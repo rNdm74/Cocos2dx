@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -23,6 +23,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -30,6 +31,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -134,12 +136,36 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\AppGlobal.cpp" />
+    <ClCompile Include="..\Classes\AppResources.cpp" />
+    <ClCompile Include="..\Classes\Entity.cpp" />
+    <ClCompile Include="..\Classes\GameplayFinishedScene.cpp" />
+    <ClCompile Include="..\Classes\GameplayScene.cpp" />
+    <ClCompile Include="..\Classes\LoadingScene.cpp" />
+    <ClCompile Include="..\Classes\MenuScene.cpp" />
+    <ClCompile Include="..\Classes\Player.cpp" />
+    <ClCompile Include="..\Classes\SettingsScene.cpp" />
+    <ClCompile Include="..\Classes\SplashScene.cpp" />
+    <ClCompile Include="..\Classes\TileMap.cpp" />
+    <ClCompile Include="..\Classes\TileMapObject.cpp" />
+    <ClCompile Include="..\Classes\TileMapTile.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\AppGlobal.h" />
+    <ClInclude Include="..\Classes\AppResources.h" />
+    <ClInclude Include="..\Classes\Entity.h" />
+    <ClInclude Include="..\Classes\GameplayFinishedScene.h" />
+    <ClInclude Include="..\Classes\GameplayScene.h" />
+    <ClInclude Include="..\Classes\LoadingScene.h" />
+    <ClInclude Include="..\Classes\MenuScene.h" />
+    <ClInclude Include="..\Classes\Player.h" />
+    <ClInclude Include="..\Classes\SettingsScene.h" />
+    <ClInclude Include="..\Classes\SplashScene.h" />
+    <ClInclude Include="..\Classes\TileMap.h" />
+    <ClInclude Include="..\Classes\TileMapObject.h" />
+    <ClInclude Include="..\Classes\TileMapTile.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

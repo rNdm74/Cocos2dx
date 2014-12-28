@@ -5,7 +5,6 @@
 #include "TileMap.h"
 #include "Entity.h"
 #include "Player.h"
-#include "Box2D.h"
 
 #define kBackgroundLayer 1
 #define kMidgroundLayer 2
@@ -21,10 +20,7 @@ private:
     Sprite* bg;
     Vec2 center;
     float velocity = 250;
-    cocos2d::Label* debug;
-    b2World* _world;
-    b2Body* _body;
-    
+    cocos2d::Label* debug;    
         
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer

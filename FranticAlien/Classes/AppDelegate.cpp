@@ -22,10 +22,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     
     if(!glview) {
-        glview = GLView::create("Frantic Alien");
+		glview = GLView::create("Frantic Alien");
+		//glview = GLView::createWithRect("Frantic Alien", Rect(0,0, 800,600), 1.0f);
         //glview = GLView::createWithFullScreen("Frantic Alien");
 
-        
         director->setOpenGLView(glview);
     }
 

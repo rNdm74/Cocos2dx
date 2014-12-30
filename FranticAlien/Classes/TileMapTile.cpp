@@ -28,7 +28,16 @@ TileMapTile* TileMapTile::create(float x, float y, int gid)
         
 		sprite->autorelease();
 
-		sprite->setPosition(x, y);
+		sprite->setPosition(x * 2.0f, y * 2.0f);
+		sprite->setScale(2.0f);
+
+		auto body = PhysicsBody::createBox(sprite->getBoundingBox().size, PhysicsMaterial(0, 0, 0));
+		body->setDynamic(false);
+		body->setRotationEnable(false);
+		body->setCollisionBitmask(1);
+		body->setContactTestBitmask(true);
+		body->setGravityEnable(false);
+		sprite->setPhysicsBody(body);
         
         if(gid == 89 || gid == 90)
         {

@@ -19,7 +19,7 @@ private:
     Player* p;
     Sprite* bg;
     Vec2 center;
-    float velocity = 250;
+    float static velocity ;
     cocos2d::Label* debug;    
         
 public:
@@ -38,19 +38,28 @@ public:
     void update(float) override;
     
 private:
-    cocos2d::PhysicsWorld* _sceneWorld;
-    void setPhysicsWorld(cocos2d::PhysicsWorld* sceneWorld) { _sceneWorld = sceneWorld; };
-    
+        
     cocos2d::ParallaxNode* _backgroundLayer;
     cocos2d::ParallaxNode* _mainLayer;
-    //cocos2d::ParallaxNode* _objectLaver;
+
     cocos2d::Layer* _viewPort;
     
-    cocos2d::Vec2 direction = cocos2d::Vec2::ZERO;
+    cocos2d::Vec2 direction;
+
+	cocos2d::PhysicsWorld* _sceneWorld;
+
+	void setPhysicsWorld(cocos2d::PhysicsWorld* world) { world = _sceneWorld; };
     
+	void actionFinished();
+	bool onContactBegin(cocos2d::PhysicsContact &contact);
+
     void Pause(Ref* sender);
     void GameplaySceneFinished(Ref* sender);
     
+	bool onTouchBegan(Touch* touch, Event  *event);
+	void onTouchMoved(Touch* touch, Event  *event);
+	void onTouchEnded(Touch* touch, Event  *event);
+
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
     
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);

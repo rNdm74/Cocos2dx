@@ -86,11 +86,11 @@ Layer* TileMap::createLayer(int level)
 {
     Layer* layer = Layer::create();
     layer->setContentSize(getLayerSize());
-    layer->setAnchorPoint(Vec2::ZERO);
+    //layer->setAnchorPoint(Vec2::ZERO);
     layer->setTag(level);
     
-	//Size visibleSize = Director::getInstance()->getVisibleSize();
-	//Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
  
     for(int row = 0; row < MAX_ROWS; row++)
 	{
@@ -100,15 +100,16 @@ Layer* TileMap::createLayer(int level)
 			
 			if(gid != 0)
 			{
-				float x = layer->getBoundingBox().origin.x + col * TILE_SIZE;
-                float y = layer->getBoundingBox().origin.y + layer->getContentSize().height - row * TILE_SIZE ; // Flip to display correctly
+				float x = col * TILE_SIZE;
+				float y = (origin.y + visibleSize.height) - row * TILE_SIZE; // Flip to display correctly
                 
-                TileMapTile* tile = TileMapTile::create(x, y, gid);
-                tile->setAnchorPoint(Point::ZERO);
+				TileMapTile* tile = TileMapTile::create(x, y, gid);
                 tile->getTexture()->setAntiAliasTexParameters();
                 
 				layer->addChild(tile);
 			}
+
+			
 		}
 	}
     

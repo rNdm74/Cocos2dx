@@ -201,8 +201,14 @@ bool GameplayScene::onTouchBegan(Touch* touch, Event  *event)
 	{
 		p->hideMenu();
 	}
-
-	p->IsSelected = !p->IsSelected;
+    else if (rect.containsPoint(touchPoint) == false)
+    {
+    	direction.x = (touchPoint.x > playerPoint.x) ? -1 : 1;
+    	p->Walk(touchPoint);
+    	//_mainLayer->runAction(Sequence::createWithTwoActions(MoveBy::create(duration, Vec2((touchPoint.x > playerPoint.x) ? -distance : distance, 0)), CallFunc::create(CC_CALLBACK_0(GameplayScene::actionFinished, this))));
+    }
+	
+    p->IsSelected = !p->IsSelected;
 
 	//log("mouse X: %.1f, Y: %.1f", touch->getLocation().x, touch->getLocation().y);
 	//log("player X: %.1f, Y: %.1f", p->getPosition().x, p->getPosition().y);

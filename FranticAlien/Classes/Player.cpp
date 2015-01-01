@@ -18,12 +18,15 @@ Player* Player::createPlayerWithFilename(std::string spriteFrameName)
     if(sprite && sprite->initWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName)))
     {
         sprite->autorelease();
-		sprite->setScale(2.0f);
-        //sprite->setAnchorPoint(Vec2::ZERO);
-        sprite->setShadow();
 		sprite->setMenu();
 		sprite->hideMenu();
 		sprite->addEvents();
+
+		auto body = PhysicsBody::createBox(sprite->getBoundingBox().size, PhysicsMaterial(0, 0, 0));
+		body->setRotationEnable(false);
+		body->setCollisionBitmask(2);
+		body->setContactTestBitmask(true);
+		sprite->setPhysicsBody(body);
       
         return sprite;
     }
@@ -66,15 +69,15 @@ bool Player::touchBegan(Touch* touch, Event* e)
 			case 1:
 				Hurt();
 				break;
-			case2:				
+			case 2:				
 				Jump();
 				break;
 			case 3:
 				Climb();
 				break;
-			default:
+			/*default:
 				Stand();
-				break;
+				break;*/
 			}
 		}
 	}
@@ -90,7 +93,7 @@ void Player::setShadow()
     _shadow->setSpriteFrame(this->getSpriteFrame());
     
     // Step 2
-    _shadow->setAnchorPoint(Point(0.5,0)); // position it to the center of the target node
+    _shadow->setAnchorPoint(Point(0.1,0)); // position it to the center of the target node
     _shadow->setPosition(Point(-1, 0));
     
     // Step 3
@@ -98,7 +101,7 @@ void Player::setShadow()
     //_shadow->setScale(this->getScale());
     
     // Step 4
-    _shadow->setScale(0.9f);
+    _shadow->setScale(0.5f);
     
     // Step 5
     //shadow->runAction(FlipY::create(true));
@@ -121,13 +124,11 @@ void Player::setMenu()
 	for (int i = 45; i <= 48; i++)
 	{
 		auto menu_item = PlayerMenu::createPlayerMenuWithFilename("shadedLight" + std::to_string(i) + ".png");
-		//menu_item->setSpriteFrame(SpriteFrame::create(, Rect(0, 0, 80, 80)));
-		menu_item->setScale(0.5f);
-		//menu_item->setAnchorPoint(Point(0.5, 0.5));
-		menu_item->setPosition(Point(getContentSize().width / 2, getContentSize().height / 2));
+		
+		menu_item->setPosition(Point(getContentSize().width / 2, getContentSize().height / 2));		
 		
 		_tick.pushBack(menu_item);
-
+		
 		this->addChild(menu_item, -10);
 	}
 }
@@ -135,11 +136,13 @@ void Player::setMenu()
 void Player::Update(float delta)
 {
 	//log("%f", _tick->getPositionX());
-	_shadow->setSpriteFrame(this->getSpriteFrame());
+	//_shadow->setSpriteFrame(this->getSpriteFrame());
 }
 
 void Player::showMenu()
 {
+	IsSelected = true;
+
 	// Sprite looks forward
 	this->setSpriteFrame(_PREFIX _SUFFIX);
 
@@ -150,12 +153,13 @@ void Player::showMenu()
 
 	for (int i = 0; i < 4; i++)
 	{
-		float radians = (i * 50) * (PI / 180);
+		float radians = 20 + (i * 50) * (PI / 180);
 
-		float x = center.x + cos(radians) * 70;
-		float y = center.y + sin(radians) * 70;
+		float x = center.x + cos(radians) * 100;
+		float y = center.y + sin(radians) * 100;
 
-		_tick.at(i)->runAction(MoveTo::create(0.1, Vec2(x, y)));
+		_tick.at(i)->runAction(MoveTo::create(0.1f, Vec2(x, y)));
+		_tick.at(i)->runAction(ScaleTo::create(0.1f, 1.0f));
 	}
 
 	// Show menu
@@ -164,6 +168,8 @@ void Player::showMenu()
 
 void Player::hideMenu()
 {
+	IsSelected = false;
+
 	// Sprite stands
 	this->setSpriteFrame(_PREFIX _STAND _SUFFIX);
 
@@ -176,29 +182,26 @@ void Player::hideMenu()
 	for (int i = 0; i < 4; i++)
 	{	
 		_tick.at(i)->runAction(MoveTo::create(0.1, center));
+		_tick.at(i)->runAction(ScaleTo::create(0.1f, 0.0f));
 	}
 }
 
 void Player::Idle()
 {
-	
+	Vector<FiniteTimeAction*> actions;
+	actions.pushBack(ScaleBy::create(4, 1.5));
+	actions.pushBack(TintTo::create(4, 255, 0, 0));
+	actions.pushBack(FadeTo::create(4, 30));
+
+	auto parallel = Spawn::create(actions);
+
+	this->runAction(parallel);
 }
 
 void Player::Walk(Vec2 newLocation)
 {	
 	this->stopAllActions();
-
-	/*float speed = 250.0f;
-
-	Vec2 start = getPosition();
-	Vec2 end = newLocation;
-
-	float distance = ccpDistance(start, end);
-
-	float duration = distance / speed;
-
-	this->runAction(Sequence::createWithTwoActions(MoveBy::create(duration, Vec2(end.x, start.y)), CallFunc::create(CC_CALLBACK_0(Player::Stand, this))));*/
-
+		
 	//Set direction to walk
 	_direction.x = (newLocation.x > getPositionX()) ? 1 : -1;
 	
@@ -219,7 +222,7 @@ void Player::Walk(Vec2 newLocation)
 
 	this->runAction(FlipX::create(_direction.x < 0));
     
-    _shadow->runAction(FlipX::create(_direction.x < 0));
+    //_shadow->runAction(FlipX::create(_direction.x < 0));
 }
 
 void Player::Stand()
@@ -227,37 +230,24 @@ void Player::Stand()
 	this->stopAllActions();
 
 	_direction = Vec2::ZERO;
-
-	float resetPositionX = getContentSize().width / 2;
-	float resetPositionY = getContentSize().height / 2;
-
-	//log("%f", resetPosition);
-
-	//if ()
-	//_tick->runAction(MoveTo::create(0.1, Point(resetPositionX, resetPositionY)));
-
+		
 	// Player is not in jumping state
 	IsJumping = false;
 
 	//log("Standing");
-	//this->setSpriteFrame(_PREFIX _STAND _SUFFIX);
-
-	//Idle();
+	this->setSpriteFrame(_PREFIX _STAND _SUFFIX);
 }
 
 void Player::Duck()
 {
+	this->stopAllActions();
+
     this->setSpriteFrame(_PREFIX _DUCK _SUFFIX);
-
-	//FiniteTimeAction* waitAction = DelayTime::create(0.1);
-	//FiniteTimeAction* waitFinished = CallFunc::create(CC_CALLBACK_0(Player::Stand, this));
-
-	//this->runAction(Sequence::createWithTwoActions(waitAction, waitFinished));
 }
 
 void Player::Jump()
 {
-	//this->stopAllActions();
+	this->stopAllActions();
 
 	// Player is in jumping state
 	IsJumping = true;
@@ -272,6 +262,8 @@ void Player::Jump()
 
 void Player::Climb()
 {
+	this->stopAllActions();
+
     //  create the Animation, and populate it with frames fetched from the SpriteFrameCache
     Animation* anim = Animation::create();
     
@@ -290,6 +282,8 @@ void Player::Climb()
 
 void Player::Hurt()
 {
+	this->stopAllActions();
+
     this->setSpriteFrame(_PREFIX _HURT _SUFFIX);
 }
 

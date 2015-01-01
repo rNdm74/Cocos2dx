@@ -20,10 +20,10 @@ AppResources::~AppResources()
 
 bool AppResources::Load()
 {
-    loadLevels();
+    //loadLevels();
     loadPlayerResources();
     //loadEnemyResources();
-    loadObjectResources();
+    //loadObjectResources();
     loadTileResources();
     
     return true;
@@ -31,6 +31,8 @@ bool AppResources::Load()
 
 void AppResources::loadLevels()
 {
+	auto document = loadXMLDocument(XML_TILED_MAP_EDITOR);
+	
 	tinyxml2::XMLElement* element = loadXMLDocument(XML_TILED_MAP_EDITOR)->FirstChildElement()->FirstChildElement();
 
 	for(tinyxml2::XMLElement* e = element; e != NULL; e = e->NextSiblingElement())
@@ -88,11 +90,11 @@ void AppResources::loadObjectResources()
 
 void AppResources::loadTileResources()
 {
-	tinyxml2::XMLElement* element = loadXMLDocument(XML_TILES_SPRITESHEET)->FirstChildElement()->FirstChildElement();
+	auto element = loadXMLDocument(XML_TILES_SPRITESHEET)->FirstChildElement()->FirstChildElement();
 
 	int key = 0;
 
-	for(tinyxml2::XMLElement* e = element; e != NULL; e = e->NextSiblingElement())
+	for(auto e = element; e != NULL; e = e->NextSiblingElement())
 	{
 		//log("%s", e->Attribute("name"));
 
@@ -112,30 +114,19 @@ void AppResources::loadTileResources()
 	log("%s", "Loaded Tile Resources");
 }
 
-tinyxml2::XMLDocument* AppResources::loadXMLDocument(std::string name)
+tinyxml2::XMLDocument* AppResources::loadXMLDocument(std::string filename)
 {
 	// If invalid string throw error
-
-	// Local variables
-	tinyxml2::XMLDocument* doc;
-	Data data;
-	unsigned char* bytes;
-	std::string content;
+	CCASSERT(filename.size() > 0, "Invalid filename for xml document");
+	
+	// Load string from file
+	auto fileContents = FileUtils::getInstance()->getStringFromFile(filename);
 
 	// Create new XMLDocument for parsing
-	doc = new tinyxml2::XMLDocument(true, tinyxml2::Whitespace::COLLAPSE_WHITESPACE);
-
-	// Get raw data from external XML file
-	data = FileUtils::getInstance()->getDataFromFile(name.c_str());
-
-	// Get bytes from loaded data
-	bytes = data.getBytes();
-
-	// Add byte information to string for parsing
-	content.append(reinterpret_cast<const char*>(bytes));
+	auto doc = new tinyxml2::XMLDocument(true, tinyxml2::Whitespace::COLLAPSE_WHITESPACE);
 
 	// Allow document to parse string information
-	doc->Parse(content.c_str(), data.getSize());
+	doc->Parse(fileContents.c_str(), fileContents.size());
 
 	// Return the built XMLDocument
 	return doc;

@@ -30,6 +30,9 @@ public:
     
     bool Load();
 
+	// XML
+	tinyxml2::XMLDocument* loadXMLDocument(std::string filename);
+
     std::string getFrameName(int gid) { return framename_map[gid - 1]; };
     int getLevelGid(int level, int row, int col){ return level_map[level][row * MAX_COLS + col]; };
     std::map<int, std::map<int, cocos2d::Vec2>> getLevelObjects(int level){ return object_map[level]; };
@@ -48,8 +51,7 @@ private:
     void loadObjectResources();
     void loadTileResources();
 
-    // XML
-    tinyxml2::XMLDocument* loadXMLDocument(std::string name);
+    
 };
 
 #endif // __RESOURCESMANAGER_H__

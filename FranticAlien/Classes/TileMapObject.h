@@ -3,10 +3,12 @@
 
 #include "cocos2d.h"
 
-class TileMapObject : public cocos2d::Sprite
+class TileMapObject : public cocos2d::Ref
 {
 public:
-	static TileMapObject* create(int gid, float x, float y);
+	int _gid;
+	int _x;
+	int _y;
 };
 
 #endif // __TILE_MAP_OBJECT_H__

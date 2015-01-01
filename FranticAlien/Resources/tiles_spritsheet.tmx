@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="17" height="11" tilewidth="70" tileheight="70">
- <tileset firstgid="1" name="Tiles" tilewidth="70" tileheight="146">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="14" height="5" tilewidth="70" tileheight="70">
+ <tileset firstgid="1" name="Tileset" tilewidth="70" tileheight="146">
   <tile id="0">
    <image width="70" height="70" source="box.png"/>
   </tile>
@@ -8,40 +8,40 @@
    <image width="70" height="70" source="boxAlt.png"/>
   </tile>
   <tile id="2">
-   <image width="70" height="70" source="boxCoin_disabled.png"/>
-  </tile>
-  <tile id="3">
    <image width="70" height="70" source="boxCoin.png"/>
   </tile>
+  <tile id="3">
+   <image width="70" height="70" source="boxCoin_disabled.png"/>
+  </tile>
   <tile id="4">
-   <image width="70" height="70" source="boxCoinAlt_disabled.png"/>
+   <image width="70" height="70" source="boxCoinAlt.png"/>
   </tile>
   <tile id="5">
-   <image width="70" height="70" source="boxCoinAlt.png"/>
+   <image width="70" height="70" source="boxCoinAlt_disabled.png"/>
   </tile>
   <tile id="6">
    <image width="70" height="70" source="boxEmpty.png"/>
   </tile>
   <tile id="7">
-   <image width="70" height="70" source="boxExplosive_disabled.png"/>
+   <image width="70" height="70" source="boxExplosive.png"/>
   </tile>
   <tile id="8">
-   <image width="70" height="70" source="boxExplosive.png"/>
+   <image width="70" height="70" source="boxExplosive_disabled.png"/>
   </tile>
   <tile id="9">
    <image width="70" height="70" source="boxExplosiveAlt.png"/>
   </tile>
   <tile id="10">
-   <image width="70" height="70" source="boxItem_disabled.png"/>
-  </tile>
-  <tile id="11">
    <image width="70" height="70" source="boxItem.png"/>
   </tile>
+  <tile id="11">
+   <image width="70" height="70" source="boxItem_disabled.png"/>
+  </tile>
   <tile id="12">
-   <image width="70" height="70" source="boxItemAlt_disabled.png"/>
+   <image width="70" height="70" source="boxItemAlt.png"/>
   </tile>
   <tile id="13">
-   <image width="70" height="70" source="boxItemAlt.png"/>
+   <image width="70" height="70" source="boxItemAlt_disabled.png"/>
   </tile>
   <tile id="14">
    <image width="70" height="70" source="boxWarning.png"/>
@@ -59,10 +59,10 @@
    <image width="70" height="70" source="castle.png"/>
   </tile>
   <tile id="19">
-   <image width="70" height="70" source="castleCenter_rounded.png"/>
+   <image width="70" height="70" source="castleCenter.png"/>
   </tile>
   <tile id="20">
-   <image width="70" height="70" source="castleCenter.png"/>
+   <image width="70" height="70" source="castleCenter_rounded.png"/>
   </tile>
   <tile id="21">
    <image width="70" height="70" source="castleCliffLeft.png"/>
@@ -119,10 +119,10 @@
    <image width="70" height="70" source="dirt.png"/>
   </tile>
   <tile id="39">
-   <image width="70" height="70" source="dirtCenter_rounded.png"/>
+   <image width="70" height="70" source="dirtCenter.png"/>
   </tile>
   <tile id="40">
-   <image width="70" height="70" source="dirtCenter.png"/>
+   <image width="70" height="70" source="dirtCenter_rounded.png"/>
   </tile>
   <tile id="41">
    <image width="70" height="70" source="dirtCliffLeft.png"/>
@@ -197,10 +197,10 @@
    <image width="70" height="70" source="grass.png"/>
   </tile>
   <tile id="65">
-   <image width="70" height="70" source="grassCenter_rounded.png"/>
+   <image width="70" height="70" source="grassCenter.png"/>
   </tile>
   <tile id="66">
-   <image width="70" height="70" source="grassCenter.png"/>
+   <image width="70" height="70" source="grassCenter_rounded.png"/>
   </tile>
   <tile id="67">
    <image width="70" height="70" source="grassCliffLeft.png"/>
@@ -275,19 +275,19 @@
    <image width="70" height="70" source="liquidLava.png"/>
   </tile>
   <tile id="91">
-   <image width="70" height="70" source="liquidLavaTop_mid.png"/>
+   <image width="70" height="70" source="liquidLavaTop.png"/>
   </tile>
   <tile id="92">
-   <image width="70" height="70" source="liquidLavaTop.png"/>
+   <image width="70" height="70" source="liquidLavaTop_mid.png"/>
   </tile>
   <tile id="93">
    <image width="70" height="70" source="liquidWater.png"/>
   </tile>
   <tile id="94">
-   <image width="70" height="70" source="liquidWaterTop_mid.png"/>
+   <image width="70" height="70" source="liquidWaterTop.png"/>
   </tile>
   <tile id="95">
-   <image width="70" height="70" source="liquidWaterTop.png"/>
+   <image width="70" height="70" source="liquidWaterTop_mid.png"/>
   </tile>
   <tile id="96">
    <image width="70" height="70" source="lock_blue.png"/>
@@ -320,10 +320,10 @@
    <image width="70" height="70" source="sand.png"/>
   </tile>
   <tile id="106">
-   <image width="70" height="70" source="sandCenter_rounded.png"/>
+   <image width="70" height="70" source="sandCenter.png"/>
   </tile>
   <tile id="107">
-   <image width="70" height="70" source="sandCenter.png"/>
+   <image width="70" height="70" source="sandCenter_rounded.png"/>
   </tile>
   <tile id="108">
    <image width="70" height="70" source="sandCliffLeft.png"/>
@@ -392,10 +392,10 @@
    <image width="70" height="70" source="snow.png"/>
   </tile>
   <tile id="130">
-   <image width="70" height="70" source="snowCenter_rounded.png"/>
+   <image width="70" height="70" source="snowCenter.png"/>
   </tile>
   <tile id="131">
-   <image width="70" height="70" source="snowCenter.png"/>
+   <image width="70" height="70" source="snowCenter_rounded.png"/>
   </tile>
   <tile id="132">
    <image width="70" height="70" source="snowCliffLeft.png"/>
@@ -452,10 +452,10 @@
    <image width="70" height="70" source="stone.png"/>
   </tile>
   <tile id="150">
-   <image width="70" height="70" source="stoneCenter_rounded.png"/>
+   <image width="70" height="70" source="stoneCenter.png"/>
   </tile>
   <tile id="151">
-   <image width="70" height="70" source="stoneCenter.png"/>
+   <image width="70" height="70" source="stoneCenter_rounded.png"/>
   </tile>
   <tile id="152">
    <image width="70" height="70" source="stoneCliffLeft.png"/>
@@ -518,316 +518,13 @@
    <image width="70" height="70" source="window.png"/>
   </tile>
  </tileset>
- <layer name="0" width="17" height="11">
+ <tileset firstgid="173" name="backgrounds" tilewidth="800" tileheight="480">
+  <tile id="0">
+   <image width="800" height="480" source="background.png"/>
+  </tile>
+ </tileset>
+ <layer name="0" width="14" height="5">
   <data>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="126"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="126"/>
-   <tile gid="82"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="84"/>
-  </data>
- </layer>
- <layer name="1" width="17" height="11" visible="0">
-  <data>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -900,7 +597,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="2" width="17" height="11" visible="0">
+ <layer name="1" width="14" height="5">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -958,140 +655,23 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="126"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
   </data>
  </layer>
- <layer name="3" width="17" height="11" visible="0">
+ <layer name="2" width="14" height="5">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1149,140 +729,23 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
+   <tile gid="96"/>
   </data>
  </layer>
- <layer name="4" width="17" height="11" visible="0">
+ <layer name="3" width="14" height="5">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1335,6 +798,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="85"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1353,124 +817,6 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="96"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
-   <tile gid="94"/>
   </data>
  </layer>
 </map>

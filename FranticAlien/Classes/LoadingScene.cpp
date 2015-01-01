@@ -34,7 +34,7 @@ bool LoadingScene::init()
 
     // create and initialize a label
     
-    auto label = LabelTTF::create("Loading......", "Arial", 80);
+    auto label = LabelTTF::create("Loading......", "Marker Felt", 80);
     
     // position the label on the center of the screen
     label->setPosition(Vec2(origin.x + visibleSize.width / 2, (origin.y + visibleSize.height / 2) + (label->getContentSize().height) / 2));

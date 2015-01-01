@@ -34,7 +34,7 @@ bool GameplayFinishedScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     // create and initialize a label
-    auto label = LabelTTF::create(AppGlobal::getInstance()->getActiveLevel(), "Arial", 80);
+    auto label = LabelTTF::create(AppGlobal::getInstance()->GetActiveLevel(), "Arial", 80);
     
     // position the label on the center of the screen
     label->setPosition(Vec2(origin.x + visibleSize.width / 2, (origin.y + visibleSize.height / 2) + (label->getContentSize().height) / 2));

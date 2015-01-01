@@ -13,8 +13,10 @@ AppDelegate::~AppDelegate()
 {
 }
 
+
+
 bool AppDelegate::applicationDidFinishLaunching() {
-    
+    		
     //Texture2D::PVRImagesHavePremultipliedAlpha(true);
     
     // initialize director
@@ -23,29 +25,35 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     if(!glview) {
 		glview = GLView::create("Frantic Alien");
-		//glview = GLView::createWithRect("Frantic Alien", Rect(0,0, 800,600), 1.0f);
+		//glview = GLView::createWithRect("Frantic Alien", Rect(0, 0, 480, 320));
         //glview = GLView::createWithFullScreen("Frantic Alien");
 
         director->setOpenGLView(glview);
+		//director->setAlphaBlending(true);
     }
+
 
     // turn on display FPS
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
+
+	log("Scale factor     : %.0f", director->getContentScaleFactor());
+	log("Screen size      : {%.0f, %.0f}", glview->getFrameSize().width, glview->getFrameSize().height);
+	log("Tile size        : {%.0f, %.0f}", 70.0f, 70.0f);
     
     // create global area for game
     auto appGlobal = AppGlobal::getInstance();
     appGlobal->IsGameSceneRunning = false;
     
-    // create gloat resources manager
+    // create global resources manager
     auto appResources = AppResources::getInstance();
     appResources->Load();
-    
-    // set design resolution for game
-    glview->setDesignResolutionSize(1024, 768, ResolutionPolicy::NO_BORDER);
-    
+	
+	// set design resolution for game
+	glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
+
     // create a scene. it's an autorelease object
     auto scene = SplashScene::createScene();
 

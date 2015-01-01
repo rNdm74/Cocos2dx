@@ -14,7 +14,6 @@
 class GameplayScene : public cocos2d::Layer
 {
 private:
-    TileMap* map;
     Entity* player;
     Player* p;
     Sprite* bg;
@@ -39,7 +38,11 @@ public:
     
 private:
         
-    cocos2d::ParallaxNode* _backgroundLayer;
+	TileMap* tilemap;
+
+	cocos2d::ParallaxNode* _backgroundLayer;
+	cocos2d::Sprite* _star;
+
     cocos2d::ParallaxNode* _mainLayer;
 
     cocos2d::Layer* _viewPort;
@@ -64,6 +67,7 @@ private:
     
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
+
 };
 
 #endif // __GAMEPLAY_SCENE_H__

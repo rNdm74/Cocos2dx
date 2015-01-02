@@ -139,6 +139,12 @@ void TileMap::objectgroupswitch(tinyxml2::XMLElement* node)
 	//		<object gid="12" x="280" y="700"/>
 	// </objectgroup>
 
+//    <objectgroup name="0">
+//      <object x="350" y="280">
+//          <polygon points="0,0 70,-70 70,0"/>
+//      </object>
+//    </objectgroup>
+    
 	// Create the tilemap layer
 	auto objectgroup = new TileMapObjectGroup();
 
@@ -150,16 +156,19 @@ void TileMap::objectgroupswitch(tinyxml2::XMLElement* node)
 	auto objectNode = node->FirstChildElement();
 	
 	// Iterate through all tiles
-	for (auto t = objectNode; t != NULL; t = t->NextSiblingElement())
+	for (auto obj = objectNode; obj != NULL; obj = obj->NextSiblingElement())
 	{
 		TileMapObject object;
 
-		int gid, x, y;
-		t->QueryIntAttribute("gid", &object._gid);
-		t->QueryIntAttribute("x", &object._x);
-		t->QueryIntAttribute("y", &object._y);
-		
-		objectgroup->_objectInfo.push_back(object);
+		//obj->QueryIntAttribute("gid", &object._gid);
+		//obj->QueryIntAttribute("x", &object._x);
+		//obj->QueryIntAttribute("y", &object._y);
+        
+        //auto polygon = obj->FirstChildElement();
+        
+        //std::string points = polygon->Attribute("points");
+        
+		//objectgroup->_objectInfo.push_back(object);
 	}
 
 	// Add to the total layer list
@@ -245,7 +254,7 @@ void TileMap::updatePosition()
 					}
 					else
 					{
-						po->setOffset(po->getOffset() + Point(visibleSize.width + node->getContentSize().width * 2, 0));
+						po->setOffset(po->getOffset() + Point(visibleSize.width + node->getContentSize().width, 0));
 					}					
 				}
 			}
@@ -313,10 +322,10 @@ void TileMap::addLayers()
 
 					TileMapTile* tile = TileMapTile::create(x, y, gid);
 					
-					float offsetX = tile->getContentSize().width / 2;
-					float offsetY = tile->getContentSize().height / 2;
+					float offsetX = 0;
+                    float offsetY = tile->getContentSize().height;
 
-					this->addChild(tile, z, Vec2(z / 3 + 0.1f , 1), Vec2(x + offsetX, y - offsetY));
+					this->addChild(tile, z, Vec2(z / 5 + 0.1f , 1), Vec2(x + offsetX, y - offsetY));
 				}		
 			}
 		}

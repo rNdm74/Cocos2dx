@@ -75,7 +75,28 @@ void AppResources::loadLevels()
 
 void AppResources::loadPlayerResources()
 {
-    cache->addSpriteFramesWithFile("alienBeige.plist");
+    
+    //cache->addSpriteFramesWithFile("alienBeige.plist");
+    
+    auto document = loadXMLDocument("Spritesheets/aliens.xml");
+    
+    auto textureAtlas = document->FirstChildElement();
+    
+    auto subTexture = textureAtlas->FirstChildElement();
+    
+    for(auto sub = subTexture; sub != NULL; sub = sub->NextSiblingElement())
+    {
+        int x, y, width, height;
+        sub->QueryIntAttribute("x", &x);
+        sub->QueryIntAttribute("y", &y);
+        sub->QueryIntAttribute("width", &width);
+        sub->QueryIntAttribute("height", &height);
+        
+        //framename_map[key] = sub->Attribute("name");
+        
+        cache->addSpriteFrame(SpriteFrame::create("Spritesheets/aliens.png", Rect(x, y + 0.2, width, height - 0.8)), sub->Attribute("name"));
+        
+    }
     
 	log("%s", "Loaded Player Resources");
 }

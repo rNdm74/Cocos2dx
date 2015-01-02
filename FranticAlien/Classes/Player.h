@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "PlayerMenu.h"
 
-#define _PREFIX "alienBeige"
+//#define _PREFIX "alienBeige"
 #define _SUFFIX ".png"
 
 #define _WALK   "_walk"
@@ -13,6 +13,8 @@
 #define _JUMP   "_jump"
 #define _CLIMB  "_climb"
 #define _HURT   "_hurt"
+
+#define MENU 1
 
 #define PI 3.14159265
 
@@ -32,10 +34,16 @@ public:
 	void addEvents();
 	bool touchBegan(cocos2d::Touch* touch, cocos2d::Event* e);
 
-    void setShadow();
+    void setCharacter(int type);
+    
 	void setMenu();
 	void showMenu();
 	void hideMenu();
+    
+    void addSmoke();
+    void addDust();
+    void stopDust();
+    void resumeDust();
 
     void Update(float delta);
 	void Idle();
@@ -54,8 +62,12 @@ private:
     cocos2d::Vec2 _direction;
     cocos2d::Vec2 _velocity;
     cocos2d::SpriteFrameCache* _spriteFrameCache;
-    cocos2d::Sprite* _shadow;
-	cocos2d::Vector<PlayerMenu*> _tick;
+    
+    cocos2d::ParticleSmoke* _dust;
+    cocos2d::ParticleSmoke* _smoke;
+    
+	//cocos2d::Vector<PlayerMenu*> _tick;
+    std::string _PREFIX;
 	
 };
 

@@ -54,15 +54,32 @@ bool MenuScene::init()
     menu->alignItemsVerticallyWithPadding(25.0f);
     this->addChild(menu);
     
+    //auto mouseListener = EventListenerMouse::create();
+    //mouseListener->onMouseMove = CC_CALLBACK_1(MenuScene::onMouseMove, this);
+    //_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    auto tap = Sprite::create("tap.png");
+    this->addChild(tap, 999);
     auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseMove = CC_CALLBACK_1(MenuScene::onMouseMove, this);
+    mouseListener->onMouseMove = [=](cocos2d::Event* event){
+        
+        // Cast Event to EventMouse for position details like above
+        auto cursor = static_cast<EventMouse*>(event);
+        
+        auto pos = Vec2(cursor->getCursorX(), cursor->getCursorY());
+        
+        //log("x: %f, y:%f", pos.x, pos.y);
+        
+        tap->setPosition(pos);
+        
+    };
+    
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
+    
     
     auto keyListener = EventListenerKeyboard::create();
-    
     keyListener->onKeyPressed = CC_CALLBACK_2(MenuScene::onKeyPressed, this);
     keyListener->onKeyReleased = CC_CALLBACK_2(MenuScene::onKeyReleased, this);
-    
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
     
     return true;

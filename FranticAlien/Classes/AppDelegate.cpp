@@ -25,6 +25,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     if(!glview) {
 		glview = GLView::create("Frantic Alien");
+        glfwSetInputMode(glview->getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		//glview = GLView::createWithRect("Frantic Alien", Rect(0, 0, 480, 320));
         //glview = GLView::createWithFullScreen("Frantic Alien");
 
@@ -34,10 +35,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0/60);
 
 	log("Scale factor     : %.0f", director->getContentScaleFactor());
 	log("Screen size      : {%.0f, %.0f}", glview->getFrameSize().width, glview->getFrameSize().height);

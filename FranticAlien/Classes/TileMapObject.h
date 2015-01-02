@@ -9,6 +9,7 @@ public:
 	int _gid;
 	int _x;
 	int _y;
+    std::vector<cocos2d::Vec2> points;
 };
 
 #endif // __TILE_MAP_OBJECT_H__

@@ -18,12 +18,14 @@ USING_NS_CC;
 Scene* GameplayScene::createScene()
 {
     // 'scene' is an autorelease object
-    auto scene = Scene::createWithPhysics();
+    auto scene = Scene::create();
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //scene->getPhysicsWorld()->setUpdateRate();
+    //int updateRate = scene->getPhysicsWorld()->getUpdateRate();
 
     // 'layer' is an autorelease object
     auto layer = GameplayScene::create();
-	layer->setPhysicsWorld(scene->getPhysicsWorld());
+	//layer->setPhysicsWorld(scene->getPhysicsWorld());
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -46,7 +48,24 @@ bool GameplayScene::init()
     //auto allAtOnceListener = EventListenerTouchAllAtOnce::create();
 	//allAtOnceListener->onTouchesMoved = CC_CALLBACK_2(GameplayScene::onTouchesMoved, this);
 	//_eventDispatcher->addEventListenerWithSceneGraphPriority(allAtOnceListener, this);
+    auto tap = Sprite::create("tap.png");
+    this->addChild(tap, 999);
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseMove = [=](cocos2d::Event* event){
+        
+        // Cast Event to EventMouse for position details like above
+        auto cursor = static_cast<EventMouse*>(event);
+        
+        auto pos = Vec2(cursor->getCursorX(), cursor->getCursorY());
+        
+        //log("x: %f, y:%f", pos.x, pos.y);
+        
+        tap->setPosition(pos);
+        
+    };
 
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = CC_CALLBACK_2(GameplayScene::onTouchBegan, this);
 	listener->onTouchMoved = CC_CALLBACK_2(GameplayScene::onTouchMoved, this);
@@ -59,9 +78,9 @@ bool GameplayScene::init()
     keyListener->onKeyReleased = CC_CALLBACK_2(GameplayScene::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
     
-	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GameplayScene::onContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+//	auto contactListener = EventListenerPhysicsContact::create();
+//	contactListener->onContactBegin = CC_CALLBACK_1(GameplayScene::onContactBegin, this);
+//	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
     // create and initialize a menu
     auto menu_item_1 = MenuItemFont::create("Pause", CC_CALLBACK_1(GameplayScene::Pause, this));
@@ -84,12 +103,14 @@ bool GameplayScene::init()
 	// Player
 	p = Player::createPlayerWithFilename("alienBeige_stand.png");
 	p->setTag(kTagPlayer);
-	p->setPosition(center);
+	p->setPosition(Vec2(origin.x + visibleSize.width / 2 , (origin.y + visibleSize.height) - (69 * 4)));
 	p->Stand();
 	this->addChild(p, 2);
 
 	//
     this->scheduleUpdateWithPriority(42);
+    
+    
     
     return true;
 }
@@ -107,16 +128,68 @@ void GameplayScene::GameplaySceneFinished(Ref* sender)
 }
 
 void GameplayScene::update(float delta)
-{	
-	//direction.x = -1;
+{
+    //check for collisions
+    p->Update(delta);
+    
+    for(auto child : tilemap->getChildren())
+    {
+        //bool solid = child->getTag() == 83 | child->getTag() == 76;
+        
+        auto pBox = p->getBoundingBox();
+        //auto tBox = child->getBoundingBox();
+        
+        auto tWorldPos = tilemap->convertToWorldSpace(child->getPosition());
+        auto tBox = Rect(tWorldPos.x, tWorldPos.y, child->getContentSize().width, child->getContentSize().height);
+        
+        auto offsetPoint = Vec2(p->getPositionX(), p->getPositionY() + 5);
+        
+        // Flat tile collision
+        if(child->getTag() == 83 && tBox.intersectsRect(pBox))
+        {
+            p->setPositionY(tBox.origin.y + tBox.size.height);
+        }
+        
+        if(child->getTag() == 76)
+        {
+            auto nodePoint = p->getPosition();
+            
+            if(pBox.getMaxX() < tWorldPos.x + tBox.size.width && pBox.getMaxX() > tWorldPos.x)
+            {
+                float t = (nodePoint.x - tWorldPos.x) / tBox.size.width;
+                float floorY =  (1-t) * tWorldPos.y + t * (tWorldPos.y + tBox.size.width);
+                
+                log("t: %f, floorY: %f", t,floorY);
+                
+                p->setPositionY(tWorldPos.y + (floorY - 20));
+            }
+        }
+        else if(child->getTag() == 78)
+        {
+            auto nodePoint = p->getPosition();
+            
+            if(pBox.getMaxX() < tWorldPos.x + tBox.size.width && pBox.getMaxX() > tWorldPos.x)
+            {
+                float t = (nodePoint.x - tWorldPos.x) / tBox.size.width;
+                float floorY =  (1-t) * (tWorldPos.y + tBox.size.width) + t * tWorldPos.y;
+                
+                log("t: %f, floorY: %f", t,floorY);
+                
+                p->setPositionY(tWorldPos.y + (floorY - 20));
+            }
+        }
+    }
+    
+    // Clamp player to center of screen
+    //p->setPositionX(center.x);
 
 	tilemap->updatePosition();
 
-	p->Update(delta);
+	
 
 	float x = tilemap->getPositionX();
 
-	x += 400 * delta  * direction.x;
+	x += 800 * delta  * direction.x;
 
 	tilemap->setPositionX(x);
 }
@@ -128,17 +201,6 @@ void GameplayScene::actionFinished()
 
 bool GameplayScene::onContactBegin(PhysicsContact &contact)
 {
-	PhysicsBody* a = contact.getShapeA()->getBody();
-	PhysicsBody* b = contact.getShapeB()->getBody();
-
-	if ((1 == a->getCollisionBitmask()) && (2 == b->getCollisionBitmask()) || (2 == a->getCollisionBitmask()) && (1 == b->getCollisionBitmask()))
-	{
-		//log("contact");
-
-		//a->setGravityEnable(false);
-		//b->setGravityEnable(false);
-	}
-
 	return true;
 }
 
@@ -192,15 +254,22 @@ void GameplayScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event)
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_SHIFT)
     {       
-    }    
+    }
+    else if(keyCode == EventKeyboard::KeyCode::KEY_SPACE)
+    {
+        p->Jump();
+    }
     else if(keyCode == EventKeyboard::KeyCode::KEY_W)
-    { 
+    {
+        p->Climb();
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_S)
-    {        
+    {
+        p->Duck();
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_A)
-    { 		
+    {
+        p->Hurt();
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_D)
     { 

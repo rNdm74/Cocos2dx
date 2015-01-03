@@ -1,13 +1,8 @@
-#ifndef  _APP_GLOBAL_H_
-#define  _APP_GLOBAL_H_
+#ifndef  __FranticAlien__APP_GLOBAL_H_
+#define  __FranticAlien__APP_GLOBAL_H_
 
 #include "cocos2d.h"
 
-/**
-@brief    The cocos2d Application.
-
-The reason for implement as private inheritance is to hide some interface call by Director.
-*/
 enum EDirection{
     DIR_LEFT,
     DIR_RIGHT,
@@ -17,51 +12,31 @@ enum EDirection{
 
 class  AppGlobal
 {
-private:
-    static AppGlobal* m_pInstance;
-
-	float _scaleX;
-	float _scaleY;
-	float _scaleFactor;
-    
-    EDirection _direction;
-
 public:
-    inline EDirection getDirection() { return _direction; }
-    inline void setDirection(EDirection direction) { _direction = direction; }
-    
-    static AppGlobal* getInstance();
-    
     bool IsGameSceneRunning;
     int ActiveLevel;
     cocos2d::Point StartPosition;
     
+public:
+    static AppGlobal* getInstance();
     
-
-	float GetRandom(float begin, float end)
-	{
-		double value;
-
-		value = (double)rand() / RAND_MAX;
-		value = value * (end - begin) + begin;
-
-		return value;
-	};
+	float getRandom(float begin, float end);
     
     std::string GetActiveLevel() { return std::to_string(ActiveLevel); };
-
-	float GetScaleX();
-	float GetScaleY();
-	float GetScaleFactor();
-
-	cocos2d::Vec2 ScalePoint(cocos2d::Vec2 point);
-	    
+	
+    inline EDirection getDirection() { return _direction; }
+    inline void setDirection(EDirection direction) { _direction = direction; }
+    
 private:
     AppGlobal();
-    virtual ~AppGlobal();	
+    virtual ~AppGlobal();
+    
+    static AppGlobal* m_pInstance;
+    
+    EDirection _direction;
 };
 
-#define RAND(begin, end)  ( AppGlobal::getInstance()->GetRandom( (begin), (end) ) )
+#define RAND(begin, end)  ( AppGlobal::getInstance()->getRandom( (begin), (end) ) )
 
 //#define GETSCALEX ( AppGlobal::getInstance()->GetScaleX() )
 //#define GETSCALEY ( AppGlobal::getInstance()->GetScaleY() )

@@ -1,5 +1,5 @@
-#ifndef __GAMEPLAY_FINISHED_SCENE_H__
-#define __GAMEPLAY_FINISHED_SCENE_H__
+#ifndef __FranticAlien__GAMEPLAY_FINISHED_SCENE_H__
+#define __FranticAlien__GAMEPLAY_FINISHED_SCENE_H__
 
 #include "cocos2d.h"
 

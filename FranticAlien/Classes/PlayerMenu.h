@@ -1,7 +1,8 @@
-#ifndef __FranticAlien__PlayerMenu__
-#define __FranticAlien__PlayerMenu__
+#ifndef __FranticAlien__PLAYER_MENU_H__
+#define __FranticAlien__PLAYER_MENU_H__
 
 #include "cocos2d.h"
+#include "Player.h"
 
 class PlayerMenu : public cocos2d::Sprite
 {

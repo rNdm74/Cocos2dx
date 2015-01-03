@@ -18,29 +18,12 @@ AppGlobal::~AppGlobal()
 {
 }
 
-float AppGlobal::GetScaleX()
+float AppGlobal::getRandom(float begin, float end)
 {
-	return _scaleX;
+    double value;
+    
+    value = (double)rand() / RAND_MAX;
+    value = value * (end - begin) + begin;
+    
+    return value;
 }
-
-float AppGlobal::GetScaleY()
-{
-	return _scaleY;
-}
-
-float AppGlobal::GetScaleFactor()
-{ 
-	return _scaleFactor;
-}
-
-Vec2 AppGlobal::ScalePoint(Vec2 point)
-{
-	Size designSize = { 480, 320 };
-
-	Size winSize = Director::getInstance()->getWinSize();
-
-	Size scaleFactor = Size(winSize.width / designSize.width, winSize.height / designSize.height);
-
-	return Vec2(point.x * scaleFactor.width, point.y * scaleFactor.height);
-}
-

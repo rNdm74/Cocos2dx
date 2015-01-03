@@ -186,16 +186,16 @@ void Player::resumeDust()
 
 void Player::Update(float delta)
 {
-    if(this->isJumping() == false)
-    {
-        float y = getPositionY();
-    
-        delta += 6;
-    
-        y += delta * -1;
-    
-        setPositionY(y);
-    }
+//    if(this->isJumping() == false)
+//    {
+//        float y = getPositionY();
+//    
+//        delta += 6;
+//    
+//        y += delta * -1;
+//    
+//        setPositionY(y);
+//    }
 }
 
 void Player::showMenu()

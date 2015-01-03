@@ -1,9 +1,8 @@
-#ifndef __GAMEPLAY_SCENE_H__
-#define __GAMEPLAY_SCENE_H__
+#ifndef __FranticAlien__GAMEPLAY_SCENE_H__
+#define __FranticAlien__GAMEPLAY_SCENE_H__
 
 #include "cocos2d.h"
 #include "TileMap.h"
-#include "Entity.h"
 #include "Player.h"
 
 #define kBackgroundLayer 1
@@ -14,10 +13,9 @@
 class GameplayScene : public cocos2d::Layer
 {
 private:
-    Entity* player;
     Player* p;
-    Sprite* bg;
-    Vec2 center;
+    cocos2d::Sprite* bg;
+    cocos2d::Vec2 center;
     float static velocity ;
     cocos2d::Label* debug;    
         
@@ -40,30 +38,19 @@ private:
         
 	TileMap* tilemap;
 
-	cocos2d::ParallaxNode* _backgroundLayer;
-	cocos2d::Sprite* _star;
-
-    cocos2d::ParallaxNode* _mainLayer;
-
-    cocos2d::Layer* _viewPort;
-    
     cocos2d::Vec2 direction;
 
-	cocos2d::PhysicsWorld* _sceneWorld;
-
-	void setPhysicsWorld(cocos2d::PhysicsWorld* world) { world = _sceneWorld; };
-    
 	void actionFinished();
 	bool onContactBegin(cocos2d::PhysicsContact &contact);
 
     void Pause(Ref* sender);
     void GameplaySceneFinished(Ref* sender);
     
-	bool onTouchBegan(Touch* touch, Event  *event);
-	void onTouchMoved(Touch* touch, Event  *event);
-	void onTouchEnded(Touch* touch, Event  *event);
+	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event  *event);
+	void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event  *event);
+	void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event  *event);
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
     
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);

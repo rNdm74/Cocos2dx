@@ -1,5 +1,5 @@
-#ifndef  _APP_DELEGATE_H_
-#define  _APP_DELEGATE_H_
+#ifndef  __FranticAlien__APP_DELEGATE_H_
+#define  __FranticAlien__APP_DELEGATE_H_
 
 #include "cocos2d.h"
 

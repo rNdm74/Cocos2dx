@@ -1,9 +1,9 @@
 #include "GameplayScene.h"
 #include "GameplayFinishedScene.h"
 #include "MenuScene.h"
-#include "Entity.h"
 #include "AppGlobal.h"
 #include "Player.h"
+#include "GameObject.h"
 
 enum
 {
@@ -101,11 +101,16 @@ bool GameplayScene::init()
 	this->addChild(tilemap);
 		    
 	// Player
-	p = Player::createPlayerWithFilename("alienBeige_stand.png");
-	p->setTag(kTagPlayer);
-	p->setPosition(Vec2(origin.x + visibleSize.width / 2 , (origin.y + visibleSize.height) - (69 * 4)));
-	p->Stand();
-	this->addChild(p, 2);
+//	p = Player::createPlayerWithFilename("alienBeige_stand.png");
+//	p->setTag(kTagPlayer);
+//	p->setPosition(Vec2(origin.x + visibleSize.width / 2 , (origin.y + visibleSize.height) - (69 * 4)));
+//	p->Stand();
+    auto player = GamePlayer::createWithFrameName("alienBeige_stand.png");
+    player->setPosition(Vec2(200, 200));
+    
+    log("pX: %f, pY%f", player->getPositionX(), getPositionY());
+    
+    this->addChild(player, 99);
 
 	//
     this->scheduleUpdateWithPriority(42);
@@ -130,55 +135,55 @@ void GameplayScene::GameplaySceneFinished(Ref* sender)
 void GameplayScene::update(float delta)
 {
     //check for collisions
-    p->Update(delta);
-    
-    for(auto child : tilemap->getChildren())
-    {
-        //bool solid = child->getTag() == 83 | child->getTag() == 76;
-        
-        auto pBox = p->getBoundingBox();
-        //auto tBox = child->getBoundingBox();
-        
-        auto tWorldPos = tilemap->convertToWorldSpace(child->getPosition());
-        auto tBox = Rect(tWorldPos.x, tWorldPos.y, child->getContentSize().width, child->getContentSize().height);
-        
-        auto offsetPoint = Vec2(p->getPositionX(), p->getPositionY() + 5);
-        
-        // Flat tile collision
-        if(child->getTag() == 83 && tBox.intersectsRect(pBox))
-        {
-            p->setPositionY(tBox.origin.y + tBox.size.height);
-        }
-        
-        if(child->getTag() == 76)
-        {
-            auto nodePoint = p->getPosition();
-            
-            if(pBox.getMaxX() < tWorldPos.x + tBox.size.width && pBox.getMaxX() > tWorldPos.x)
-            {
-                float t = (nodePoint.x - tWorldPos.x) / tBox.size.width;
-                float floorY =  (1-t) * tWorldPos.y + t * (tWorldPos.y + tBox.size.width);
-                
-                log("t: %f, floorY: %f", t,floorY);
-                
-                p->setPositionY(tWorldPos.y + (floorY - 20));
-            }
-        }
-        else if(child->getTag() == 78)
-        {
-            auto nodePoint = p->getPosition();
-            
-            if(pBox.getMaxX() < tWorldPos.x + tBox.size.width && pBox.getMaxX() > tWorldPos.x)
-            {
-                float t = (nodePoint.x - tWorldPos.x) / tBox.size.width;
-                float floorY =  (1-t) * (tWorldPos.y + tBox.size.width) + t * tWorldPos.y;
-                
-                log("t: %f, floorY: %f", t,floorY);
-                
-                p->setPositionY(tWorldPos.y + (floorY - 20));
-            }
-        }
-    }
+//    p->Update(delta);
+//    
+//    for(auto child : tilemap->getChildren())
+//    {
+//        //bool solid = child->getTag() == 83 | child->getTag() == 76;
+//        
+//        auto pBox = p->getBoundingBox();
+//        //auto tBox = child->getBoundingBox();
+//        
+//        auto tWorldPos = tilemap->convertToWorldSpace(child->getPosition());
+//        auto tBox = Rect(tWorldPos.x, tWorldPos.y, child->getContentSize().width, child->getContentSize().height);
+//        
+//        auto offsetPoint = Vec2(p->getPositionX(), p->getPositionY() + 5);
+//        
+//        // Flat tile collision
+//        if(child->getTag() == 83 && tBox.intersectsRect(pBox))
+//        {
+//            p->setPositionY(tBox.origin.y + tBox.size.height);
+//        }
+//        
+//        if(child->getTag() == 76)
+//        {
+//            auto nodePoint = p->getPosition();
+//            
+//            if(pBox.getMaxX() < tWorldPos.x + tBox.size.width && pBox.getMaxX() > tWorldPos.x)
+//            {
+//                float t = (nodePoint.x - tWorldPos.x) / tBox.size.width;
+//                float floorY =  (1-t) * tWorldPos.y + t * (tWorldPos.y + tBox.size.width);
+//                
+//                log("t: %f, floorY: %f", t,floorY);
+//                
+//                p->setPositionY(tWorldPos.y + (floorY - 20));
+//            }
+//        }
+//        else if(child->getTag() == 78)
+//        {
+//            auto nodePoint = p->getPosition();
+//            
+//            if(pBox.getMaxX() < tWorldPos.x + tBox.size.width && pBox.getMaxX() > tWorldPos.x)
+//            {
+//                float t = (nodePoint.x - tWorldPos.x) / tBox.size.width;
+//                float floorY =  (1-t) * (tWorldPos.y + tBox.size.width) + t * tWorldPos.y;
+//                
+//                log("t: %f, floorY: %f", t,floorY);
+//                
+//                p->setPositionY(tWorldPos.y + (floorY - 20));
+//            }
+//        }
+//    }
     
     // Clamp player to center of screen
     //p->setPositionX(center.x);

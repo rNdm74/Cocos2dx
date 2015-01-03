@@ -1,42 +1,24 @@
-#ifndef __INPUT_COMPONENT_H__
-#define __INPUT_COMPONENT_H__
+#ifndef __FranticAlien__INPUT_COMPONENT_H__
+#define __FranticAlien__INPUT_COMPONENT_H__
 
-//#include "cocos2d.h"
-//#include "AppGlobal.h"
-#include "Entity.h"
+#include "cocos2d.h"
+
+class GameObject;
 
 class InputComponent
 {
 public:
-    virtual ~InputComponent() {};
-    virtual void update(Entity& player);
+    virtual ~InputComponent(){};
+    virtual void update(GameObject& gameObject) = 0;
 };
 
-//class PlayerInputComponent : public InputComponent
-//{
-//public:
-//    virtual void update(Entity& entity)
-//    {
-//        switch (AppGlobal::getInstance()->getDirection())
-//        {
-//            case DIR_LEFT:
-//                entity.velocity -= WALK_ACCELERATION;
-//                break;
-//                
-//            case DIR_RIGHT:
-//                entity.velocity += WALK_ACCELERATION;
-//                break;
-//                
-//            case DIR_UP:
-//                break;
-//                
-//            case DIR_DOWN:
-//                break;
-//        }
-//    }
-//    
-//private:
-//    static const int WALK_ACCELERATION = 1;
-//};
+class PlayerInputComponent : public InputComponent
+{
+public:
+    void update(GameObject& gameObject);
 
-#endif // __INPUT_COMPONENT_H__
+private:
+    static const int WALK_ACCELERATION = 1;
+};
+
+#endif /* defined(__FranticAlien__InputComponent__) */

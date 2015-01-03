@@ -36,7 +36,6 @@ TileMap* TileMap::create(std::string filename)
 
 	if (node && node->initWithTMXFile(filename)) {
 
-
 		// Add it to autorelease pool
 		node->autorelease();
 		node->setPosition(origin);
@@ -120,14 +119,18 @@ void TileMap::layerswitch(tinyxml2::XMLElement* node)
 
 	// Move to tile node
 	auto tileNode = data->FirstChildElement();
+    
+    auto layerInfo = layer->getLayerInfo();
 	
 	// Iterate through all tiles
 	for (auto tile = tileNode; tile != NULL; tile = tile->NextSiblingElement())
 	{
         int gid = atoi(tile->Attribute("gid"));
-        layer->getLayerInfo().push_back(gid);
+        layerInfo.push_back(gid);
 	}
 
+    layer->setLayerInfo(layerInfo);
+    
 	// Add to the total layer list
 	_tileMapLayers.push_back(layer);
 }
@@ -297,11 +300,14 @@ void TileMap::addLayers()
 		
 	for (auto l : _tileMapLayers)
 	{
-		for(int row = 0; row < l->getHeight(); row++)
+        int rowHeight = l->getHeight();
+        int colWidth = l->getWidth();
+        
+		for(int row = 0; row < rowHeight; row++)
 		{
-			for(int col = 0; col <  l->getWidth(); col++)
+			for(int col = 0; col <  colWidth; col++)
 			{
-				int index = row * l->getHeight() + col;
+				int index = row * colWidth + col;
 
 				int gid = l->getLayerInfoAt(index);
 				

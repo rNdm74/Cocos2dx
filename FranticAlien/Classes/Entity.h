@@ -1,32 +1,14 @@
-#ifndef __ENTITY_H__
-#define __ENTITY_H__
+//
+//  Entity.h
+//  FranticAlien
+//
+//  Created by rndm on 3/01/15.
+//
+//
 
-#include "cocos2d.h"
-#include "InputComponent.h"
+#ifndef __FranticAlien__ENTITY_H__
+#define __FranticAlien__ENTITY_H__
 
+#include <stdio.h>
 
-class Entity
-{
-public:
-    int velocity;
-    int x, y;
-    
-    Entity(){};
-    //virtual ~Entity();
-    
-//    void update(float delta)
-//    {
-//        _input.update(*this);
-//        //physics_.update(*this, world);
-//        //graphics_.update(*this, graphics);
-//    }
-    
-private:
-    //InputComponent _input;
-    
-    //InputComponent input_;
-    //PhysicsComponent physics_;
-    //GraphicsComponent graphics_;
-};
-
-#endif // __ENTITY_H__
+#endif /* defined(__FranticAlien__Entity__) */

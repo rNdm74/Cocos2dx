@@ -1,5 +1,5 @@
-#ifndef __LOADING_SCENE_H__
-#define __LOADING_SCENE_H__
+#ifndef __FranticAlien__LOADING_SCENE_H__
+#define __FranticAlien__LOADING_SCENE_H__
 
 #include "cocos2d.h"
 

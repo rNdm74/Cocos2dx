@@ -1,5 +1,5 @@
-#ifndef __SETTINGS_SCENE_H__
-#define __SETTINGS_SCENE_H__
+#ifndef __FranticAlien__SETTINGS_SCENE_H__
+#define __FranticAlien__SETTINGS_SCENE_H__
 
 #include "cocos2d.h"
 

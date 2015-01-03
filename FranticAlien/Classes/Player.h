@@ -1,9 +1,9 @@
-#ifndef __FranticAlien__Player__
-#define __FranticAlien__Player__
+#ifndef __FranticAlien__PLAYER_H__
+#define __FranticAlien__PLAYER_H__
 
 #include "cocos2d.h"
 #include "PlayerMenu.h"
-#include "Entity.h"
+#include "GameObject.h"
 
 #define _SUFFIX ".png"
 #define _WALK   "_walk"
@@ -61,8 +61,6 @@ public: // FUNCTIONS
     void stopDust();
     void resumeDust();
 
-    void update(Entity& entity);
-    
     void Update(float delta);
 	void Idle();
     void Walk(cocos2d::Vec2 newLocation);

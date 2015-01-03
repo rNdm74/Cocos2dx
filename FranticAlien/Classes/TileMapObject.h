@@ -1,5 +1,5 @@
-#ifndef __TILE_MAP_OBJECT_H__
-#define __TILE_MAP_OBJECT_H__
+#ifndef __FranticAlien__TILE_MAP_OBJECT_H__
+#define __FranticAlien__TILE_MAP_OBJECT_H__
 
 #include "cocos2d.h"
 

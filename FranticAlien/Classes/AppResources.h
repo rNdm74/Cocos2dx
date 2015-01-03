@@ -1,5 +1,5 @@
-#ifndef __APP_RESOURCES_H__
-#define __APP_RESOURCES_H__
+#ifndef __FranticAlien__APP_RESOURCES_H__
+#define __FranticAlien__APP_RESOURCES_H__
 
 #include "cocos2d.h"
 #include "tinyxml2.h"
@@ -7,7 +7,6 @@
 
 #define XML_TILES_SPRITESHEET "tiles_spritesheet.xml"
 #define XML_TILED_MAP_EDITOR "tiles_spritsheet.tmx"
-
 #define IMG_TILES_SPRITESHEET "tiles_spritesheet.png"
 
 #define MAX_COLS 17

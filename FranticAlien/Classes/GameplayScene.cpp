@@ -210,15 +210,15 @@ bool GameplayScene::onTouchBegan(Touch* touch, Event  *event)
 	Vec2 playerPoint = p->getPosition();
 	Rect rect = p->getBoundingBox();
 
-	if (p->IsSelected == false && rect.containsPoint(touchPoint))
+	if (p->isSelected() == false && rect.containsPoint(touchPoint))
 	{
 		p->showMenu();
 	}
-	else if (p->IsSelected == true && rect.containsPoint(touchPoint))
+	else if (p->isSelected() == true && rect.containsPoint(touchPoint))
 	{
 		p->hideMenu();
 	}
-	else if (p->IsSelected == false && rect.containsPoint(touchPoint) == false)
+	else if (p->isSelected() == false && rect.containsPoint(touchPoint) == false)
 	{
 		direction.x = (touchPoint.x > playerPoint.x) ? -1 : 1;
 		p->Walk(touchPoint);
@@ -235,7 +235,7 @@ void GameplayScene::onTouchEnded(Touch* touch, Event  *event)
 {
 	direction = Vec2::ZERO;
 
-	if (p->IsSelected == false)
+	if (p->isSelected() == false)
 	{
 		p->Stand();
 	}

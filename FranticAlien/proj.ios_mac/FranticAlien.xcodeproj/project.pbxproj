@@ -118,6 +118,8 @@
 		BA531ED51A47A60F006A6973 /* space.png in Resources */ = {isa = PBXBuildFile; fileRef = BA531ED31A47A60F006A6973 /* space.png */; };
 		BA56C8241A47CBA9002F99A8 /* tiles_spritsheet.tmx in Resources */ = {isa = PBXBuildFile; fileRef = BA56C8231A47CBA9002F99A8 /* tiles_spritsheet.tmx */; };
 		BA56C8251A47CBA9002F99A8 /* tiles_spritsheet.tmx in Resources */ = {isa = PBXBuildFile; fileRef = BA56C8231A47CBA9002F99A8 /* tiles_spritsheet.tmx */; };
+		BA680EF91A575E0F00FDDD25 /* InputComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA680EF71A575E0F00FDDD25 /* InputComponent.cpp */; };
+		BA680EFA1A575E0F00FDDD25 /* InputComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA680EF71A575E0F00FDDD25 /* InputComponent.cpp */; };
 		BABACD991A4B0171002E1C8F /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABACD971A4B0171002E1C8F /* Player.cpp */; };
 		BABACD9A1A4B0171002E1C8F /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABACD971A4B0171002E1C8F /* Player.cpp */; };
 		BABACDA11A4C336E002E1C8F /* bg_castle.png in Resources */ = {isa = PBXBuildFile; fileRef = BABACD9D1A4C336E002E1C8F /* bg_castle.png */; };
@@ -366,6 +368,8 @@
 		BA531EC81A47A43F006A6973 /* tiles_spritesheet.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tiles_spritesheet.xml; sourceTree = "<group>"; };
 		BA531ED31A47A60F006A6973 /* space.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space.png; sourceTree = "<group>"; };
 		BA56C8231A47CBA9002F99A8 /* tiles_spritsheet.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tiles_spritsheet.tmx; sourceTree = "<group>"; };
+		BA680EF71A575E0F00FDDD25 /* InputComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputComponent.cpp; path = ../Classes/InputComponent.cpp; sourceTree = "<group>"; };
+		BA680EF81A575E0F00FDDD25 /* InputComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputComponent.h; path = ../Classes/InputComponent.h; sourceTree = "<group>"; };
 		BABACD971A4B0171002E1C8F /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../Classes/Player.cpp; sourceTree = "<group>"; };
 		BABACD981A4B0171002E1C8F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = ../Classes/Player.h; sourceTree = "<group>"; };
 		BABACD9D1A4C336E002E1C8F /* bg_castle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_castle.png; sourceTree = "<group>"; };
@@ -595,6 +599,7 @@
 				BA531E851A479E04006A6973 /* Entities */,
 				BA531E871A479E20006A6973 /* Scenes */,
 				BA531E861A479E12006A6973 /* TileMap */,
+				BA680EF41A575DF900FDDD25 /* Utils */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -603,6 +608,8 @@
 			isa = PBXGroup;
 			children = (
 				BA318A001A556257008E1426 /* PlayerMenu.cpp */,
+				BA680EF71A575E0F00FDDD25 /* InputComponent.cpp */,
+				BA680EF81A575E0F00FDDD25 /* InputComponent.h */,
 				BA318A011A556257008E1426 /* PlayerMenu.h */,
 				BA531E881A479E34006A6973 /* Entity.cpp */,
 				BA531E891A479E34006A6973 /* Entity.h */,
@@ -642,6 +649,13 @@
 				BA531EA31A479E57006A6973 /* SplashScene.h */,
 			);
 			name = Scenes;
+			sourceTree = "<group>";
+		};
+		BA680EF41A575DF900FDDD25 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -906,6 +920,7 @@
 				BA531EAE1A479E57006A6973 /* SplashScene.cpp in Sources */,
 				BA531EBA1A479E65006A6973 /* AppResources.cpp in Sources */,
 				BA531EA81A479E57006A6973 /* LoadingScene.cpp in Sources */,
+				BA680EF91A575E0F00FDDD25 /* InputComponent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,6 +932,7 @@
 				BA318A031A556257008E1426 /* PlayerMenu.cpp in Sources */,
 				BA531EBB1A479E65006A6973 /* AppResources.cpp in Sources */,
 				BA531EA51A479E57006A6973 /* GameplayFinishedScene.cpp in Sources */,
+				BA680EFA1A575E0F00FDDD25 /* InputComponent.cpp in Sources */,
 				BA531E8B1A479E34006A6973 /* Entity.cpp in Sources */,
 				BA531EB91A479E65006A6973 /* AppGlobal.cpp in Sources */,
 				BA531EC11A47A189006A6973 /* TileMapObject.cpp in Sources */,

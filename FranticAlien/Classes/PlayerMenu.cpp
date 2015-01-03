@@ -48,7 +48,7 @@ bool PlayerMenu::touchEvent(Touch* touch, Event* event)
     auto parent = static_cast<Player*>(node->getParent());
     
     
-    if(parent->IsSelected)
+    if(parent->isSelected())
     {
         MessageBox(node->getName().c_str(), "You have clicked");
     }

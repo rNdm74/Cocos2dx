@@ -5,13 +5,9 @@ USING_NS_CC;
 
 Player::Player()
 {
-    _PREFIX = "alienBeige";
-    
     _spriteFrameCache = SpriteFrameCache::getInstance();
 
-	IsSelected = false;
-    
-    //addDust();
+	_isSelected = false;
 }
 
 Player* Player::createPlayerWithFilename(std::string spriteFrameName)
@@ -63,7 +59,7 @@ bool Player::touchBegan(Touch* touch, Event* e)
             this->runAction(Repeat::create(ReverseTime::create(MoveBy::create(0.1,Vec2(1, 0))), 10));
             
             // Smoke effect
-            addSmoke();
+            this->addSmoke();
             
             // Delay for smoke to clear
             FiniteTimeAction* waitAction = DelayTime::create(1.0);
@@ -78,30 +74,7 @@ bool Player::touchBegan(Touch* touch, Event* e)
 
 void Player::setCharacter(int type)
 {
-    switch (type)
-    {
-        case 0:
-            _PREFIX = "alienBeige";
-            //Duck();
-            break;
-        case 1:
-            _PREFIX = "alienBlue";
-            //Hurt();
-            break;
-        case 2:
-            _PREFIX = "alienGreen";
-            //Jump();
-            break;
-        case 3:
-            _PREFIX = "alienPink";
-            //Climb();
-            break;
-        case 4:
-            _PREFIX = "alienYellow";
-            break;
-    }
-    
-    this->setSpriteFrame(_PREFIX + _SUFFIX);
+    this->setSpriteFrame(_PREFIX.at(type) + _SUFFIX);
 }
 
 void Player::setMenu()
@@ -213,7 +186,7 @@ void Player::resumeDust()
 
 void Player::Update(float delta)
 {
-    if(IsJumping == false)
+    if(this->isJumping() == false)
     {
         float y = getPositionY();
     
@@ -227,18 +200,22 @@ void Player::Update(float delta)
 
 void Player::showMenu()
 {
-	IsSelected = true;
+    // Stop all running actions
+    this->stopAllActions();
+    
+    // Player is now selected
+	this->setSelected(true);
 
 	// Sprite looks forward
-	this->setSpriteFrame(_PREFIX + _SUFFIX);
+	this->setSpriteFrame(_PREFIX.at(0) + _SUFFIX);
 
-	// Stop all running actions
-	this->stopAllActions();
-
+	// Show menu
 	Vec2 center = Vec2(getContentSize().width / 2, 20 + getContentSize().height / 2);
 
+    // Get all children from menu node
     auto children = this->getChildByTag(MENU)->getChildren();
     
+    // Displays the radial menu around sprite
 	for (int i = 0; i < children.size(); i++)
 	{
 		float radians = -0.2 + (i * 50) * (PI / 180);
@@ -249,20 +226,19 @@ void Player::showMenu()
 		children.at(i)->runAction(MoveTo::create(0.1f, Vec2(x, y)));
 		children.at(i)->runAction(ScaleTo::create(0.1f, 0.8f));
 	}
-
-	// Show menu
-	
 }
 
 void Player::hideMenu()
 {
-	IsSelected = false;
+    // Stop all running actions
+    this->stopAllActions();
+    
+    // Player is not selected anymore
+    this->setSelected(false);
 
 	// Sprite stands
-	this->setSpriteFrame(_PREFIX + _STAND _SUFFIX);
+	//this->setSpriteFrame(_PREFIX + _STAND _SUFFIX);
 
-	// Stop all running actions
-	this->stopAllActions();
 
 	// Hides menu
 	Vec2 center = Vec2(getContentSize().width / 2, getContentSize().height / 2);
@@ -289,7 +265,8 @@ void Player::Idle()
 }
 
 void Player::Walk(Vec2 newLocation)
-{	
+{
+    // Stop all running actions
 	this->stopAllActions();
 		
 	//Set direction to walk
@@ -297,92 +274,91 @@ void Player::Walk(Vec2 newLocation)
 	
     //  create the Animation, and populate it with frames fetched from the SpriteFrameCache
     auto _anim = Animation::create();
+     _anim->setDelayPerUnit(0.1f);
     
     for (int i = 1; i <= 2; i ++)
     {
-        auto fileName = _PREFIX + _WALK + std::to_string(i) + _SUFFIX;
+        auto fileName = "";//_PREFIX + _WALK + std::to_string(i) + _SUFFIX;
         auto frame = _spriteFrameCache->getSpriteFrameByName(fileName);
         _anim->addSpriteFrame(frame);
     }
-    
-    //  we can also set timing information
-    _anim->setDelayPerUnit(0.1f);
     
     this->runAction(RepeatForever::create(Animate::create(_anim)));
 
 	this->runAction(FlipX::create(_direction.x < 0));
  
-    resumeDust();
+    this->resumeDust();
 }
 
 void Player::Stand()
 {
+    // Stop all running actions
 	this->stopAllActions();
     
-    //
-    stopDust();
+    // Stops the particle effect
+    this->stopDust();
     
 	// Player is not in jumping state
-	IsJumping = false;
+    this->setJumping(false);
 
-	//log("Standing");
-	this->setSpriteFrame(_PREFIX + _STAND _SUFFIX);
+	// Player is standing frame
+	//this->setSpriteFrame(_PREFIX + _STAND _SUFFIX);
 }
 
 void Player::Duck()
 {
+    // Stop all running actions
 	this->stopAllActions();
     
-    //this->getPhysicsBody()->setEnable(false);
-    //this->setAnchorPoint(Vec2::ZERO);
-    
-    //this->setPositionY();
-
-    this->setSpriteFrame(_PREFIX + _DUCK _SUFFIX);
+    // Player is ducking sprite
+    //this->setSpriteFrame(_PREFIX + _DUCK _SUFFIX);
 }
 
 void Player::Jump()
 {
+    // Stop all running actions
 	this->stopAllActions();
-    
-    //this->getPhysicsBody()->setGravityEnable(false);
 
 	// Player is in jumping state
-	IsJumping = true;
+    this->setJumping(true);
 
-    this->setSpriteFrame(_PREFIX + _JUMP _SUFFIX);
+    // Player is jumping frame
+    //this->setSpriteFrame(_PREFIX + _JUMP _SUFFIX);
 
-	FiniteTimeAction* jumpAction = JumpBy::create(0.5f, Vec2(0, 0), 50, 1);
-	FiniteTimeAction* jumpFinished = CallFunc::create(CC_CALLBACK_0(Player::Stand, this)); 
+    //
+	auto jumpAction = JumpBy::create(0.5f, Vec2(0, 0), 50, 1);
+	auto jumpFinished = CallFunc::create(CC_CALLBACK_0(Player::Stand, this));
 
 	this->runAction(Sequence::createWithTwoActions(jumpAction, jumpFinished));
 }
 
 void Player::Climb()
 {
+    // Stop all running actions
 	this->stopAllActions();
 
-    //  create the Animation, and populate it with frames fetched from the SpriteFrameCache
-    Animation* anim = Animation::create();
-    
+    //  Create animation
+    auto anim = Animation::create();
+    anim->setDelayPerUnit(0.1f);
+
     for (int i = 1; i <= 2; i ++)
     {
-        auto fileName = _PREFIX + _CLIMB + std::to_string(i) + _SUFFIX;
+        auto fileName = "";//_PREFIX + _CLIMB + std::to_string(i) + _SUFFIX;
         auto frame = _spriteFrameCache->getSpriteFrameByName(fileName);
         anim->addSpriteFrame(frame);
     }
     
-    //  we can also set timing information
-    anim->setDelayPerUnit(0.1f);
-
+    //
     this->runAction(RepeatForever::create(Animate::create(anim)));
 }
 
 void Player::Hurt()
 {
+    // Stop all running actions
 	this->stopAllActions();
 
-    this->setSpriteFrame(_PREFIX + _HURT _SUFFIX);
+    // Sprite is hurt frame
+    //this->setSpriteFrame(_PREFIX + _HURT _SUFFIX);
 }
 
 void Player::Flip(Vec2 newLocation)

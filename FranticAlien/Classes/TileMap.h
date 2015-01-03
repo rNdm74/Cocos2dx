@@ -1,5 +1,5 @@
-#ifndef __TILEMAP_H__
-#define __TILEMAP_H__
+#ifndef __FranticAlien__TILEMAP_H__
+#define __FranticAlien__TILEMAP_H__
 
 #include "cocos2d.h"
 #include "tinyxml2.h"
@@ -27,6 +27,11 @@ private:
 class TileMapObjectGroup : public cocos2d::Ref
 {
 public:
+    inline void setName(std::string name) { _name = name; }
+    inline void setObjectInfo(std::vector<TileMapObject> objectInfo) { _objectInfo = objectInfo; }
+    inline std::string getName(){ return _name; }
+    inline std::vector<TileMapObject> getObjectInfo() { return _objectInfo; }
+private:
 	std::string _name;	
 	std::vector<TileMapObject> _objectInfo;
 };
@@ -34,32 +39,58 @@ public:
 class TileMapLayer : public cocos2d::Ref
 {
 public:
+    inline void setName(std::string name) { _name = name; }
+    inline void setWidth(int width) { _width = width; }
+    inline void setHeight(int height) { _height = height; }
+    inline void setLayerInfo(std::vector<int> layerInfo) { _layerInfo = layerInfo; }
+    inline std::string getName() { return _name; }
+    inline int getWidth() { return _width; }
+    inline int getHeight() { return _height; }
+    inline std::vector<int> getLayerInfo() { return _layerInfo; }
+    inline int getLayerInfoAt(int index) { return _layerInfo[index]; }
+private:
 	std::string _name;
 	int _width;
 	int _height;
-
 	std::vector<int> _layerInfo;
 };
 
 class TileSetTile : public cocos2d::Ref
 {
 public:
-	int _imagewidth;
-	int _imageheight;
+    inline void setImageWidth(int imageWidth) { _imageWidth = imageWidth; }
+    inline void setImageHeight(int imageHeight) { _imageHeight = imageHeight; }
+    inline void setSource(std::string source) { _source = source; }
+    inline int getImageWidth() { return _imageWidth; }
+    inline int getImageHeight() { return _imageHeight; }
+    inline std::string getSource() { return _source; }
+private:
+	int _imageWidth;
+	int _imageHeight;
 	std::string _source;
 };
 
 class TileSet : public cocos2d::Ref
 {
 public:
-	int _firstgid;
+    static TileSet* create();
+    
+    inline void setFirstGid(int firstGid) { _firstGid = firstGid; }
+    inline void setName(std::string name) { _name = name; }
+    inline void setTileWidth(int tileWidth) { _tileWidth = tileWidth; }
+    inline void setTileHeight(int tileHeight) { _tileHeight = tileHeight; }
+    inline void setTileSet(std::map<int, TileSetTile> tileSet) { _tileSet = tileSet; }
+    inline int getFirstGid() { return _firstGid; }
+    inline std::string getName() { return _name; }
+    inline int getTileWidth() { return _tileWidth; }
+    inline int getTileHeight() { return _tileHeight; }
+    inline std::map<int, TileSetTile> getTileSet() { return _tileSet; }
+private:
+	int _firstGid;
 	std::string _name;
-	int _tilewidth;
-	int _tileheight;
-
-	std::map<int, TileSetTile> _tiles;
-
-	static TileSet* create();
+	int _tileWidth;
+	int _tileHeight;
+	std::map<int, TileSetTile> _tileSet;
 };
 
 class TileMap : public cocos2d::ParallaxNode
@@ -76,8 +107,8 @@ private:
 
 	TileSet* tileset;
 	
-	std::vector<TileMapLayer*> layers;
-	std::vector<TileMapObjectGroup*> objects;
+	std::vector<TileMapLayer*> _tileMapLayers;
+	std::vector<TileMapObjectGroup*> _tileMapObjects;
 
 public:
 		

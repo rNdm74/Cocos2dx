@@ -8,6 +8,13 @@
 
 The reason for implement as private inheritance is to hide some interface call by Director.
 */
+enum EDirection{
+    DIR_LEFT,
+    DIR_RIGHT,
+    DIR_UP,
+    DIR_DOWN
+};
+
 class  AppGlobal
 {
 private:
@@ -16,13 +23,20 @@ private:
 	float _scaleX;
 	float _scaleY;
 	float _scaleFactor;
+    
+    EDirection _direction;
 
 public:
+    inline EDirection getDirection() { return _direction; }
+    inline void setDirection(EDirection direction) { _direction = direction; }
+    
     static AppGlobal* getInstance();
     
     bool IsGameSceneRunning;
     int ActiveLevel;
     cocos2d::Point StartPosition;
+    
+    
 
 	float GetRandom(float begin, float end)
 	{

@@ -523,7 +523,7 @@
    <image width="800" height="480" source="background.png"/>
   </tile>
  </tileset>
- <layer name="0" width="10" height="5">
+ <layer name="0" width="10" height="5" visible="0">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -555,16 +555,6 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
-   <tile gid="63"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -575,6 +565,16 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
   </data>
  </layer>
  <layer name="1" width="10" height="5">
@@ -609,6 +609,16 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -619,16 +629,6 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
   </data>
  </layer>
  <layer name="2" width="10" height="5">

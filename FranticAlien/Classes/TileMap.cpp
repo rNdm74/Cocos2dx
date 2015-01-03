@@ -65,31 +65,33 @@ void TileMap::tilesetswitch(tinyxml2::XMLElement* node)
 
 	// Create tileset object
 	tileset = TileSet::create();
-
-	// Attributes
-	node->QueryIntAttribute("firstgid", &tileset->_firstgid);
-	tileset->_name = node->Attribute("name");
-	node->QueryIntAttribute("tilewidth", &tileset->_tilewidth);
-	node->QueryIntAttribute("tileheight", &tileset->_tileheight);
-
+    
+    // Attributes
+    tileset->setFirstGid(atoi(node->Attribute("firstgid")));
+    tileset->setName(node->Attribute("name"));
+    tileset->setTileWidth(atoi(node->Attribute("tilewidth")));
+    tileset->setTileHeight(atoi(node->Attribute("tileheight")));
+	
 	// Get the tile node
 	auto tileNode = node->FirstChildElement();
+    
+    // Get the tileset map
+    auto tileSetMap = tileset->getTileSet();
 
 	// Iterate through all tileset tiles
-	for (auto t = tileNode; t != NULL; t = t->NextSiblingElement())
+	for (auto tile = tileNode; tile != NULL; tile = tile->NextSiblingElement())
 	{
 		// id of tile node
-		int key;
-		t->QueryIntAttribute("id", &key);
+		int key = atoi(tile->Attribute("id"));
 
 		// Get the image node
-		auto imageNode = t->FirstChildElement();
+		auto image = tile->FirstChildElement();
 
 		// Attributes
-		imageNode->QueryIntAttribute("width", &tileset->_tiles[key]._imagewidth);
-		imageNode->QueryIntAttribute("height", &tileset->_tiles[key]._imageheight);
-		tileset->_tiles[key]._source = imageNode->Attribute("source");
-	}
+        tileSetMap[key].setImageWidth(atoi(image->Attribute("width")));
+        tileSetMap[key].setImageHeight(atoi(image->Attribute("height")));
+        tileSetMap[key].setSource(image->Attribute("source"));
+    }
 }
 
 void TileMap::layerswitch(tinyxml2::XMLElement* node)
@@ -109,9 +111,9 @@ void TileMap::layerswitch(tinyxml2::XMLElement* node)
 	auto layer = new TileMapLayer();
 	
 	// Attributes
-	layer->_name = node->Attribute("name");
-	node->QueryIntAttribute("width", &layer->_width);
-	node->QueryIntAttribute("height", &layer->_height);
+	layer->setName(node->Attribute("name"));
+	layer->setWidth(atoi(node->Attribute("width")));
+    layer->setHeight(atoi(node->Attribute("height")));
 	
 	// Move to data node
 	auto data = node->FirstChildElement();
@@ -120,15 +122,14 @@ void TileMap::layerswitch(tinyxml2::XMLElement* node)
 	auto tileNode = data->FirstChildElement();
 	
 	// Iterate through all tiles
-	for (auto t = tileNode; t != NULL; t = t->NextSiblingElement())
+	for (auto tile = tileNode; tile != NULL; tile = tile->NextSiblingElement())
 	{
-		int gid;
-		t->QueryIntAttribute("gid", &gid);
-		layer->_layerInfo.push_back(gid);
+        int gid = atoi(tile->Attribute("gid"));
+        layer->getLayerInfo().push_back(gid);
 	}
 
 	// Add to the total layer list
-	layers.push_back(layer);
+	_tileMapLayers.push_back(layer);
 }
 
 void TileMap::objectgroupswitch(tinyxml2::XMLElement* node)
@@ -150,7 +151,7 @@ void TileMap::objectgroupswitch(tinyxml2::XMLElement* node)
 
 
 	// Attributes
-	objectgroup->_name = node->Attribute("name");
+	objectgroup->setName(node->Attribute("name"));
 
 	// Move to object node
 	auto objectNode = node->FirstChildElement();
@@ -159,20 +160,10 @@ void TileMap::objectgroupswitch(tinyxml2::XMLElement* node)
 	for (auto obj = objectNode; obj != NULL; obj = obj->NextSiblingElement())
 	{
 		TileMapObject object;
-
-		//obj->QueryIntAttribute("gid", &object._gid);
-		//obj->QueryIntAttribute("x", &object._x);
-		//obj->QueryIntAttribute("y", &object._y);
-        
-        //auto polygon = obj->FirstChildElement();
-        
-        //std::string points = polygon->Attribute("points");
-        
-		//objectgroup->_objectInfo.push_back(object);
 	}
 
 	// Add to the total layer list
-	objects.push_back(objectgroup);
+	_tileMapObjects.push_back(objectgroup);
 }
 
 bool TileMap::initWithTMXFile(std::string filename)
@@ -304,21 +295,21 @@ void TileMap::addLayers()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 		
-	for (auto l : layers)
+	for (auto l : _tileMapLayers)
 	{
-		for(int row = 0; row < l->_height; row++)
+		for(int row = 0; row < l->getHeight(); row++)
 		{
-			for(int col = 0; col <  l->_width; col++)
+			for(int col = 0; col <  l->getWidth(); col++)
 			{
-				int index = row * l->_width + col;
+				int index = row * l->getHeight() + col;
 
-				int gid = l->_layerInfo[index];
+				int gid = l->getLayerInfoAt(index);
 				
 				if (gid != 0)
 				{
 					float x = (origin.x + col * 69);
 					float y = ((origin.y + visibleSize.height) - row * 69);
-					float z = std::atoi(l->_name.c_str());
+                    float z = atoi(l->getName().c_str());
 
 					TileMapTile* tile = TileMapTile::create(x, y, gid);
 					

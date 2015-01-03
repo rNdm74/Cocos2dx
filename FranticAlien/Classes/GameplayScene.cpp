@@ -106,7 +106,7 @@ bool GameplayScene::init()
 //	p->setPosition(Vec2(origin.x + visibleSize.width / 2 , (origin.y + visibleSize.height) - (69 * 4)));
 //	p->Stand();
     auto player = GamePlayer::createWithFrameName("alienBeige_stand.png");
-    player->setPosition(Vec2(200, 200));
+    player->setPosition(Vec2(200, 100));
     
     log("pX: %f, pY%f", player->getPositionX(), getPositionY());
     
@@ -211,7 +211,7 @@ bool GameplayScene::onContactBegin(PhysicsContact &contact)
 
 bool GameplayScene::onTouchBegan(Touch* touch, Event  *event)
 {
-	Vec2 touchPoint = touch->getLocation();
+	/*Vec2 touchPoint = touch->getLocation();
 	Vec2 playerPoint = p->getPosition();
 	Rect rect = p->getBoundingBox();
 
@@ -227,7 +227,7 @@ bool GameplayScene::onTouchBegan(Touch* touch, Event  *event)
 	{
 		direction.x = (touchPoint.x > playerPoint.x) ? -1 : 1;
 		p->Walk(touchPoint);
-	}
+	}*/
 	
 	return true;
 }
@@ -238,12 +238,12 @@ void GameplayScene::onTouchMoved(Touch* touch, Event  *event)
 
 void GameplayScene::onTouchEnded(Touch* touch, Event  *event)
 {
-	direction = Vec2::ZERO;
+	/*direction = Vec2::ZERO;
 
 	if (p->isSelected() == false)
 	{
 		p->Stand();
-	}
+	}*/
 }
 
 void GameplayScene::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)

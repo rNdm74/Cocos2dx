@@ -2,15 +2,64 @@
 
 USING_NS_CC;
 
+void GameObject::addMenu()
+{
+	_menu->addMenu(*this);
+}
+
+void GameObject::showMenu()
+{
+	_menu->showMenu(*this);
+}
+
+void GameObject::hideMenu()
+{
+	_menu->hideMenu(*this);
+}
+
+void GameObject::initListeners()
+{
+	auto listener = EventListenerTouchOneByOne::create();
+	listener->setSwallowTouches(true);
+
+	listener->onTouchBegan = [=](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
+
+		auto touchEvent = static_cast<EventTouch*>(event);
+
+		auto node = touchEvent->getCurrentTarget();
+		//auto pos = node->convertTouchToNodeSpace();
+		
+		if (node->getBoundingBox().containsPoint(touch->getLocation()))
+		{
+			log("Bingo");
+			
+			auto player = static_cast<GamePlayer*>(node);
+
+			if (player->isMenuActive())
+			{
+				player->hideMenu();
+			}
+			else
+			{
+				player->showMenu();
+			}			
+		}
+
+		return true;
+	};
+
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
 GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
 {
-    auto sprite = new GamePlayer
-    (
-        PlayerMenuComponent::create(),
-        new PlayerInputComponent,
-        new PlayerPhysicsComponent,
-        new PlayerGraphicsComponent
-    );
+	auto sprite = new GamePlayer
+	(
+		new PlayerMenuComponent(),
+		new PlayerInputComponent(),
+		new PlayerPhysicsComponent(),
+		new PlayerGraphicsComponent()
+	);
     
     auto spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(arg);
     
@@ -18,11 +67,10 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
     {
         sprite->autorelease();
         sprite->setAnchorPoint(Vec2(0.5, 0));
-        //sprite->setMenu();
-        //sprite->hideMenu();
-        //sprite->addEvents();
-        //sprite->addDust();
-        
+		sprite->initListeners();
+		sprite->addMenu();
+		sprite->hideMenu();
+                
         return sprite;
     }
     
@@ -35,3 +83,5 @@ void GamePlayer::updateObject()
 {
     
 }
+
+

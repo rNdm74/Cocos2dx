@@ -21,7 +21,7 @@ class Player : public cocos2d::Sprite
 {
 private: // VARIABLES
     
-    const std::vector<std::string> _PREFIX = { "alienBeige", "alienBlue", "alienGreen", "alienPink", "alienYellow" };
+    //const std::vector<std::string> _PREFIX = { "alienBeige", "alienBlue", "alienGreen", "alienPink", "alienYellow" };
     
     cocos2d::Vec2 _direction;
     cocos2d::Vec2 _velocity;

@@ -1,7 +1,11 @@
 #ifndef __FranticAlien__MenuComponent__
 #define __FranticAlien__MenuComponent__
 
+#define FILE_PREFIX "Spritesheets/alien"
+#define FILE_SUFFIX "_badge2.png"
+
 #define MENU 1
+
 #define PI 3.14159265
 
 #include "cocos2d.h"
@@ -11,28 +15,29 @@ class GameObject;
 class MenuComponent
 {
 public:
+	//
     virtual ~MenuComponent() {};
-    virtual bool showMenu(GameObject &gameObject) = 0;
-    virtual bool hideMenu(GameObject &gameObject) = 0;
+
+	//
+	virtual bool addMenu(GameObject &gameObject) = 0;
+    virtual void showMenu(GameObject &gameObject) = 0;
+	virtual void hideMenu(GameObject &gameObject) = 0;
+	
+	virtual bool isActive() = 0;
 };
 
-class PlayerMenuComponent : public MenuComponent, public cocos2d::Node
+class PlayerMenuComponent : public MenuComponent
 {
-public:
-    // "creator" methods first
-    static PlayerMenuComponent *create();
-    
+public:    
     // init methods
-    bool init();
+	bool addMenu(GameObject &gameObject);
+	void showMenu(GameObject &gameObject);
+	void hideMenu(GameObject &gameObject);
     
-    //
-    bool showMenu(GameObject &gameObject);
-    bool hideMenu(GameObject &gameObject);
-    
+	inline bool isActive() { return _isActive; }
+
 private:
-    const std::string FILE_SUFFIX = "Spritesheets/alien";
-    const std::string FILE_PREFIX = "_badge2.png";
-    const std::vector<std::string> ITEMS = {"Beige", "Blue", "Green", "Pink", "Yellow"};
+	bool _isActive;
 };
 
 #endif /* defined(__FranticAlien__MenuComponent__) */

@@ -17,17 +17,28 @@ public:
     // "creator" methods first
     
     // If applicable, then Constructors and the Destructor
-    GameObject(MenuComponent* menu, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) : _menu(menu), _input(input), _physics(physics), _graphics(graphics){}
-    
-    virtual ~GameObject(){}
+	GameObject(MenuComponent* menu, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics)
+	{
+		_menu = menu;
+		_input = input;
+		_physics = physics;
+		_graphics = graphics;
+	}
+
+	virtual ~GameObject(){};
     
     // Then the init methods
-    
+	virtual void initListeners();
+
     // Then methods of the instance
-    virtual void updateObject() = 0;
-    
+	virtual void addMenu();
+	virtual void showMenu();
+	virtual void hideMenu();
+	virtual void updateObject(){}
+		    
     // Then the overrides
-    
+	virtual bool isMenuActive() { return _menu->isActive(); }
+
 protected:
     MenuComponent* _menu;
     InputComponent* _input;
@@ -35,18 +46,19 @@ protected:
     GraphicsComponent* _graphics;
     
 private:
-    
+	bool _selected;
 };
 
 class GamePlayer : public GameObject
 {
-    using GameObject::GameObject;
-
 public:
+	GamePlayer(MenuComponent* menu, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) 
+				 : GameObject(menu, input, physics, graphics){}
+	//
     static GamePlayer* createWithFrameName(const std::string& arg);
-    
+ 
     //
-    void updateObject();
+    virtual void updateObject() override;
 };
 
 #endif /* defined(__FranticAlien__GameObject__) */

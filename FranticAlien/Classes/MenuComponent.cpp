@@ -3,52 +3,40 @@
 
 USING_NS_CC;
 
-PlayerMenuComponent* PlayerMenuComponent::create()
-{
-    auto ret = new PlayerMenuComponent();
-    
-    if (ret && ret->init())
-    {
-        ret->autorelease();
-        ret->setTag(MENU);
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
-}
-
-bool PlayerMenuComponent::init()
+bool PlayerMenuComponent::addMenu(GameObject &gameObject)
 {
     int _ptr = 0;
     
-    for(auto s : ITEMS)
+	auto spriteColors = { "Beige", "Blue", "Green", "Pink", "Yellow" };
+
+	for (auto color : spriteColors)
     {
-        auto name = FILE_SUFFIX + s + FILE_PREFIX;
-        
-        auto menu_item = Sprite::create(name);
+		std::string name( color );
+
+		auto menu_item = Sprite::create(FILE_PREFIX + name + FILE_SUFFIX);
         menu_item->setTag(_ptr++);
         
-        this->addChild(menu_item, -10);
+        gameObject.addChild(menu_item, 10);
     }
     
-    return true;
+	return true;
 }
 
-bool PlayerMenuComponent::showMenu(GameObject &gameObject)
+void PlayerMenuComponent::showMenu(GameObject &gameObject)
 {
     // Show menu
-    auto center = Vec2(getContentSize().width / 2, 20 + getContentSize().height / 2);
+	auto center = Vec2(gameObject.getContentSize().width / 2, 20 + gameObject.getContentSize().height / 2);
     
-    // Get all children from menu node
-    auto children = this->getChildren();
+    // Get all children from gameObject
+    auto children = gameObject.getChildren();
     
     // Displays the radial menu around sprite
     for (int i = 0; i < children.size(); i++)
     {
+		// Work out angle
         float radians = -0.2 + (i * 50) * (PI / 180);
         
+		// x,y co-ordinate
         float x = center.x + cos(radians) * 80;
         float y = center.y + sin(radians) * 80;
         
@@ -56,21 +44,19 @@ bool PlayerMenuComponent::showMenu(GameObject &gameObject)
         children.at(i)->runAction(ScaleTo::create(0.1f, 0.8f));
     }
     
-    return true;
+	this->_isActive = true;
 }
 
-bool PlayerMenuComponent::hideMenu(GameObject &gameObject)
+void PlayerMenuComponent::hideMenu(GameObject &gameObject)
 {
     // Hides menu
-    auto center = Vec2(getContentSize().width / 2, getContentSize().height / 2);
+	auto center = Vec2(gameObject.getContentSize().width / 2, gameObject.getContentSize().height / 2);
     
-    auto children = this->getChildren();
-    
-    for(auto child : children)
+	for (auto child : gameObject.getChildren())
     {
         child->runAction(MoveTo::create(0.1, center));
         child->runAction(ScaleTo::create(0.1f, 0.0f));
     }
     
-    return true;
+	this->_isActive = false;
 }

@@ -74,7 +74,7 @@ bool Player::touchBegan(Touch* touch, Event* e)
 
 void Player::setCharacter(int type)
 {
-    this->setSpriteFrame(_PREFIX.at(type) + _SUFFIX);
+    //this->setSpriteFrame(_PREFIX.at(type) + _SUFFIX);
 }
 
 void Player::setMenu()
@@ -207,7 +207,7 @@ void Player::showMenu()
 	this->setSelected(true);
 
 	// Sprite looks forward
-	this->setSpriteFrame(_PREFIX.at(0) + _SUFFIX);
+	//this->setSpriteFrame(_PREFIX.at(0) + _SUFFIX);
 
 	// Show menu
 	Vec2 center = Vec2(getContentSize().width / 2, 20 + getContentSize().height / 2);

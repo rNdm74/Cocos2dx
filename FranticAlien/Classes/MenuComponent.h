@@ -10,7 +10,18 @@
 
 #include "cocos2d.h"
 
+using namespace cocos2d;
+
 class GameObject;
+
+class MenuComponentItem : public Sprite
+{
+public:
+	static MenuComponentItem* createMenuWithFrameName(std::string frameName);
+
+	void initListeners();
+
+};
 
 class MenuComponent
 {

@@ -139,10 +139,16 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\AppGlobal.cpp" />
     <ClCompile Include="..\Classes\AppResources.cpp" />
     <ClCompile Include="..\Classes\Entity.cpp" />
+    <ClCompile Include="..\Classes\GameObject.cpp" />
     <ClCompile Include="..\Classes\GameplayFinishedScene.cpp" />
     <ClCompile Include="..\Classes\GameplayScene.cpp" />
+    <ClCompile Include="..\Classes\GraphicsComponent.cpp" />
+    <ClCompile Include="..\Classes\InputComponent.cpp" />
+    <ClCompile Include="..\Classes\Level.cpp" />
     <ClCompile Include="..\Classes\LoadingScene.cpp" />
+    <ClCompile Include="..\Classes\MenuComponent.cpp" />
     <ClCompile Include="..\Classes\MenuScene.cpp" />
+    <ClCompile Include="..\Classes\PhysicsComponent.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\PlayerMenu.cpp" />
     <ClCompile Include="..\Classes\SettingsScene.cpp" />
@@ -150,6 +156,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\TileMap.cpp" />
     <ClCompile Include="..\Classes\TileMapObject.cpp" />
     <ClCompile Include="..\Classes\TileMapTile.cpp" />
+    <ClCompile Include="..\Classes\World.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,10 +164,16 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\AppGlobal.h" />
     <ClInclude Include="..\Classes\AppResources.h" />
     <ClInclude Include="..\Classes\Entity.h" />
+    <ClInclude Include="..\Classes\GameObject.h" />
     <ClInclude Include="..\Classes\GameplayFinishedScene.h" />
     <ClInclude Include="..\Classes\GameplayScene.h" />
+    <ClInclude Include="..\Classes\GraphicsComponent.h" />
+    <ClInclude Include="..\Classes\InputComponent.h" />
+    <ClInclude Include="..\Classes\Level.h" />
     <ClInclude Include="..\Classes\LoadingScene.h" />
+    <ClInclude Include="..\Classes\MenuComponent.h" />
     <ClInclude Include="..\Classes\MenuScene.h" />
+    <ClInclude Include="..\Classes\PhysicsComponent.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\PlayerMenu.h" />
     <ClInclude Include="..\Classes\SettingsScene.h" />
@@ -168,6 +181,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\TileMap.h" />
     <ClInclude Include="..\Classes\TileMapObject.h" />
     <ClInclude Include="..\Classes\TileMapTile.h" />
+    <ClInclude Include="..\Classes\World.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

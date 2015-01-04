@@ -12,9 +12,6 @@ enum
     kTagStartPosition
 };
 
-USING_NS_CC;
-
-
 Scene* GameplayScene::createScene()
 {
     // 'scene' is an autorelease object
@@ -96,17 +93,14 @@ bool GameplayScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     center = Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y);
-	    
-	tilemap = TileMap::create("tiles_spritsheet.tmx");
-	this->addChild(tilemap);
-		    
-	// Player
-//	p = Player::createPlayerWithFilename("alienBeige_stand.png");
-//	p->setTag(kTagPlayer);
-//	p->setPosition(Vec2(origin.x + visibleSize.width / 2 , (origin.y + visibleSize.height) - (69 * 4)));
-//	p->Stand();
-    auto player = GamePlayer::createWithFrameName("alienBeige_stand.png");
-    player->setPosition(Vec2(200, 100));
+	   
+	
+	world = World::create();
+	this->addChild(world);
+	
+    player = GamePlayer::createWithFrameName("alienBeige_stand.png");
+    player->setPosition(Vec2(200, 70));
+	player->getTexture()->setAntiAliasTexParameters();
     
     log("pX: %f, pY%f", player->getPositionX(), getPositionY());
     
@@ -134,7 +128,30 @@ void GameplayScene::GameplaySceneFinished(Ref* sender)
 
 void GameplayScene::update(float delta)
 {
-    //check for collisions
+	world->update(delta);
+
+
+	//player->updateObject(delta);
+
+	/*int safeOffset = -10;
+	
+	for (auto node : world->getChildren())
+	{
+		float pos = node->getPositionX();
+		pos += 1 * delta * -1;
+		node->setPositionX(pos);
+
+		if (convertToWorldSpace(node->getPosition()).x + node->getContentSize().width < safeOffset)
+		{
+			node->setPositionX(world->getContentSize().width);
+			
+		}
+
+		
+	}*/
+
+
+		//check for collisions
 //    p->Update(delta);
 //    
 //    for(auto child : tilemap->getChildren())
@@ -188,20 +205,20 @@ void GameplayScene::update(float delta)
     // Clamp player to center of screen
     //p->setPositionX(center.x);
 
-	tilemap->updatePosition();
+	//tilemap->updatePosition();
 
 	
 
-	float x = tilemap->getPositionX();
+	//float x = tilemap->getPositionX();
 
-	x += 800 * delta  * direction.x;
+	//x += 800 * delta  * direction.x;
 
-	tilemap->setPositionX(x);
+	//tilemap->setPositionX(x);
 }
 
 void GameplayScene::actionFinished()
 {
-	p->Stand();
+	//p->Stand();
 }
 
 bool GameplayScene::onContactBegin(PhysicsContact &contact)
@@ -262,19 +279,19 @@ void GameplayScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event)
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_SPACE)
     {
-        p->Jump();
+        //p->Jump();
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_W)
     {
-        p->Climb();
+        //p->Climb();
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_S)
     {
-        p->Duck();
+        //p->Duck();
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_A)
     {
-        p->Hurt();
+        //p->Hurt();
     }
     else if(keyCode == EventKeyboard::KeyCode::KEY_D)
     { 

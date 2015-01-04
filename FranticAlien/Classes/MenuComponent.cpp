@@ -1,7 +1,54 @@
 #include "MenuComponent.h"
 #include "GameObject.h"
 
-USING_NS_CC;
+MenuComponentItem* MenuComponentItem::createMenuWithFrameName(std::string frameName)
+{
+	auto sprite = new MenuComponentItem();
+
+	if (sprite && sprite->initWithFile(frameName))
+	{
+		sprite->autorelease();
+		sprite->setName(frameName);
+		sprite->initListeners();
+
+		return sprite;
+	}
+
+	CC_SAFE_DELETE(sprite);
+
+	return NULL;
+}
+
+void MenuComponentItem::initListeners()
+{
+	auto listener = EventListenerTouchOneByOne::create();
+
+	listener->onTouchBegan = [=](Touch* touch, Event* event) -> bool {
+
+		auto touchEvent = static_cast<EventTouch*>(event);
+
+		auto node = touchEvent->getCurrentTarget();
+				
+		auto tPos = node->getParent()->convertTouchToNodeSpace(touch);
+		auto nBox = node->getBoundingBox();
+
+		if (nBox.containsPoint(tPos))
+		{
+			log(node->getName().c_str());
+
+			auto scaleUpAction = ScaleTo::create(0.1, 1.0);
+			auto scaleDownAction = ScaleTo::create(0.1, 0.8);
+
+			// Button effect
+			node->runAction(Sequence::createWithTwoActions(scaleUpAction, scaleDownAction));
+		}
+
+		return true;
+	};
+
+
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+}
 
 bool PlayerMenuComponent::addMenu(GameObject &gameObject)
 {
@@ -13,10 +60,11 @@ bool PlayerMenuComponent::addMenu(GameObject &gameObject)
     {
 		std::string name( color );
 
-		auto menu_item = Sprite::create(FILE_PREFIX + name + FILE_SUFFIX);
+		auto menu_item = MenuComponentItem::createMenuWithFrameName(FILE_PREFIX + name + FILE_SUFFIX);
+		menu_item->setName(FILE_PREFIX + name + FILE_SUFFIX);
         menu_item->setTag(_ptr++);
         
-        gameObject.addChild(menu_item, 10);
+        gameObject.addChild(menu_item, -10);
     }
     
 	return true;

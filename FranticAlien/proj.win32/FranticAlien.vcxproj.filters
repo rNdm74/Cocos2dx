@@ -10,6 +10,18 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Utils">
+      <UniqueIdentifier>{c3567e30-0527-4a6b-8eef-3f62701afb43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scenes">
+      <UniqueIdentifier>{b53abce7-22eb-4b3f-a76c-a5fa2c31ee9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Tilemap">
+      <UniqueIdentifier>{58da6480-6602-498f-9fad-008009c0817f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Entity">
+      <UniqueIdentifier>{940e5ae7-081f-4185-a023-1742bbc76522}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,41 +36,62 @@
     <ClCompile Include="..\Classes\AppResources.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Entity.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\GameObject.cpp">
+      <Filter>Classes\Utils</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameplayFinishedScene.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameplayScene.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GraphicsComponent.cpp">
+      <Filter>Classes\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\InputComponent.cpp">
+      <Filter>Classes\Utils</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LoadingScene.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MenuScene.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\MenuComponent.cpp">
+      <Filter>Classes\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PhysicsComponent.cpp">
+      <Filter>Classes\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Entity.cpp">
+      <Filter>Classes\Entity</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SettingsScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SplashScene.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Entity</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\TileMap.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\TileMapObject.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\TileMapTile.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingsScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SplashScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MenuScene.cpp">
+      <Filter>Classes\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PlayerMenu.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\World.cpp">
+      <Filter>Classes\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Level.cpp">
+      <Filter>Classes\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,41 +107,62 @@
     <ClInclude Include="..\Classes\AppResources.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Entity.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\GameObject.h">
+      <Filter>Classes\Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameplayFinishedScene.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameplayScene.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GraphicsComponent.h">
+      <Filter>Classes\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InputComponent.h">
+      <Filter>Classes\Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LoadingScene.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MenuScene.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\MenuComponent.h">
+      <Filter>Classes\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PhysicsComponent.h">
+      <Filter>Classes\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Entity.h">
+      <Filter>Classes\Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SettingsScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SplashScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileMap.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileMapObject.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\TileMapTile.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileMap.h">
+      <Filter>Classes\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileMapObject.h">
+      <Filter>Classes\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingsScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SplashScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MenuScene.h">
+      <Filter>Classes\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PlayerMenu.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\World.h">
+      <Filter>Classes\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Level.h">
+      <Filter>Classes\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

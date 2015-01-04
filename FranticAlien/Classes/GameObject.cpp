@@ -1,7 +1,5 @@
 #include "GameObject.h"
 
-USING_NS_CC;
-
 void GameObject::addMenu()
 {
 	_menu->addMenu(*this);
@@ -20,20 +18,24 @@ void GameObject::hideMenu()
 void GameObject::initListeners()
 {
 	auto listener = EventListenerTouchOneByOne::create();
-	listener->setSwallowTouches(true);
-
+	
 	listener->onTouchBegan = [=](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
 
 		auto touchEvent = static_cast<EventTouch*>(event);
 
 		auto node = touchEvent->getCurrentTarget();
-		//auto pos = node->convertTouchToNodeSpace();
 		
 		if (node->getBoundingBox().containsPoint(touch->getLocation()))
 		{
 			log("Bingo");
 			
 			auto player = static_cast<GamePlayer*>(node);
+
+			auto scaleUpAction = ScaleTo::create(0.1, 1.1);
+			auto scaleDownAction = ScaleTo::create(0.1, 1.0);
+
+			// Button effect
+			node->runAction(Sequence::createWithTwoActions(scaleUpAction, scaleDownAction));
 
 			if (player->isMenuActive())
 			{
@@ -67,6 +69,7 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
     {
         sprite->autorelease();
         sprite->setAnchorPoint(Vec2(0.5, 0));
+		sprite->setName("Player");
 		sprite->initListeners();
 		sprite->addMenu();
 		sprite->hideMenu();
@@ -79,8 +82,9 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
     return NULL;
 }
 
-void GamePlayer::updateObject()
+void GamePlayer::updateObject(float& delta)
 {
+	_physics->update(*this, delta);
     
 }
 

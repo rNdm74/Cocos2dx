@@ -3,19 +3,25 @@
 
 #include "cocos2d.h"
 
+using namespace cocos2d;
+
 class GameObject;
 
 class PhysicsComponent
 {
 public:
     virtual ~PhysicsComponent(){};
-    virtual void update(GameObject& gameObject) = 0;
+	virtual void update(GameObject& gameObject, float& delta) = 0;
+	virtual void applyGravity(GameObject& gameObject, float& delta) = 0;
+	virtual void collisionDetection(GameObject& gameObject, float& delta) = 0;
 };
 
 class PlayerPhysicsComponent : public PhysicsComponent
 {
 public:
-    void update(GameObject& gameObject);
+    void update(GameObject& gameObject, float& delta);
+	void applyGravity(GameObject& gameObject, float& delta);
+	void collisionDetection(GameObject& gameObject, float& delta);
 };
 
 #endif /* defined(__FranticAlien__PhysicsComponent__) */

@@ -8,10 +8,12 @@
 #include "PhysicsComponent.h"
 #include "GraphicsComponent.h"
 
-class GameObject : public cocos2d::Sprite
+using namespace cocos2d;
+
+class GameObject : public Sprite
 {
 public:
-    cocos2d::Vec2 velocity;
+    Vec2 velocity;
     
 public:
     // "creator" methods first
@@ -34,7 +36,7 @@ public:
 	virtual void addMenu();
 	virtual void showMenu();
 	virtual void hideMenu();
-	virtual void updateObject(){}
+	virtual void updateObject(float& delta){}
 		    
     // Then the overrides
 	virtual bool isMenuActive() { return _menu->isActive(); }
@@ -58,7 +60,7 @@ public:
     static GamePlayer* createWithFrameName(const std::string& arg);
  
     //
-    virtual void updateObject() override;
+    virtual void updateObject(float& delta) override;
 };
 
 #endif /* defined(__FranticAlien__GameObject__) */

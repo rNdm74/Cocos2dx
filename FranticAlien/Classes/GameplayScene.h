@@ -4,30 +4,31 @@
 #include "cocos2d.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "World.h"
 
 #define kBackgroundLayer 1
 #define kMidgroundLayer 2
 #define kForegroundLayer 3
 #define PTM_RATIO 32.0
 
-class GameplayScene : public cocos2d::Layer
+using namespace cocos2d;
+
+class GameplayScene : public Layer
 {
 private:
-    Player* p;
-    cocos2d::Sprite* bg;
-    cocos2d::Vec2 center;
-    float static velocity ;
-    cocos2d::Label* debug;    
+	World* world;
+    GamePlayer* player;
+    Vec2 center;   
         
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::Scene* createScene();
+    static Scene* createScene();
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
     
     // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
+    void menuCloseCallback(Ref* pSender);
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameplayScene);
@@ -41,19 +42,19 @@ private:
     cocos2d::Vec2 direction;
 
 	void actionFinished();
-	bool onContactBegin(cocos2d::PhysicsContact &contact);
+	bool onContactBegin(PhysicsContact &contact);
 
     void Pause(Ref* sender);
     void GameplaySceneFinished(Ref* sender);
     
-	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event  *event);
-	void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event  *event);
-	void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event  *event);
+	bool onTouchBegan(Touch* touch, Event  *event);
+	void onTouchMoved(Touch* touch, Event  *event);
+	void onTouchEnded(Touch* touch, Event  *event);
 
-    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
     
-    void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
-    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
+    void onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event);
+    void onKeyReleased(EventKeyboard::KeyCode keyCode, Event *event);
 
 };
 

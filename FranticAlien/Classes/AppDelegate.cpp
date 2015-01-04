@@ -25,20 +25,25 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     if(!glview) {
 		glview = GLView::create("Frantic Alien");
-        glfwSetInputMode(glview->getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-		//glview = GLView::createWithRect("Frantic Alien", Rect(0, 0, 480, 320));
+		
+		//glview = GLView::createWithRect("Frantic Alien", Rect(0, 0, 480, 320));		
         //glview = GLView::createWithFullScreen("Frantic Alien");
 
+		glfwSetInputMode(glview->getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
         director->setOpenGLView(glview);
-		//director->setAlphaBlending(true);
+		director->setAlphaBlending(true);
+		//director->setProjection(CCDirectorProjection2D);
     }
 
 
     // turn on display FPS
-    //director->setDisplayStats(true);
+    director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0/60);
+
+	
 
 	log("Scale factor     : %.0f", director->getContentScaleFactor());
 	log("Screen size      : {%.0f, %.0f}", glview->getFrameSize().width, glview->getFrameSize().height);
@@ -53,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     appResources->Load();
 	
 	// set design resolution for game
-	glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
+	glview->setDesignResolutionSize(960, 640, ResolutionPolicy::NO_BORDER);
 
     // create a scene. it's an autorelease object
     auto scene = SplashScene::createScene();

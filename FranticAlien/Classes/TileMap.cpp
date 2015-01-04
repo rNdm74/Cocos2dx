@@ -63,7 +63,7 @@ void TileMap::tilesetswitch(tinyxml2::XMLElement* node)
 	// </tileset>
 
 	// Create tileset object
-	tileset = TileSet::create();
+	auto tileset = TileSet::create();
     
     // Attributes
     tileset->setFirstGid(atoi(node->Attribute("firstgid")));
@@ -91,6 +91,8 @@ void TileMap::tilesetswitch(tinyxml2::XMLElement* node)
         tileSetMap[key].setImageHeight(atoi(image->Attribute("height")));
         tileSetMap[key].setSource(image->Attribute("source"));
     }
+
+	_tileSets.push_back(tileset);
 }
 
 void TileMap::layerswitch(tinyxml2::XMLElement* node)

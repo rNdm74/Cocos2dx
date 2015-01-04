@@ -2,7 +2,7 @@
 #define __FranticAlien__APP_RESOURCES_H__
 
 #include "cocos2d.h"
-#include "tinyxml2.h"
+#include "tinyxml2/tinyxml2.h"
 
 
 #define XML_TILES_SPRITESHEET "tiles_spritesheet.xml"

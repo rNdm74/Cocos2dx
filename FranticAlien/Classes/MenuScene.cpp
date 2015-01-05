@@ -1,9 +1,8 @@
 #include "MenuScene.h"
 #include "AppGlobal.h"
+#include "AppResources.h"
 #include "LoadingScene.h"
 #include "SettingsScene.h"
-
-USING_NS_CC;
 
 Scene* MenuScene::createScene()
 {
@@ -12,6 +11,10 @@ Scene* MenuScene::createScene()
     
     // 'layer' is an autorelease object
     auto layer = MenuScene::create();
+	layer->setTag(KTagSceneLayer);
+
+	// add cursor
+	AppGlobal::getInstance()->addCursor(*layer);
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -30,6 +33,8 @@ bool MenuScene::init()
         return false;
     }
     
+	//AppResources::getInstance()->Load();
+
     //Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -52,30 +57,7 @@ bool MenuScene::init()
     }
     
     menu->alignItemsVerticallyWithPadding(25.0f);
-    this->addChild(menu);
-    
-    //auto mouseListener = EventListenerMouse::create();
-    //mouseListener->onMouseMove = CC_CALLBACK_1(MenuScene::onMouseMove, this);
-    //_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
-    auto tap = Sprite::create("tap.png");
-    this->addChild(tap, 999);
-    auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseMove = [=](cocos2d::Event* event){
-        
-        // Cast Event to EventMouse for position details like above
-        auto cursor = static_cast<EventMouse*>(event);
-        
-        auto pos = Vec2(cursor->getCursorX(), cursor->getCursorY());
-        
-        //log("x: %f, y:%f", pos.x, pos.y);
-        
-        tap->setPosition(pos);
-        
-    };
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
-
-    
+    this->addChild(menu);   
     
     auto keyListener = EventListenerKeyboard::create();
     keyListener->onKeyPressed = CC_CALLBACK_2(MenuScene::onKeyPressed, this);
@@ -86,11 +68,7 @@ bool MenuScene::init()
 }
 
 void MenuScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event)
-{
-    //log("Key with keycode %d pressed", keyCode);
-    //int key = (int)EventKeyboard::KeyCode::KEY_KP_ENTER;
-    //log("Enter pressed %i", key);
-    
+{       
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
     {
         if(AppGlobal::getInstance()->IsGameSceneRunning)
@@ -118,15 +96,6 @@ void MenuScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event)
 void MenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d released", keyCode);
-}
-
-void MenuScene::onMouseEnter(Event* event)
-{
-}
-
-void MenuScene::onMouseMove(Event *event)
-{
-    //EventMouse* e = (EventMouse*)event;
 }
 
 void MenuScene::Continue(Ref* sender)

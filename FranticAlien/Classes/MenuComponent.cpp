@@ -5,7 +5,7 @@ MenuComponentItem* MenuComponentItem::createMenuWithFrameName(std::string frameN
 {
 	auto sprite = new MenuComponentItem();
 
-	if (sprite && sprite->initWithFile(frameName))
+	if (sprite && sprite->initWithSpriteFrameName(frameName))
 	{
 		sprite->autorelease();
 		sprite->setName(frameName);
@@ -63,7 +63,8 @@ bool PlayerMenuComponent::addMenu(GameObject &gameObject)
 		auto menu_item = MenuComponentItem::createMenuWithFrameName(FILE_PREFIX + name + FILE_SUFFIX);
 		menu_item->setName(FILE_PREFIX + name + FILE_SUFFIX);
         menu_item->setTag(_ptr++);
-        
+		menu_item->getTexture()->setAntiAliasTexParameters();
+
         gameObject.addChild(menu_item, -10);
     }
     
@@ -103,7 +104,7 @@ void PlayerMenuComponent::hideMenu(GameObject &gameObject)
 	for (auto child : gameObject.getChildren())
     {
         child->runAction(MoveTo::create(0.1, center));
-        child->runAction(ScaleTo::create(0.1f, 0.0f));
+        child->runAction(ScaleTo::create(0.1f, 0));
     }
     
 	this->_isActive = false;

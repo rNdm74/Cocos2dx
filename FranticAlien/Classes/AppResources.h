@@ -2,39 +2,40 @@
 #define __FranticAlien__APP_RESOURCES_H__
 
 #include "cocos2d.h"
-#include "tinyxml2/tinyxml2.h"
 
+// PNG assets
+#define BACKGROUND_PNG		"background.png"
+#define CHARACTERS_PNG		"characters.png"
+#define CONTROLS_PNG		"controls.png"
+#define HUD_PNG				"hud.png"
+#define ITEMS_PNG			"items.png"
+#define PARTICLES_PNG		"particles.png"
+#define TILES_PNG			"tiles.png"
 
-#define XML_TILES_SPRITESHEET "tiles_spritesheet.xml"
-#define XML_TILED_MAP_EDITOR "tiles_spritsheet.tmx"
-#define IMG_TILES_SPRITESHEET "tiles_spritesheet.png"
+// PLIST assets
+#define BACKGROUND_PLIST	"background.plist"
+#define CHARACTERS_PLIST	"characters.plist"
+#define CONTROLS_PLIST		"controls.plist"
+#define HUD_PLIST			"hud.plist"
+#define ITEMS_PLIST			"items.plist"
+#define PARTICLES_PLIST		"particles.plist"
+#define TILES_PLIST			"tiles.plist"
 
-#define MAX_COLS 17
+using namespace cocos2d;
 
 class AppResources
 {
 private:
 	static AppResources* m_pInstance;
 
-	cocos2d::SpriteFrameCache* cache;
-
-	std::map<int, std::string> framename_map;
-	std::map<int, int*> level_map;
-
-		   //Level       //Index       //Gid         //x,y
-	std::map<int, std::map<int ,std::map<int, cocos2d::Vec2>>> object_map;
+	SpriteFrameCache* cache;
+	TextureCache* textureCache;
 
 public:
     static AppResources* getInstance();
     
-    bool Load();
-
-	// XML
-	tinyxml2::XMLDocument* loadXMLDocument(std::string filename);
-
-    std::string getFrameName(int gid) { return framename_map[gid - 1]; };
-    int getLevelGid(int level, int row, int col){ return level_map[level][row * MAX_COLS + col]; };
-    std::map<int, std::map<int, cocos2d::Vec2>> getLevelObjects(int level){ return object_map[level]; };
+	bool initLoad();
+	bool mainLoad();
 
 private:
     AppResources();
@@ -42,13 +43,16 @@ private:
     AppResources(AppResources const&){};
     AppResources& operator=(AppResources const&);
 
-    void loadLevels();
+	char* timestamp();
     
     // Sprites
-    void loadPlayerResources();
-    void loadEnemyResources();
-    void loadObjectResources();
-    void loadTileResources();
+	void loadBackgroundResources(Texture2D* texture);
+	void loadCharacterResources(Texture2D* texture);
+	void loadControlResources(Texture2D* texture);
+	void loadHudResources(Texture2D* texture);
+	void loadItemResources(Texture2D* texture);
+	void loadParticleResources(Texture2D* texture);
+	void loadTileResources(Texture2D* texture);
 
     
 };

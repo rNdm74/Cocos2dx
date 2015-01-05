@@ -66,15 +66,6 @@
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>Classes\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\TileMap.cpp">
-      <Filter>Classes\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\TileMapObject.cpp">
-      <Filter>Classes\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\TileMapTile.cpp">
-      <Filter>Classes\Tilemap</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\SettingsScene.cpp">
       <Filter>Classes\Scenes</Filter>
     </ClCompile>
@@ -136,15 +127,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
       <Filter>Classes\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileMapTile.h">
-      <Filter>Classes\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileMap.h">
-      <Filter>Classes\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileMapObject.h">
-      <Filter>Classes\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SettingsScene.h">
       <Filter>Classes\Scenes</Filter>

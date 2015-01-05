@@ -1,8 +1,7 @@
 #include "LoadingScene.h"
 #include "AppGlobal.h"
+#include "AppResources.h"
 #include "GameplayScene.h"
-
-USING_NS_CC;
 
 Scene* LoadingScene::createScene()
 {
@@ -11,6 +10,10 @@ Scene* LoadingScene::createScene()
     
     // 'layer' is an autorelease object
     auto layer = LoadingScene::create();
+	layer->setTag(KTagSceneLayer);
+
+	// add cursor
+	AppGlobal::getInstance()->addCursor(*layer);
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -41,8 +44,10 @@ bool LoadingScene::init()
 
     // add the label as a child to this layer
     this->addChild(label, 1);
+
+	AppResources::getInstance()->mainLoad();
     
-    FiniteTimeAction* waitAction = DelayTime::create(0.5);
+    FiniteTimeAction* waitAction = DelayTime::create(0.1);
     FiniteTimeAction* waitFinished = CallFunc::create(CC_CALLBACK_0(LoadingScene::loadGameplayScene, this));
     
     this->runAction(Sequence::createWithTwoActions(waitAction, waitFinished));

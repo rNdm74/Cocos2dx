@@ -153,9 +153,6 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\PlayerMenu.cpp" />
     <ClCompile Include="..\Classes\SettingsScene.cpp" />
     <ClCompile Include="..\Classes\SplashScene.cpp" />
-    <ClCompile Include="..\Classes\TileMap.cpp" />
-    <ClCompile Include="..\Classes\TileMapObject.cpp" />
-    <ClCompile Include="..\Classes\TileMapTile.cpp" />
     <ClCompile Include="..\Classes\World.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -178,9 +175,6 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\PlayerMenu.h" />
     <ClInclude Include="..\Classes\SettingsScene.h" />
     <ClInclude Include="..\Classes\SplashScene.h" />
-    <ClInclude Include="..\Classes\TileMap.h" />
-    <ClInclude Include="..\Classes\TileMapObject.h" />
-    <ClInclude Include="..\Classes\TileMapTile.h" />
     <ClInclude Include="..\Classes\World.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

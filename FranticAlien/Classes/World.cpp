@@ -1,4 +1,7 @@
 #include "World.h"
+#include "AppGlobal.h"
+#include "Level.h"
+#include "GameObject.h"
 
 World* World::create()
 {
@@ -20,7 +23,11 @@ World* World::create()
 
 World::World()
 {
-	this->background = WorldParallaxBackGround::create();
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	Vec2 mapOrigin = Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - (visibleSize.height / 6));
+
+	background = WorldParallaxBackGround::create();
 	this->addChild(background);
 
 	for (const auto& child : background->getChildren())
@@ -28,22 +35,17 @@ World::World()
 		static_cast<SpriteBatchNode*>(child)->getTexture()->setAntiAliasTexParameters();
 	}
 
-	this->map = TMXTiledMap::create("tiles_spritesheet.tmx");
-	
-	this->addChild(map);
+	level = new Level();
+	level->loadMap("level1.tmx");
+	this->addChild(level->getMap());
 
-	this->map->setAnchorPoint(Vec2(0.5, 0.5));
+	player = GamePlayer::createWithFrameName("alienBeige_stand.png");
+	player->setPosition(mapOrigin);
+	player->getTexture()->setAntiAliasTexParameters();
 
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	Vec2 mapOrigin = Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+	log("pX: %f, pY%f", player->getPositionX(), getPositionY());
 
-	this->map->setPosition(mapOrigin);
-
-	for (const auto& child : map->getChildren())
-	{
-		static_cast<SpriteBatchNode*>(child)->getTexture()->setAntiAliasTexParameters();
-	}
+	this->addChild(player, 99);
 }
 
 World::~World()
@@ -53,28 +55,26 @@ World::~World()
 void World::update(float& delta)
 {
 	this->background->update(delta);
+	//this->level->checkCollisions(delta, *player);
+	this->level->update(delta, *player);
 
-	//float currentX = map->getPositionX();
-	//currentX += 50 * delta * -1;
-	//map->setPositionX(currentX);
-
-	//this->updateLayers();
+	this->player->updateObject(delta);
 }
 
 void World::updateLayers()
 {
 	
 
-	for (auto& object : this->map->getChildren())
-	{
-		// is this map child a tile layer?
-		auto layer = dynamic_cast<TMXLayer*>(object);
+	//for (auto& object : this->map->getChildren())
+	//{
+	//	// is this map child a tile layer?
+	//	auto layer = dynamic_cast<TMXLayer*>(object);
 
-		if (layer != nullptr)
-		{
-			this->updateTiles(layer);
-		}			
-	}
+	//	if (layer != nullptr)
+	//	{
+	//		this->updateTiles(layer);
+	//	}			
+	//}
 }
 
 void World::updateTiles(TMXLayer* layer)
@@ -194,13 +194,13 @@ void WorldParallaxBackGround::addBackground()
 
 	for (int i = 0; i < 3; i++)
 	{
-		auto background = Sprite::create("background.png");
+		auto background = Sprite::create("bg0.png");
 		background->setTag(kTagScrollingBackground);
 		background->setAnchorPoint(Vec2(0, 0));
 		background->setScale(1.2f);
 		this->addChild(background, -10, Vec2(0.1, 1), Vec2(i * background->getContentSize().width, 70));
 
-		background = Sprite::create("groundGrass.png");
+		background = Sprite::createWithSpriteFrameName("groundGrass.png");
 		background->setTag(kTagScrollingBackground);
 		background->setAnchorPoint(Vec2(0, 0));
 		this->addChild(background, -9, Vec2(0.2, 1), Vec2(i * background->getContentSize().width, 70));
@@ -214,7 +214,7 @@ void WorldParallaxBackGround::addBushs()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto background = Sprite::create("bush.png");
+	auto background = Sprite::createWithSpriteFrameName("bush.png");
 	
 	background->setTag(kTagScrollingBush);
 	background->setAnchorPoint(Vec2(0, 0));
@@ -229,7 +229,7 @@ void WorldParallaxBackGround::addClouds()
 
 	auto pos = std::to_string((int)RAND(1, 3));
 
-	auto background = Sprite::create("cloud" + pos + ".png");
+	auto background = Sprite::createWithSpriteFrameName("cloud" + pos + ".png");
 
 	background->setTag(kTagScrollingCloud);
 	background->setAnchorPoint(Vec2(0, 0));

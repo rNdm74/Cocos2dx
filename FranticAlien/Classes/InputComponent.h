@@ -9,13 +9,13 @@ class InputComponent
 {
 public:
     virtual ~InputComponent(){};
-    virtual void update(GameObject& gameObject) = 0;
+    virtual void update(GameObject& gameObject, float& delta) = 0;
 };
 
 class PlayerInputComponent : public InputComponent
 {
 public:
-    void update(GameObject& gameObject);
+	void update(GameObject& gameObject, float& delta);
 
 private:
     static const int WALK_ACCELERATION = 1;

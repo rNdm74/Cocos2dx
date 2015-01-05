@@ -2,8 +2,8 @@
 #include "GameplayFinishedScene.h"
 #include "MenuScene.h"
 #include "AppGlobal.h"
-#include "Player.h"
-#include "GameObject.h"
+//#include "Player.h"
+//#include "GameObject.h"
 
 enum
 {
@@ -16,13 +16,13 @@ Scene* GameplayScene::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    //scene->getPhysicsWorld()->setUpdateRate();
-    //int updateRate = scene->getPhysicsWorld()->getUpdateRate();
-
+	
     // 'layer' is an autorelease object
     auto layer = GameplayScene::create();
-	//layer->setPhysicsWorld(scene->getPhysicsWorld());
+	layer->setTag(KTagSceneLayer);
+
+	// add cursor
+	AppGlobal::getInstance()->addCursor(*layer);
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -40,29 +40,7 @@ bool GameplayScene::init()
     {
         return false;
     }
-
-    // Mouse & Touch input
-    //auto allAtOnceListener = EventListenerTouchAllAtOnce::create();
-	//allAtOnceListener->onTouchesMoved = CC_CALLBACK_2(GameplayScene::onTouchesMoved, this);
-	//_eventDispatcher->addEventListenerWithSceneGraphPriority(allAtOnceListener, this);
-    auto tap = Sprite::create("tap.png");
-    this->addChild(tap, 999);
-    auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseMove = [=](cocos2d::Event* event){
-        
-        // Cast Event to EventMouse for position details like above
-        auto cursor = static_cast<EventMouse*>(event);
-        
-        auto pos = Vec2(cursor->getCursorX(), cursor->getCursorY());
-        
-        //log("x: %f, y:%f", pos.x, pos.y);
-        
-        tap->setPosition(pos);
-        
-    };
-
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
-    
+	    
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = CC_CALLBACK_2(GameplayScene::onTouchBegan, this);
 	listener->onTouchMoved = CC_CALLBACK_2(GameplayScene::onTouchMoved, this);
@@ -98,13 +76,7 @@ bool GameplayScene::init()
 	world = World::create();
 	this->addChild(world);
 	
-    player = GamePlayer::createWithFrameName("alienBeige_stand.png");
-    player->setPosition(Vec2(200, 70));
-	player->getTexture()->setAntiAliasTexParameters();
     
-    log("pX: %f, pY%f", player->getPositionX(), getPositionY());
-    
-    this->addChild(player, 99);
 
 	//
     this->scheduleUpdateWithPriority(42);

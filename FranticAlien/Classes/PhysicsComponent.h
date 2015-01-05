@@ -6,22 +6,23 @@
 using namespace cocos2d;
 
 class GameObject;
+class Level;
 
 class PhysicsComponent
 {
 public:
     virtual ~PhysicsComponent(){};
-	virtual void update(GameObject& gameObject, float& delta) = 0;
-	virtual void applyGravity(GameObject& gameObject, float& delta) = 0;
-	virtual void collisionDetection(GameObject& gameObject, float& delta) = 0;
+	virtual void update(GameObject &gameObject, Level& level, float& delta) = 0;
+	virtual void applyGravity(GameObject &gameObject, Level& level, float& delta) = 0;
+	virtual void collisionDetection(GameObject &gameObject, Level& level, float& delta) = 0;
 };
 
 class PlayerPhysicsComponent : public PhysicsComponent
 {
 public:
-    void update(GameObject& gameObject, float& delta);
-	void applyGravity(GameObject& gameObject, float& delta);
-	void collisionDetection(GameObject& gameObject, float& delta);
+	void update(GameObject &gameObject, Level& level, float& delta);
+	void applyGravity(GameObject &gameObject, Level& level, float& delta);
+	void collisionDetection(GameObject &gameObject, Level& level, float& delta);
 };
 
 #endif /* defined(__FranticAlien__PhysicsComponent__) */

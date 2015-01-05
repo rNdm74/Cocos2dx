@@ -1,7 +1,7 @@
 #include "SplashScene.h"
 #include "MenuScene.h"
-
-USING_NS_CC;
+#include "AppGlobal.h"
+#include "AppResources.h"
 
 Scene* SplashScene::createScene()
 {
@@ -10,6 +10,10 @@ Scene* SplashScene::createScene()
     
     // 'layer' is an autorelease object
     auto layer = SplashScene::create();
+	layer->setTag(KTagSceneLayer);
+
+	// add cursor
+	AppGlobal::getInstance()->addCursor(*layer);
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -42,18 +46,17 @@ bool SplashScene::init()
 
     // add the label as a child to this layer
     this->addChild(label, 1);
-    
-    // fade in / out action
-    
-    
+    	
+    // fade in / out action   
     Vector<cocos2d::FiniteTimeAction*> fadeActions(3);
-    
+	
     fadeActions.insert(0, CallFunc::create(CC_CALLBACK_0(SplashScene::loadMenuScene, this)));
     fadeActions.insert(0, FadeOut::create(0.5));
     fadeActions.insert(0, FadeIn::create(0.5));
-    
-    
+        
     label->runAction(Sequence::create(fadeActions));
+
+	
     
     return true;
 }
@@ -61,6 +64,7 @@ bool SplashScene::init()
 void SplashScene::loadMenuScene()
 {
     //CCLog("%s", "next scene");
+	AppGlobal::getInstance()->initMouseListener();
     
     auto menuScene = MenuScene::createScene();
     Director::getInstance()->replaceScene(menuScene);

@@ -3,6 +3,12 @@
 
 #include "cocos2d.h"
 
+#define kTagCursor 999
+
+#define KTagSceneLayer 1
+
+using namespace cocos2d;
+
 enum EDirection{
     DIR_LEFT,
     DIR_RIGHT,
@@ -15,21 +21,33 @@ class  AppGlobal
 public:
     bool IsGameSceneRunning;
     int ActiveLevel;
-    cocos2d::Point StartPosition;
+    Point StartPosition;
+
+	Vec2 cursorMove;
+	bool mouseUp;
+	bool mouseDown;
+	Vec2 mouseScroll;
+	
     
 public:
     static AppGlobal* getInstance();
-    
+
+	void initMouseListener();
+
+		    
 	float getRandom(float begin, float end);
-    
+	void addCursor(Layer& layer);
+
     std::string GetActiveLevel() { return std::to_string(ActiveLevel); };
 	
-    inline EDirection getDirection() { return _direction; }
-    inline void setDirection(EDirection direction) { _direction = direction; }
+    EDirection getDirection() { return _direction; }
+    void setDirection(EDirection direction) { _direction = direction; }
     
 private:
     AppGlobal();
     virtual ~AppGlobal();
+
+	
     
     static AppGlobal* m_pInstance;
     

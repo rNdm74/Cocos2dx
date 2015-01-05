@@ -1,7 +1,7 @@
 #ifndef __FranticAlien__MenuComponent__
 #define __FranticAlien__MenuComponent__
 
-#define FILE_PREFIX "Spritesheets/alien"
+#define FILE_PREFIX "alien"
 #define FILE_SUFFIX "_badge2.png"
 
 #define MENU 1

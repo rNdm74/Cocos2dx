@@ -2,7 +2,10 @@
 #define __FranticAlien__WORLD_H__
 
 #include "cocos2d.h"
-#include "AppGlobal.h"
+
+class AppGlobal;
+class Level;
+class GamePlayer;
 
 #define kTagScrollingBackground 0
 #define kTagScrollingCloud 1
@@ -59,7 +62,8 @@ public:
 	void updateTiles(TMXLayer* layer);
 	
 private:
-	TMXTiledMap* map;
+	GamePlayer* player;
+	Level* level;
 	WorldParallaxBackGround* background;
 };
 

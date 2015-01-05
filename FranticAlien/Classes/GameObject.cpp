@@ -68,7 +68,7 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
     if(sprite && sprite->initWithSpriteFrame(spriteFrame))
     {
         sprite->autorelease();
-        sprite->setAnchorPoint(Vec2(0.5, 0));
+        sprite->setAnchorPoint(Vec2(0, 0));
 		sprite->setName("Player");
 		sprite->initListeners();
 		sprite->addMenu();
@@ -84,7 +84,8 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
 
 void GamePlayer::updateObject(float& delta)
 {
-	_physics->update(*this, delta);
+	//_physics->update(*this, delta);
+	_input->update(*this, delta);
     
 }
 

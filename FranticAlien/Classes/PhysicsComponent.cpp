@@ -1,14 +1,15 @@
 #include "PhysicsComponent.h"
 #include "GameObject.h"
+#include "Level.h"
 
-void PlayerPhysicsComponent::update(GameObject &gameObject, float& delta)
+void PlayerPhysicsComponent::update(GameObject &gameObject, Level& level, float& delta)
 {
     //log("%s", gameObject.getSomething());
 
-	this->applyGravity(gameObject, delta);
+	this->applyGravity(gameObject, level, delta);
 }
 
-void PlayerPhysicsComponent::applyGravity(GameObject &gameObject, float& delta)
+void PlayerPhysicsComponent::applyGravity(GameObject &gameObject, Level& level, float& delta)
 {
 	//log("%s", gameObject.getSomething());
 
@@ -21,7 +22,7 @@ void PlayerPhysicsComponent::applyGravity(GameObject &gameObject, float& delta)
 	gameObject.setPositionY(y);
 }
 
-void PlayerPhysicsComponent::collisionDetection(GameObject &gameObject, float& delta)
+void PlayerPhysicsComponent::collisionDetection(GameObject &gameObject, Level& level, float& delta)
 {
 	//log("%s", gameObject.getSomething());
 

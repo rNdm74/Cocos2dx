@@ -1,6 +1,7 @@
 #include "AppResources.h"
+#include <time.h>
 
-USING_NS_CC;
+
 
 AppResources* AppResources::m_pInstance = NULL;
 
@@ -12,143 +13,112 @@ AppResources* AppResources::getInstance()
 AppResources::AppResources()
 {
     cache = SpriteFrameCache::getInstance();
+	cache->addSpriteFramesWithFile(HUD_PLIST); 
+	
+	textureCache = Director::getInstance()->getTextureCache();
 }
 
 AppResources::~AppResources()
 {
 }
 
-bool AppResources::Load()
-{
-    //loadLevels();
-    loadPlayerResources();
-    //loadEnemyResources();
-    //loadObjectResources();
-    loadTileResources();
-    
+bool AppResources::initLoad()
+{	
+	//log(" Started loading assets: %s", timestamp());
+	textureCache->addImageAsync(BACKGROUND_PNG, CC_CALLBACK_1(AppResources::loadBackgroundResources, this));
+	
+	textureCache->addImageAsync(CHARACTERS_PNG, CC_CALLBACK_1(AppResources::loadCharacterResources, this));
+			
+	textureCache->addImageAsync(HUD_PNG, CC_CALLBACK_1(AppResources::loadHudResources, this));
+			    
     return true;
 }
 
-void AppResources::loadLevels()
+bool AppResources::mainLoad()
 {
-	auto document = loadXMLDocument(XML_TILED_MAP_EDITOR);
+	//textureCache->addImageAsync(CONTROLS_PNG, CC_CALLBACK_1(AppResources::loadControlResources, this));
+
+	textureCache->addImageAsync(ITEMS_PNG, CC_CALLBACK_1(AppResources::loadItemResources, this));
+
+	textureCache->addImageAsync(PARTICLES_PNG, CC_CALLBACK_1(AppResources::loadParticleResources, this));
+
+	//textureCache->addImageAsync(TILES_PNG, CC_CALLBACK_1(AppResources::loadTileResources, this));
+
+	return true;
+}
+
+char* AppResources::timestamp()
+{
+	time_t rawtime;
+	struct tm * timeinfo;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	return asctime(timeinfo);
+}
+
+void AppResources::loadBackgroundResources(Texture2D* texture)
+{	
+	//log("Loaded background texture: %s", timestamp());
+
+	cache->addSpriteFramesWithFile(BACKGROUND_PLIST, texture);
+
+	//log("Loaded background plist: %s", timestamp());
+}
+
+void AppResources::loadCharacterResources(Texture2D* texture)
+{
+	//log("Loaded character texture: %s", timestamp());
+
+	cache->addSpriteFramesWithFile(CHARACTERS_PLIST, texture);
+
+	//log("Loaded character plist: %s", timestamp());
+}
+
+void AppResources::loadControlResources(Texture2D* texture)
+{
+	//log("Loaded control texture: %s", timestamp());
+
+	cache->addSpriteFramesWithFile(CONTROLS_PLIST, texture);
+
+	//log("Loaded control plist: %s", timestamp());
+}
+
+void AppResources::loadHudResources(Texture2D* texture)
+{
+	//log("Loaded hud texture: %s", timestamp());
+
+	cache->addSpriteFramesWithFile(HUD_PLIST, texture);
+
+	//log("Loaded hud plist: %s", timestamp());
+
 	
-	tinyxml2::XMLElement* element = loadXMLDocument(XML_TILED_MAP_EDITOR)->FirstChildElement()->FirstChildElement();
-
-	for(tinyxml2::XMLElement* e = element; e != NULL; e = e->NextSiblingElement())
-	{
-		int key, width, height;
-
-		std::string eName = e->Name();
-
-		e->QueryIntAttribute("name", &key);
-		e->QueryIntAttribute("width", &width);
-		e->QueryIntAttribute("height", &height);
-
-		if(eName.compare("layer") == 0)
-		{
-			//CCLog("%s", "layer");
-
-			level_map[key] = new int[width*height];
-
-			int index = 0;
-
-			for(tinyxml2::XMLElement* tile = e->FirstChildElement()->FirstChildElement(); tile != NULL; tile = tile->NextSiblingElement())
-				tile->QueryIntAttribute("gid", &level_map[key][index++]);
-		}
-		else if(eName.compare("objectgroup") == 0)
-		{
-			int index = 0;
-
-			for(tinyxml2::XMLElement* object = e->FirstChildElement(); object != NULL; object = object->NextSiblingElement())
-			{
-				int gid, x, y;
-				object->QueryIntAttribute("gid", &gid);
-				object->QueryIntAttribute("x", &x);
-				object->QueryIntAttribute("y", &y);
-
-				object_map[key][index++][gid] = Vec2(x, y);
-			}
-		}
-	}
 }
 
-void AppResources::loadPlayerResources()
+void AppResources::loadItemResources(Texture2D* texture)
 {
-    
-    //cache->addSpriteFramesWithFile("alienBeige.plist");
-    
-    auto document = loadXMLDocument("Spritesheets/aliens.xml");
-    
-    auto textureAtlas = document->FirstChildElement();
-    
-    auto subTexture = textureAtlas->FirstChildElement();
-    
-    for(auto sub = subTexture; sub != NULL; sub = sub->NextSiblingElement())
-    {
-        int x, y, width, height;
-        sub->QueryIntAttribute("x", &x);
-        sub->QueryIntAttribute("y", &y);
-        sub->QueryIntAttribute("width", &width);
-        sub->QueryIntAttribute("height", &height);
-        
-        //framename_map[key] = sub->Attribute("name");
-        
-        cache->addSpriteFrame(SpriteFrame::create("Spritesheets/aliens.png", Rect(x, y + 0.2, width, height - 0.8)), sub->Attribute("name"));
-        
-    }
-    
-	log("%s", "Loaded Player Resources");
-}
-void AppResources::loadEnemyResources()
-{
-	log("%s", "Loaded Enemy Resources");
-}
-void AppResources::loadObjectResources()
-{
-	log("%s", "Loaded Object Resources");
+	//log("Loaded item texture: %s", timestamp());
+
+	cache->addSpriteFramesWithFile(ITEMS_PLIST, texture);
+
+	//log("Loaded item plist: %s", timestamp());
 }
 
-void AppResources::loadTileResources()
+void AppResources::loadParticleResources(Texture2D* texture)
 {
-	auto element = loadXMLDocument(XML_TILES_SPRITESHEET)->FirstChildElement()->FirstChildElement();
+	//log("Loaded particle texture: %s", timestamp());
 
-	int key = 0;
+	cache->addSpriteFramesWithFile(PARTICLES_PLIST, texture);
 
-	for(auto e = element; e != NULL; e = e->NextSiblingElement())
-	{
-		//log("%s", e->Attribute("name"));
-
-		int x, y, width, height;
-	 	e->QueryIntAttribute("x", &x);
-	   	e->QueryIntAttribute("y", &y);
-	   	e->QueryIntAttribute("width", &width);
-	   	e->QueryIntAttribute("height", &height);
-
-	   	framename_map[key] = e->Attribute("name");
-
-	   	cache->addSpriteFrame(SpriteFrame::create(IMG_TILES_SPRITESHEET, Rect(x, y, width, height)), framename_map[key]);
-
-	   	key++;
-	}
-
-	log("%s", "Loaded Tile Resources");
+	//log("Loaded particle plist: %s", timestamp());
 }
 
-tinyxml2::XMLDocument* AppResources::loadXMLDocument(std::string filename)
+void AppResources::loadTileResources(Texture2D* texture)
 {
-	// If invalid string throw error
-	CCASSERT(filename.size() > 0, "Invalid filename for xml document");
-	
-	// Load string from file
-	auto fileContents = FileUtils::getInstance()->getStringFromFile(filename);
+	//log("Loaded tile texture: %s", timestamp());
 
-	// Create new XMLDocument for parsing
-	auto doc = new tinyxml2::XMLDocument(true, tinyxml2::Whitespace::COLLAPSE_WHITESPACE);
+	cache->addSpriteFramesWithFile(TILES_PLIST, texture);
 
-	// Allow document to parse string information
-	doc->Parse(fileContents.c_str(), fileContents.size());
-
-	// Return the built XMLDocument
-	return doc;
+	//log("Loaded tile plist: %s", timestamp());
 }

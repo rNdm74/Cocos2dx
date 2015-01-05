@@ -3,8 +3,6 @@
 #include "AppResources.h"
 #include "SplashScene.h"
 
-USING_NS_CC;
-
 AppDelegate::AppDelegate() {
 
 }
@@ -12,8 +10,6 @@ AppDelegate::AppDelegate() {
 AppDelegate::~AppDelegate() 
 {
 }
-
-
 
 bool AppDelegate::applicationDidFinishLaunching() {
     		
@@ -25,7 +21,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     if(!glview) {
 		glview = GLView::create("Frantic Alien");
-		
 		//glview = GLView::createWithRect("Frantic Alien", Rect(0, 0, 480, 320));		
         //glview = GLView::createWithFullScreen("Frantic Alien");
 
@@ -33,33 +28,31 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
         director->setOpenGLView(glview);
 		director->setAlphaBlending(true);
-		//director->setProjection(CCDirectorProjection2D);
     }
-
-
+	
     // turn on display FPS
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0/60);
 
-	
-
-	log("Scale factor     : %.0f", director->getContentScaleFactor());
-	log("Screen size      : {%.0f, %.0f}", glview->getFrameSize().width, glview->getFrameSize().height);
-	log("Tile size        : {%.0f, %.0f}", 70.0f, 70.0f);
-    
-    // create global area for game
-    auto appGlobal = AppGlobal::getInstance();
-    appGlobal->IsGameSceneRunning = false;
-    
-    // create global resources manager
-    auto appResources = AppResources::getInstance();
-    appResources->Load();
-	
 	// set design resolution for game
 	glview->setDesignResolutionSize(960, 640, ResolutionPolicy::NO_BORDER);
 
+
+		
+	/*log("Scale factor     : %.0f", director->getContentScaleFactor());
+	log("Screen size      : {%.0f, %.0f}", glview->getFrameSize().width, glview->getFrameSize().height);
+	log("Tile size        : {%.0f, %.0f}", 70.0f, 70.0f);*/
+    
+	// create global resources manager
+	auto appResources = AppResources::getInstance();
+	appResources->initLoad();
+
+    // create global area for game
+    auto appGlobal = AppGlobal::getInstance();
+    appGlobal->IsGameSceneRunning = false;
+        		
     // create a scene. it's an autorelease object
     auto scene = SplashScene::createScene();
 

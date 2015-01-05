@@ -17,7 +17,7 @@ class GameplayScene : public Layer
 {
 private:
 	World* world;
-    GamePlayer* player;
+    
     Vec2 center;   
         
 public:

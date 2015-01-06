@@ -34,8 +34,8 @@ public:
 		maxSpeedX = 5.0f * mScale;
 		maxSpeedY = 10.0f * mScale;
 
-		speedX = 0.f;
-		speedY = 0.f;
+		speedX = 0.0f;
+		speedY = 0.0f;
 
 		// Set jump and gravity forces
 		jumpStartSpeedY = 8.f * mScale;
@@ -44,28 +44,19 @@ public:
 
 		jumping = false;
 		jumpKeyDown = false;
-
-		// Set collision points to test on the player sprite
-		collisionPoint.push_back(Vec2(10, 92)); // Top of head
-		collisionPoint.push_back(Vec2(56, 92)); // Top of head
-		collisionPoint.push_back(Vec2(10, 0));	// Feet
-		collisionPoint.push_back(Vec2(56, 40)); // Feet
-		collisionPoint.push_back(Vec2(0, 50));  // Left arm
-		collisionPoint.push_back(Vec2(0, 40));  // Left arm
-		collisionPoint.push_back(Vec2(66, 50)); // Right arm
-		collisionPoint.push_back(Vec2(66, 40)); // Right arm
 	}
 
 	virtual ~GameObject(){};
     
     // Then the init methods
+	virtual void initCollisionPoints();
 	virtual void initListeners();
 
     // Then methods of the instance
 	virtual void addMenu();
 	virtual void showMenu();
 	virtual void hideMenu();
-	virtual void updateObject(float& delta){}
+	virtual void updateObject(float& delta, Level& level){}
 		    
     // Then the overrides
 	virtual bool isMenuActive() { return _menu->isActive(); }
@@ -125,7 +116,7 @@ public:
     static GamePlayer* createWithFrameName(const std::string& arg);
  
     //
-    virtual void updateObject(float& delta) override;
+	virtual void updateObject(float& delta, Level& level) override;
 };
 
 #endif /* defined(__FranticAlien__GameObject__) */

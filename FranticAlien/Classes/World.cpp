@@ -56,9 +56,9 @@ void World::update(float& delta)
 {
 	this->background->update(delta);
 	//this->level->checkCollisions(delta, *player);
-	this->level->update(delta, *player);
+	//this->level->update(delta, *player);
 
-	this->player->updateObject(delta);
+	this->player->updateObject(delta, *level);
 }
 
 void World::updateLayers()

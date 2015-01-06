@@ -47,17 +47,17 @@ void PlayerInputComponent::update(GameObject& gameObject, float& delta)
 			moveRequest = true;
 		}
 
-		// Jump if not already jumping and the jump key was released earlier
-		if (GetAsyncKeyState(' ') && !gameObject.jumping && !gameObject.jumpKeyDown)
-		{
-			gameObject.jumping = true;
-			gameObject.jumpKeyDown = true;
-			gameObject.speedY = -gameObject.jumpStartSpeedY;
-		}
+		//// Jump if not already jumping and the jump key was released earlier
+		//if (GetAsyncKeyState(' ') && !gameObject.jumping && !gameObject.jumpKeyDown)
+		//{
+		//	gameObject.jumping = true;
+		//	gameObject.jumpKeyDown = true;
+		//	gameObject.speedY = -gameObject.jumpStartSpeedY;
+		//}
 
-		// Jump key released
-		if (!GetAsyncKeyState(' '))
-			gameObject.jumpKeyDown = false;
+		//// Jump key released
+		//if (!GetAsyncKeyState(' '))
+		//	gameObject.jumpKeyDown = false;
 
 	}
 
@@ -70,7 +70,7 @@ void PlayerInputComponent::update(GameObject& gameObject, float& delta)
 	if (gameObject.speedY < -gameObject.maxSpeedY) gameObject.speedY = -gameObject.maxSpeedY;
 
 	// Apply the force of gravity
-	//player.speedY += player.accY;
+	//gameObject.speedY += gameObject.accY;
 
 	// Decelerate the player's sideways movement if left or right wasn't pressed
 	if (!moveRequest)

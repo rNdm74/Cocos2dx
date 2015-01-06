@@ -2,6 +2,31 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="14" height="10" tilewidth="70" tileheight="70">
  <tileset firstgid="1" name="tiles" tilewidth="70" tileheight="70" spacing="1">
   <image source="tiles.png" width="1846" height="1846"/>
+  <tile id="196">
+   <properties>
+    <property name="Collidable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="222">
+   <properties>
+    <property name="Collidable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="225">
+   <properties>
+    <property name="Collidable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="251">
+   <properties>
+    <property name="Collidable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="277">
+   <properties>
+    <property name="Collidable" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="4" width="14" height="10">
   <data>

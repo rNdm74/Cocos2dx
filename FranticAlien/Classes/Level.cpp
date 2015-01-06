@@ -62,13 +62,20 @@ void Level::setupResources()
 
 	worldObjectCount = 0;
 		
+	
+
 	for (auto& object : worldObjects)
 	{
 		// is this map child a tile layer?
 		auto layer = dynamic_cast<TMXLayer*>(object);
 
+		auto layerName = layer->getLayerName();
+
+		bool isCollidable = layerName != "4" && layerName != "5";
+
+
 		//auto 
-		if (layer != nullptr)
+		if (layer != nullptr && isCollidable)
 		{						
 			addWorldObjects(*layer);
 		}
@@ -84,13 +91,13 @@ void Level::addWorldObjects(TMXLayer& layer)
 		for (int x = 0; x < layerSize.width; x++)
 		{			
 			auto tileSprite = layer.getTileAt(Vec2(x, y));
-			
+						
 			if (tileSprite)
 			{
+				auto anchor = tileSprite->getAnchorPoint();
 				worldObjectCount++;
 
-				// Get the tile bounds
-				worldObjectBoundingBoxes.push_back(tileSprite->getBoundingBox());
+				worldObjectBoundingBoxes.push_back(tileSprite->getBoundingBox());							
 			}
 		}
 	}
@@ -176,7 +183,6 @@ void Level::update(float& delta, GameObject& player)
 	// during the update, we want to use a fixed time reference; if we always use the
 	// current time, errors can be introduced due to the time elapsed while the
 	// update is running
-	int updateTick; // ??
 
 	// Flags to specify what kind of collision has occurred
 	bool contactX = true, contactYbottom = true, contactYtop = true;
@@ -208,7 +214,7 @@ void Level::update(float& delta, GameObject& player)
 		float playerX = playerPos.x;
 		float playerY = playerPos.y;
 		float playerW = playerSize.width;
-		float playerH = playerSize.height / 2;
+		float playerH = playerSize.height;
 
 		Rect playerBounds = Rect
 		(
@@ -263,72 +269,116 @@ void Level::update(float& delta, GameObject& player)
 			// paper' problem.
 			// ================================================================================
 
-			// We will test the four possible directions of player movement individually
-			// dir: 0 = top, 1 = bottom, 2 = left, 3 = right
-			for (int dir = 0; dir < 4; dir++)
+			//auto specAABB = playerBounds;
+			//float top = worldObjectBoundingBoxes.at(*it).origin.y + worldObjectBoundingBoxes.at(*it).size.height;
+			//float left =
+
+			Rect tileBounds = worldObjectBoundingBoxes.at(*it);
+			
+			float thisLeftX = tileBounds.origin.x;
+			float thisRightX = tileBounds.origin.x + tileBounds.size.width;
+			float thisTopY = tileBounds.origin.y + tileBounds.size.height;
+			float thisBottomY = tileBounds.origin.y;
+
+			float otherLeftX = playerBounds.origin.x;
+			float otherRightX = playerBounds.origin.x + playerBounds.size.width;
+			float otherTopY = playerBounds.origin.y + playerBounds.size.height;
+			float otherBottomY = playerBounds.origin.y;
+
+			Rect specIntBounds = Rect(otherLeftX, otherBottomY, thisRightX - otherLeftX, thisTopY - otherBottomY);
+
+			//auto specIntBounds = worldObjectBoundingBoxes.at(*it).unionWithRect(playerBounds);//.unionWithRect(specAABB);
+
+			float unionX = specIntBounds.getMaxX() - specIntBounds.getMinX();
+			float unionY = specIntBounds.getMaxY() - specIntBounds.getMinY();
+			
+			if (unionX >= 1 && unionY >= 1)
 			{
-				// Skip the test if the expected direction of movement makes the test irrelevant
-				// For example, we only want to test the top of the player's head when movement is
-				// upwards, not downwards. This is really important! If we don't do this, we can
-				// get stuck in a ceiling when falling for example.
-
-				if (dir == 0 && nextMoveY > 0) continue;
-				if (dir == 1 && nextMoveY < 0) continue;
-				if (dir == 2 && nextMoveX > 0) continue;
-				if (dir == 3 && nextMoveX < 0) continue;
-
-				// Our current position along the anticipated movement vector of the player this frame
-				projectedMoveX = projectedMoveY = 0;
-
-				// Calculate the length of the movement vector using Pythagoras
-				vectorLength = sqrt(nextMoveX * nextMoveX + nextMoveY * nextMoveY);
-				segments = 0;
-
-				// Advance along the vector until it intersects with some geometry
-				// or we reach the end
-				Vec2 upper = Vec2
-				(
-					player.collisionPoint[dir * 2].x + playerX + projectedMoveX,
-					player.collisionPoint[dir * 2].y + playerY + projectedMoveY
-				);
-
-				Vec2 lower = Vec2
-				(
-					player.collisionPoint[dir * 2 + 1].x + playerX + projectedMoveX,
-					player.collisionPoint[dir * 2 + 1].y + playerY + projectedMoveY
-				);
-
-				Rect bounds = worldObjectBoundingBoxes.at(*it);
-
-				while (!bounds.containsPoint(upper) && !bounds.containsPoint(lower) && segments < vectorLength)
+				// We will test the four possible directions of player movement individually
+				// dir: 0 = top, 1 = bottom, 2 = left, 3 = right
+				for (int dir = 0; dir < 4; dir++)
 				{
-					projectedMoveX += nextMoveX / vectorLength;
-					projectedMoveY += nextMoveY / vectorLength;
+					// Skip the test if the expected direction of movement makes the test irrelevant
+					// For example, we only want to test the top of the player's head when movement is
+					// upwards, not downwards. This is really important! If we don't do this, we can
+					// get stuck in a ceiling when falling for example.
 
-					segments++;
+					if (dir == 0 && nextMoveY > 0) continue;
+					if (dir == 1 && nextMoveY < 0) continue;
+					if (dir == 2 && nextMoveX > 0) continue;
+					if (dir == 3 && nextMoveX < 0) continue;
 
-					CollisionStats[iteration].specSteps++;
-				}
+					float minX = specIntBounds.getMinX();
+					float maxX = specIntBounds.getMaxX();
 
-				// If an intersection occurred...
-				if (segments < vectorLength)
-				{
-					// Apply correction for over-movement
-					if (segments > 0)
+					float minY = specIntBounds.getMinY();
+					float maxY = specIntBounds.getMaxY();
+
+					float safeMoveX = std::max(minX - playerX, playerX + playerW - maxX);
+					float safeMoveY = std::max(maxY - playerY, playerY - minY);
+					
+					float safeVecLen = sqrt(safeMoveX * safeMoveX + safeMoveY * safeMoveY);
+
+					// Calculate the length of the movement vector using Pythagoras
+					vectorLength = sqrt(nextMoveX * nextMoveX + nextMoveY * nextMoveY);
+
+					// Our current position along the anticipated movement vector of the player this frame
+					projectedMoveX = nextMoveX * (safeVecLen / vectorLength);
+					projectedMoveY = nextMoveY * (safeVecLen / vectorLength);
+
+					vectorLength -= safeVecLen;
+
+					segments = 0;
+
+					// Advance along the vector until it intersects with some geometry
+					// or we reach the end
+					Vec2 upper = Vec2
+					(
+						player.collisionPoint[dir * 2].x + playerX + projectedMoveX,
+						player.collisionPoint[dir * 2].y + playerY + projectedMoveY
+					);
+
+					Vec2 lower = Vec2
+					(
+						player.collisionPoint[dir * 2 + 1].x + playerX + projectedMoveX,
+						player.collisionPoint[dir * 2 + 1].y + playerY + projectedMoveY
+					);
+
+					Rect bounds = worldObjectBoundingBoxes.at(*it);
+
+					while (!bounds.containsPoint(upper) && !bounds.containsPoint(lower) && segments < vectorLength)
 					{
-						projectedMoveX -= nextMoveX / vectorLength;
-						projectedMoveY -= nextMoveY / vectorLength;
+						projectedMoveX += nextMoveX / vectorLength;
+						projectedMoveY += nextMoveY / vectorLength;
+						segments++;
+
+						CollisionStats[iteration].specSteps++;
 					}
 
-					// Adjust the X or Y component of the vector depending on
-					// which direction we are currently testing
-					if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
-					if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
+					// If an intersection occurred...
+					if (segments < vectorLength)
+					{
+						// Apply correction for over-movement
+						if (segments > 0)
+						{
+							projectedMoveX -= nextMoveX / vectorLength;
+							projectedMoveY -= nextMoveY / vectorLength;
+						}
+
+						// Adjust the X or Y component of the vector depending on
+						// which direction we are currently testing
+						if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
+						if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
+					}
 				}
+			}
+			else
+			{
+				CollisionStats[iteration].specDiscards++;
 			}
 
 			// ================================================================================
-			// Discrete contact solver
+			// Penetration resolution
 			//
 			// Here we look for existing collisions and nudge the player in the opposite
 			// direction until the collision is solved. The purpose of iteration is because
@@ -339,63 +389,62 @@ void Level::update(float& delta, GameObject& player)
 			// repeatedly, creating jitter in the player's movement.
 			// ================================================================================
 
+			Rect playerNextBounds = Rect
+			(
+				playerX + nextMoveX, 
+				playerY + nextMoveY,
+				playerW + nextMoveX, 
+				playerH + nextMoveY 
+			);
+
+			
+			tileBounds = worldObjectBoundingBoxes.at(*it);
+
+			thisLeftX = tileBounds.origin.x;
+			thisRightX = tileBounds.origin.x + tileBounds.size.width;
+			thisTopY = tileBounds.origin.y + tileBounds.size.height;
+			thisBottomY = tileBounds.origin.y;
+
+			otherLeftX = playerNextBounds.origin.x;
+			otherRightX = playerNextBounds.origin.x + playerBounds.size.width;
+			otherTopY = playerNextBounds.origin.y + playerBounds.size.height;
+			otherBottomY = playerNextBounds.origin.y;
+
+			//Rect specIntBounds = Rect(otherLeftX, otherBottomY, thisRightX - otherLeftX, thisTopY - otherBottomY);
+			Rect intersectedBounds = tileBounds.unionWithRect(playerNextBounds);//Rect(otherLeftX, otherBottomY, thisRightX - otherLeftX, thisTopY - otherBottomY);//worldObjectBoundingBoxes.at(*it).unionWithRect(playerNextBounds);
+
+			// Convert to int to prevent juddering of the character due to floating point rounding errors
+			int intX = static_cast<int>(intersectedBounds.getMaxX() - intersectedBounds.getMinX());
+			int intY = static_cast<int>(intersectedBounds.getMinY() - intersectedBounds.getMaxY());
+
 			// We will test the four possible directions of player movement individually
 			// dir: 0 = top, 1 = bottom, 2 = left, 3 = right
 			for (int dir = 0; dir < 4; dir++)
 			{
-				// Skip the test if the expected direction of movement makes the test irrelevant
-				// For example, we only want to test the top of the player's head when movement is
-				// upwards, not downwards. This is really important! If we don't do this, we can
-				// make corrections in the wrong direction, causing the player to magically jump
-				// up to platforms or stick to ceilings.
-
-				if (dir == 0 && nextMoveY > 0) continue;
-				if (dir == 1 && nextMoveY < 0) continue;
-				if (dir == 2 && nextMoveX > 0) continue;
-				if (dir == 3 && nextMoveX < 0) continue;
-
-				projectedMoveX = (dir >= 2 ? nextMoveX : 0);
-				projectedMoveY = (dir <  2 ? nextMoveY : 0);
-
-				// Traverse backwards in X or Y (but not both at the same time)
-				// until the player is no longer colliding with the geometry
-
-				// Note: This code also enables walking up gently sloping surfaces:
-				// as the force of gravity pulls down on the player and causes surface contact,
-				// the correction pushes the player away from the inside of the platform up
-				// to the surface. Without this, the player would get stuck in any sloping
-				// platform.
-				// This same code also prevents walking up platforms that are too steeply sloped.
-				// The act of falling causes collisions with the left or right side of the
-				// player, causing him/her to be nudged left or right and be free to continue
-				// falling further. The maximum incline of the slope the player can walk up
-				// is directly related to the selected gravitational force.
 				Vec2 upper = Vec2
 				(
-					player.collisionPoint[dir * 2].x + playerX + projectedMoveX,
-					player.collisionPoint[dir * 2].y + playerY + projectedMoveY
+					player.collisionPoint[dir * 2].x + playerX + nextMoveX,
+					player.collisionPoint[dir * 2].y + playerY + nextMoveY
 				);
 
 				Vec2 lower = Vec2
 				(
-					player.collisionPoint[dir * 2 + 1].x + playerX + projectedMoveX,
-					player.collisionPoint[dir * 2 + 1].y + playerY + projectedMoveY
+					player.collisionPoint[dir * 2 + 1].x + playerX + nextMoveX,
+					player.collisionPoint[dir * 2 + 1].y + playerY + nextMoveY
 				);
 
-				Rect bounds = worldObjectBoundingBoxes.at(*it);
-
-				while (!bounds.containsPoint(upper) && !bounds.containsPoint(lower) && segments < vectorLength)				
+				if (intersectedBounds.containsPoint(upper) || intersectedBounds.containsPoint(lower))
 				{
-					if (dir == 0) projectedMoveY++;
-					if (dir == 1) projectedMoveY--;
-					if (dir == 2) projectedMoveX++;
-					if (dir == 3) projectedMoveX--;
+					switch (dir) 
+					{
+						case 0: nextMoveY += intY; break;
+						case 1: nextMoveY -= intY; break;
+						case 2: nextMoveX += intX; break;
+						case 3: nextMoveX -= intX; break;
+					}
 
 					CollisionStats[iteration].penetrationCorrections++;
 				}
-
-				if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
-				if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
 			}
 
 			// Detect what type of contact has occurred based on a comparison of

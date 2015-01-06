@@ -15,6 +15,21 @@ void GameObject::hideMenu()
 	_menu->hideMenu(*this);
 }
 
+void GameObject::initCollisionPoints()
+{
+	auto size = this->getBoundingBox().size;
+
+	// Set collision points to test on the player sprite
+	collisionPoint.push_back(Vec2(1, 70 - 1));					// Top of head
+	collisionPoint.push_back(Vec2(size.width - 1, 70 - 1));		// Top of head
+	collisionPoint.push_back(Vec2(1, 0));						// Feet
+	collisionPoint.push_back(Vec2(size.width - 1, 0));			// Feet
+	collisionPoint.push_back(Vec2(0, 10));						// Left arm
+	collisionPoint.push_back(Vec2(0, 70 - 1));					// Left arm
+	collisionPoint.push_back(Vec2(size.width, 10));			// Right arm
+	collisionPoint.push_back(Vec2(size.width, 70 - 1));		// Right arm
+}
+
 void GameObject::initListeners()
 {
 	auto listener = EventListenerTouchOneByOne::create();
@@ -68,8 +83,9 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
     if(sprite && sprite->initWithSpriteFrame(spriteFrame))
     {
         sprite->autorelease();
-        sprite->setAnchorPoint(Vec2(0, 0));
+        sprite->setAnchorPoint(Vec2(0.5, 0));
 		sprite->setName("Player");
+		sprite->initCollisionPoints();
 		sprite->initListeners();
 		sprite->addMenu();
 		sprite->hideMenu();
@@ -82,11 +98,10 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
     return NULL;
 }
 
-void GamePlayer::updateObject(float& delta)
+void GamePlayer::updateObject(float& delta, Level& level)
 {
-	//_physics->update(*this, delta);
-	_input->update(*this, delta);
-    
+	_physics->update(*this, level, delta);
+	_input->update(*this, delta);    
 }
 
 

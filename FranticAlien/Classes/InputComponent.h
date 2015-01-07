@@ -5,6 +5,8 @@
 
 class GameObject;
 
+using namespace cocos2d;
+
 class InputComponent
 {
 public:
@@ -18,7 +20,7 @@ public:
 	void update(GameObject& gameObject, float& delta);
 
 private:
-    static const int WALK_ACCELERATION = 1;
+   
 };
 
 #endif /* defined(__FranticAlien__InputComponent__) */

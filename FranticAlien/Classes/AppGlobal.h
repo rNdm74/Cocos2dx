@@ -3,18 +3,7 @@
 
 #include "cocos2d.h"
 
-#define kTagCursor 999
-
-#define KTagSceneLayer 1
-
 using namespace cocos2d;
-
-enum EDirection{
-    DIR_LEFT,
-    DIR_RIGHT,
-    DIR_UP,
-    DIR_DOWN
-};
 
 class  AppGlobal
 {
@@ -26,32 +15,28 @@ public:
 	Vec2 cursorMove;
 	bool mouseUp;
 	bool mouseDown;
-	Vec2 mouseScroll;
-	
+	Vec2 mouseScroll;	
     
 public:
     static AppGlobal* getInstance();
 
 	void initMouseListener();
-
-		    
+			    
 	float getRandom(float begin, float end);
 	void addCursor(Layer& layer);
 
     std::string GetActiveLevel() { return std::to_string(ActiveLevel); };
 	
-    EDirection getDirection() { return _direction; }
-    void setDirection(EDirection direction) { _direction = direction; }
+    //EDirection getDirection() { return _direction; }
+    //void setDirection(EDirection direction) { _direction = direction; }
     
 private:
     AppGlobal();
     virtual ~AppGlobal();
-
 	
-    
     static AppGlobal* m_pInstance;
     
-    EDirection _direction;
+    //EDirection _direction;
 };
 
 #define RAND(begin, end)  ( AppGlobal::getInstance()->getRandom( (begin), (end) ) )

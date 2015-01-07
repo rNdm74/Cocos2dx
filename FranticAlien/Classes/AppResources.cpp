@@ -1,6 +1,5 @@
 #include "AppResources.h"
-#include <time.h>
-
+#include "Constants.h"
 
 
 AppResources* AppResources::m_pInstance = NULL;
@@ -45,17 +44,6 @@ bool AppResources::mainLoad()
 	//textureCache->addImageAsync(TILES_PNG, CC_CALLBACK_1(AppResources::loadTileResources, this));
 
 	return true;
-}
-
-char* AppResources::timestamp()
-{
-	time_t rawtime;
-	struct tm * timeinfo;
-
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
-
-	return asctime(timeinfo);
 }
 
 void AppResources::loadBackgroundResources(Texture2D* texture)

@@ -1,114 +1,11 @@
 #include "World.h"
+#include "Constants.h"
 #include "AppGlobal.h"
 #include "Level.h"
 #include "GameObject.h"
+#include "B2DebugDrawLayer.h"
 
-World* World::create()
-{
-	// Create an instance of InfiniteParallaxNode
-	World* node = new World();
-
-	if (node) {
-		// Add it to autorelease pool
-		node->autorelease();
-	}
-	else {
-		// Otherwise delete
-		delete node;
-		node = 0;
-	}
-
-	return node;
-}
-
-World::World()
-{
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	Vec2 mapOrigin = Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - (visibleSize.height / 6));
-
-	background = WorldParallaxBackGround::create();
-	this->addChild(background);
-
-	for (const auto& child : background->getChildren())
-	{
-		static_cast<SpriteBatchNode*>(child)->getTexture()->setAntiAliasTexParameters();
-	}
-
-	level = new Level();
-	level->loadMap("level1.tmx");
-	this->addChild(level->getMap());
-
-	player = GamePlayer::createWithFrameName("alienBeige_stand.png");
-	player->setPosition(mapOrigin);
-	player->getTexture()->setAntiAliasTexParameters();
-
-	log("pX: %f, pY%f", player->getPositionX(), getPositionY());
-
-	this->addChild(player, 99);
-}
-
-World::~World()
-{
-}
-
-void World::update(float& delta)
-{
-	this->background->update(delta);
-	//this->level->checkCollisions(delta, *player);
-	//this->level->update(delta, *player);
-
-	this->player->updateObject(delta, *level);
-}
-
-void World::updateLayers()
-{
-	
-
-	//for (auto& object : this->map->getChildren())
-	//{
-	//	// is this map child a tile layer?
-	//	auto layer = dynamic_cast<TMXLayer*>(object);
-
-	//	if (layer != nullptr)
-	//	{
-	//		this->updateTiles(layer);
-	//	}			
-	//}
-}
-
-void World::updateTiles(TMXLayer* layer)
-{			
-	// create all the rectangular fixtures for each tile
-	Size layerSize = layer->getLayerSize();
-
-	for (int y = 0; y < layerSize.height; y++)
-	{
-		for (int x = 0; x < layerSize.width; x++)
-		{
-			// create a fixture if this tile has a sprite
-			auto tileSprite = layer->getTileAt(Point(x, y));
-
-			if (tileSprite)
-			{
-				auto tilePos = convertToWorldSpace(tileSprite->getPosition());
-				log("%f, %f", tilePos.x, tilePos.y);
-				//if (tileSprite->)
-
-				//tileSprite->removeFromParent();
-				
-				//this->addChild(tileSprite, 0, Vec2(parallaxRatio, 1), tileSprite->getPosition());
-			}				
-		}
-	}
-}
-
-//
-//
-// 
-//
-//
-
+#pragma region WorldParallaxBackGround
 WorldParallaxBackGround* WorldParallaxBackGround::create()
 {
 	// Create an instance of InfiniteParallaxNode
@@ -129,7 +26,7 @@ WorldParallaxBackGround* WorldParallaxBackGround::create()
 }
 
 WorldParallaxBackGround::WorldParallaxBackGround()
-{	
+{
 }
 
 WorldParallaxBackGround::~WorldParallaxBackGround()
@@ -215,11 +112,11 @@ void WorldParallaxBackGround::addBushs()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	auto background = Sprite::createWithSpriteFrameName("bush.png");
-	
+
 	background->setTag(kTagScrollingBush);
 	background->setAnchorPoint(Vec2(0, 0));
 	background->setScale(RAND(0.7, 2));
-	
+
 	this->addChild(background, -8, Vec2(0.4, 1), Vec2(RAND(visibleSize.width, visibleSize.width * 2), 70));
 }
 
@@ -240,3 +137,70 @@ void WorldParallaxBackGround::addClouds()
 
 	this->addChild(background, -8, Vec2(RAND(0.1, 0.6), 1), Vec2(x, y));
 }
+#pragma endregion WorldParallaxBackGround
+
+
+#pragma region World
+World* World::create()
+{
+	// Create an instance of InfiniteParallaxNode
+	World* node = new World();
+
+	if (node) {
+		// Add it to autorelease pool
+		node->autorelease();
+	}
+	else {
+		// Otherwise delete
+		delete node;
+		node = 0;
+	}
+
+	return node;
+}
+
+World::World()
+{
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	Vec2 mapOrigin = Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height);
+
+	background = WorldParallaxBackGround::create();
+	this->addChild(background);
+
+	for (const auto& child : background->getChildren())
+	{
+		static_cast<SpriteBatchNode*>(child)->getTexture()->setAntiAliasTexParameters();
+	}
+
+	level = new Level();
+	level->loadMap(kLevelTMX);
+	//level->prepareLayers();
+	level->addObjects();
+	this->addChild(level->getMap());
+
+	player = GamePlayer::createWithFrameName(kPlayerFileName);
+	player->setPosition(mapOrigin);
+	player->getTexture()->setAntiAliasTexParameters();
+	player->addBodyToWorld(*level->getPhysicsWorld());
+	player->addFixturesToBody();
+	this->addChild(player, 99);
+
+	//debugDraw = B2DebugDrawLayer::create(level->getPhysicsWorld(), kPixelsPerMeter, 0);
+	//this->addChild(debugDraw);
+}
+
+World::~World()
+{
+}
+
+
+
+void World::update(float& delta)
+{
+	background->update(delta);
+	level->update(delta);
+	player->update(delta, *level->getPhysicsWorld());
+}
+
+#pragma endregion World

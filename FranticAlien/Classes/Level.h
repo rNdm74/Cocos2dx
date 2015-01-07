@@ -2,60 +2,43 @@
 #define __FranticAlien__LEVEL_H__
 
 #include "cocos2d.h"
+#include "Box2D.h"
 
 class GameObject;
 
 using namespace cocos2d;
 
-class Level : public Node
+class Level : public Node, public b2ContactListener
 {
 public:
-	TMXTiledMap *map;
 
-	void loadMap(const char* name);
-	TMXTiledMap * getMap();
-
+	void loadMap(std::string mapname);
+	
 	Level();
 	virtual ~Level(void);
 
-	void setupResources();
-	void addWorldObjects(TMXLayer& layer);
+	void BeginContact(b2Contact* contact);
+	void EndContact(b2Contact* contact);
 
-	void update(float& delta, GameObject& player);
+	void createPhysicsWorld();
+	void prepareLayers();
+	void createFixtures(TMXLayer& layer);
+	void createRectangularFixture(TMXLayer& layer, int x, int y, int width, int height);
+	void createRectangularFixture(float x, float y, float width, float height);
+	void addObjects();
 
-	void checkCollisions(float& delta, GameObject& player);
-	void checkTiles(float& delta, TMXLayer& layer, GameObject& player);
+	GameObject* addObject(std::string className, ValueMap& properties);
+
+	void update(float& delta);
+
+	TMXTiledMap* getMap() { return map; }
+	b2World* getPhysicsWorld() { return physicsWorld; }
 
 private:
-	// The number of objects in the game world
-	int worldObjectCount;
+	TMXTiledMap* map;
+	b2World* physicsWorld;
 
-	// The geometry of all the landscape objects (platforms and walls)
-	Vector<Node*> worldObjects;
-
-	// Pre-calculated bounding boxes for all the landscape objects
-	std::vector<Rect> worldObjectBoundingBoxes;
-		
-	// The maximum number of iterations for the contact solver to run per frame
-	static const int iterations = 3;
-
-	// Statistics on the contact solver per frame
-	typedef struct {
-		int boundConstraints;
-		int penetrationCorrections;
-		int specSteps;
-		int specDiscards;
-		int contacts;
-	} CollisionData;
-
-	CollisionData CollisionStats[iterations];
-
-	// A list of objects this frame for which the player is currently within the bounding boxes of
-	// (these are the only objects that will be tested for collision)
-	std::set<int> boundObjects;
-
-	// True if the bounding boxes should be rendered (for debugging)
-	bool showBoundingBoxes;
+	int objectCount;
 };
 
 #endif /* defined(__FranticAlien__LEVEL_H__) */

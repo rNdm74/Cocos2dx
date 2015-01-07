@@ -1,7 +1,8 @@
-#include "LoadingScene.h"
 #include "AppGlobal.h"
 #include "AppResources.h"
+#include "Constants.h"
 #include "GameplayScene.h"
+#include "LoadingScene.h"
 
 Scene* LoadingScene::createScene()
 {

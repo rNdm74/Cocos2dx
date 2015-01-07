@@ -1,4 +1,5 @@
 #include "AppGlobal.h"
+#include "Constants.h"
 
 AppGlobal* AppGlobal::m_pInstance = NULL;
 

@@ -12,17 +12,17 @@ class PhysicsComponent
 {
 public:
     virtual ~PhysicsComponent(){};
-	virtual void update(GameObject &gameObject, Level& level, float& delta) = 0;
-	virtual void applyGravity(GameObject &gameObject, Level& level, float& delta) = 0;
-	virtual void collisionDetection(GameObject &gameObject, Level& level, float& delta) = 0;
+	virtual void update(GameObject &gameObject) = 0;
+
+protected:
+
 };
 
 class PlayerPhysicsComponent : public PhysicsComponent
 {
 public:
-	void update(GameObject &gameObject, Level& level, float& delta);
-	void applyGravity(GameObject &gameObject, Level& level, float& delta);
-	void collisionDetection(GameObject &gameObject, Level& level, float& delta);
+	void update(GameObject &gameObject);
+	
 };
 
 #endif /* defined(__FranticAlien__PhysicsComponent__) */

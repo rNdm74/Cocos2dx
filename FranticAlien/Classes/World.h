@@ -6,10 +6,7 @@
 class AppGlobal;
 class Level;
 class GamePlayer;
-
-#define kTagScrollingBackground 0
-#define kTagScrollingCloud 1
-#define kTagScrollingBush 2
+class B2DebugDrawLayer;
 
 using namespace cocos2d;
 
@@ -57,14 +54,12 @@ public:
 	virtual ~World();
 
 	void update(float& delta);
-	void updateLayers();
 
-	void updateTiles(TMXLayer* layer);
-	
 private:
 	GamePlayer* player;
 	Level* level;
 	WorldParallaxBackGround* background;
+	B2DebugDrawLayer* debugDraw;
 };
 
 

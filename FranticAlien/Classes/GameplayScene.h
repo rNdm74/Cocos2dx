@@ -2,14 +2,8 @@
 #define __FranticAlien__GAMEPLAY_SCENE_H__
 
 #include "cocos2d.h"
-#include "TileMap.h"
-#include "Player.h"
-#include "World.h"
 
-#define kBackgroundLayer 1
-#define kMidgroundLayer 2
-#define kForegroundLayer 3
-#define PTM_RATIO 32.0
+class World;
 
 using namespace cocos2d;
 
@@ -17,8 +11,6 @@ class GameplayScene : public Layer
 {
 private:
 	World* world;
-    
-    Vec2 center;   
         
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -36,11 +28,6 @@ public:
     void update(float) override;
     
 private:
-        
-	TileMap* tilemap;
-
-    cocos2d::Vec2 direction;
-
 	void actionFinished();
 	bool onContactBegin(PhysicsContact &contact);
 

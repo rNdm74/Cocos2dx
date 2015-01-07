@@ -1,7 +1,8 @@
-#include "SplashScene.h"
-#include "MenuScene.h"
 #include "AppGlobal.h"
 #include "AppResources.h"
+#include "Constants.h"
+#include "MenuScene.h"
+#include "SplashScene.h"
 
 Scene* SplashScene::createScene()
 {

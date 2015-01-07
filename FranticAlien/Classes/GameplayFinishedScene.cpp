@@ -1,9 +1,8 @@
-#include "GameplayFinishedScene.h"
 #include "AppGlobal.h"
+#include "Constants.h"
 #include "GameplayScene.h"
+#include "GameplayFinishedScene.h"
 #include "MenuScene.h"
-
-USING_NS_CC;
 
 Scene* GameplayFinishedScene::createScene()
 {

@@ -1,5 +1,6 @@
-#include "SettingsScene.h"
 #include "AppGlobal.h"
+#include "Constants.h"
+#include "SettingsScene.h"
 
 Scene* SettingsScene::createScene()
 {

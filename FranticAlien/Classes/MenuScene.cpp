@@ -1,7 +1,8 @@
-#include "MenuScene.h"
 #include "AppGlobal.h"
 #include "AppResources.h"
+#include "Constants.h"
 #include "LoadingScene.h"
+#include "MenuScene.h"
 #include "SettingsScene.h"
 
 Scene* MenuScene::createScene()

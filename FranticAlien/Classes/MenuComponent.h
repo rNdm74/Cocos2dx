@@ -1,13 +1,6 @@
 #ifndef __FranticAlien__MenuComponent__
 #define __FranticAlien__MenuComponent__
 
-#define FILE_PREFIX "alien"
-#define FILE_SUFFIX "_badge2.png"
-
-#define MENU 1
-
-#define PI 3.14159265
-
 #include "cocos2d.h"
 
 using namespace cocos2d;
@@ -20,7 +13,6 @@ public:
 	static MenuComponentItem* createMenuWithFrameName(std::string frameName);
 
 	void initListeners();
-
 };
 
 class MenuComponent

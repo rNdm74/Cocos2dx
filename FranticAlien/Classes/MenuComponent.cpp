@@ -1,5 +1,6 @@
-#include "MenuComponent.h"
+#include "Constants.h"
 #include "GameObject.h"
+#include "MenuComponent.h"
 
 MenuComponentItem* MenuComponentItem::createMenuWithFrameName(std::string frameName)
 {

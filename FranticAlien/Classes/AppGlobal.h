@@ -2,6 +2,7 @@
 #define  __FranticAlien__APP_GLOBAL_H_
 
 #include "cocos2d.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 
@@ -16,19 +17,21 @@ public:
 	bool mouseUp;
 	bool mouseDown;
 	Vec2 mouseScroll;	
+
+	EState state;
+	EState previousState;
     
 public:
     static AppGlobal* getInstance();
 
 	void initMouseListener();
+	void initKeyboardListener();
+	void initTouchListener();
 			    
 	float getRandom(float begin, float end);
 	void addCursor(Layer& layer);
 
     std::string GetActiveLevel() { return std::to_string(ActiveLevel); };
-	
-    //EDirection getDirection() { return _direction; }
-    //void setDirection(EDirection direction) { _direction = direction; }
     
 private:
     AppGlobal();
@@ -36,7 +39,6 @@ private:
 	
     static AppGlobal* m_pInstance;
     
-    //EDirection _direction;
 };
 
 #define RAND(begin, end)  ( AppGlobal::getInstance()->getRandom( (begin), (end) ) )

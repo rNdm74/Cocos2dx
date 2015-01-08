@@ -2,6 +2,7 @@
 #define __FranticAlien__GAME_OBJECT_H__
 
 #include "cocos2d.h"
+#include "Box2D.h"
 
 class MenuComponent;
 class InputComponent;
@@ -47,9 +48,9 @@ public:
 	virtual void addBodyToWorld(b2World& world);
 	virtual void addCircularFixtureToBody(float radius);
 	virtual	void addRectangularFixtureToBody(float width, float height);
-	virtual void addSensorRectangleToBody();
+	virtual void addSensorRectangleToBody(float offset);
 	virtual void addFixturesToBody(){}
-	virtual void createFixture(b2Shape* shape, bool isSensor);
+	virtual void createFixture(b2Shape* shape, bool isSensor, uint16 categoryBits, uint16 maskBits);
 	virtual void setProperties(ValueMap& properties);
 
     // Then the overrides
@@ -78,7 +79,8 @@ private:
 
 public:
 	GamePlayer(MenuComponent* menu, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) 
-				 : super(menu, input, physics, graphics){}
+	: super(menu, input, physics, graphics){}
+	
 	//
     static GamePlayer* createWithFrameName(const std::string& arg);
  

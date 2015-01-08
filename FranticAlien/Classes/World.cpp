@@ -163,7 +163,7 @@ World::World()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	Vec2 mapOrigin = Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height);
+	Vec2 mapOrigin = Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 50);
 
 	background = WorldParallaxBackGround::create();
 	this->addChild(background);
@@ -186,8 +186,8 @@ World::World()
 	player->addFixturesToBody();
 	this->addChild(player, 99);
 
-	//debugDraw = B2DebugDrawLayer::create(level->getPhysicsWorld(), kPixelsPerMeter, 0);
-	//this->addChild(debugDraw);
+	debugDraw = B2DebugDrawLayer::create(level->getPhysicsWorld(), kPixelsPerMeter, 0);
+	this->addChild(debugDraw);
 }
 
 World::~World()

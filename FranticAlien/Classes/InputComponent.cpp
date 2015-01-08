@@ -6,26 +6,68 @@
 
 void PlayerInputComponent::update(GameObject& gameObject, float& delta)
 {
-	if (GetAsyncKeyState(VK_LEFT))
+	auto global = AppGlobal::getInstance();
+
+	auto body = gameObject.getBody();
+
+	auto vel = body->GetLinearVelocity();
+
+	float desiredVel = 0.0f;
+
+	float climb = 0.0f;
+	
+	switch (global->state)
 	{
-		gameObject.getBody()->ApplyForceToCenter(b2Vec2(-250,0), true);
+		case STATE_LEFT :  
+			desiredVel = b2Max(vel.x - kMinVelocityX, -kMaxVelocityX);
+			break;
+
+		case STATE_STOP :  
+			desiredVel = vel.x * kStopVelocity;	climb = 0.0f;
+			break;
+
+		case STATE_RIGHT : 
+			desiredVel = b2Min(vel.x + kMinVelocityX, kMaxVelocityX);
+			break;
+				
+		case STATE_UP:
+		{
+			climb = 2.5f;
+
+			//if (body->GetGravityScale() == 0)
+			//	climb = 5.0f;
+		}
+		break;
+
+		case STATE_DOWN:
+		{
+			climb = -5.0f;
+			//if (body->GetGravityScale() == 0)
+				
+		}
+		break;
 	}
 
-	// Move (accelerate) rightwards
-	if (GetAsyncKeyState(VK_RIGHT))
-	{
-		gameObject.getBody()->ApplyForceToCenter(b2Vec2(250, 0), true);
-	}
+	float velChange = desiredVel - vel.x;
+	
+	float impulse = body->GetMass() * velChange;
+	
+	
+	body->ApplyLinearImpulse(b2Vec2(impulse, climb), body->GetWorldCenter(), true);
+}
 
-	if (GetAsyncKeyState(VK_UP))
-	{
-		gameObject.getBody()->ApplyForceToCenter(b2Vec2(0, 500), true);
-	}
+void PlayerInputComponent::setLeftVelocityX(float& velocityX)
+{
+	velocityX = b2Min(velocityX + kMinVelocityX, kMaxVelocityX);
+}
 
-	if (GetAsyncKeyState(VK_DOWN))
-	{
-		gameObject.getBody()->ApplyForceToCenter(b2Vec2(0, -100), true);
-	}
+void PlayerInputComponent::setRightVelocityX(float& velocityX)
+{
+	velocityX = b2Max(velocityX - kMinVelocityX, -kMaxVelocityX);
+}
 
+void PlayerInputComponent::setStopVelocityX(float& velocityX)
+{
+	velocityX = velocityX * kStopVelocity;
 }
 

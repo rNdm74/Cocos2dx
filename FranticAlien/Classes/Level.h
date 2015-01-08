@@ -24,7 +24,9 @@ public:
 	void prepareLayers();
 	void createFixtures(TMXLayer& layer);
 	void createRectangularFixture(TMXLayer& layer, int x, int y, int width, int height);
-	void createRectangularFixture(float x, float y, float width, float height);
+	void createRectangularFixture(float x, float y, float width, float height, bool isSensor, uint16 categoryBits, uint16 maskBits);
+	void createGhostFixture(float x, float y, float width, float height, bool isSensor, uint16 categoryBits, uint16 maskBits);
+	void createPolyLineFixture(std::vector<b2Vec2> vectors, int32 count, bool isSensor, uint16 categoryBits, uint16 maskBits);
 	void addObjects();
 
 	GameObject* addObject(std::string className, ValueMap& properties);

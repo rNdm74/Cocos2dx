@@ -1,9 +1,15 @@
-#include "GraphicsComponent.h"
+#include "AppGlobal.h"
+#include "Box2D.h"
+#include "Constants.h"
 #include "GameObject.h"
-
-USING_NS_CC;
+#include "GraphicsComponent.h"
 
 void PlayerGraphicsComponent::update(GameObject &gameObject)
 {
-    //log("%s", gameObject.getSomething());
+	auto bodyPos = gameObject.getBody()->GetPosition();
+
+	/*gameObject.setPosition
+	(
+		Vec2(bodyPos.x * kPixelsPerMeter, bodyPos.y * kPixelsPerMeter)
+	);*/
 }

@@ -6,27 +6,31 @@
 
 using namespace cocos2d;
 
-struct Contact {
+class GameObject;
+
+struct Contact 
+{
     b2Fixture *fixtureA;
     b2Fixture *fixtureB;
-    bool operator==(const Contact& other) const
+
+	bool operator==(const Contact& other) const
     {
         return (fixtureA == other.fixtureA) && (fixtureB == other.fixtureB);
     }
 };
 
-class ContactListener : public b2ContactListener{
-    
-    private:
-        virtual void EndContact(b2Contact* contact);
-        
-        virtual void BeginContact(b2Contact* contact);
-        
-        virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
-        virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
+class ContactListener : public b2ContactListener
+{    
+private:
+	virtual void BeginContact(b2Contact* contact);
+	virtual void EndContact(b2Contact* contact);
+               
+    virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+    virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 
+	virtual bool isLadder(b2Contact* contact, GameObject*& gameObject);
 
-    public:
+public:
         std::vector<Contact>_contacts;
 };
 #endif /* defined(__FranticAlien__CONTACT_LISTENER_H__) */

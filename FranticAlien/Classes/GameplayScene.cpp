@@ -46,9 +46,6 @@ bool GameplayScene::init()
     keyListener->onKeyReleased = CC_CALLBACK_2(GameplayScene::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
     
-//	auto contactListener = EventListenerPhysicsContact::create();
-//	contactListener->onContactBegin = CC_CALLBACK_1(GameplayScene::onContactBegin, this);
-//	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
     // create and initialize a menu
     auto menu_item_1 = MenuItemFont::create("Pause", CC_CALLBACK_1(GameplayScene::Pause, this));

@@ -19,8 +19,10 @@ class PlayerInputComponent : public InputComponent
 public:
 	void update(GameObject& gameObject, float& delta);
 
-private:
-   
+private:	
+	void setLeftVelocityX(float& velocityX);
+	void setRightVelocityX(float& velocityX);
+	void setStopVelocityX(float& velocityX);
 };
 
 #endif /* defined(__FranticAlien__InputComponent__) */

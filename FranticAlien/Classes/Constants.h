@@ -40,19 +40,48 @@
 
 #define PI 3.14159265
 
-const float kPixelsPerMeter = 32.0f;
-const float kGravity = -kPixelsPerMeter / 0.7f; // adjust this to taste
-const float kUpdateInterval = 1.0f / 60.0f;
-const double kSecondsPerUpdate = 0.1;
+const float kMinVelocityX						= 1.0f;
+const float kMaxVelocityX						= 15.0f;
+const float kStopVelocity						= 0.70f; // 98%
 
-const std::string kLevelTMX = "level1.tmx";
-const std::string kPlayerFileName = "alienBeige_stand.png";
+const float kGameObjectFixtureDensity			= 1.0f;
+const float kGameObjectFixtureFriction			= 0.3f;
+const float kGameObjectFixtureRestitution		= 0.1f;
+const int	kGameObjectFixtureFilterMaskBits	= 0xffff;
 
-enum EDirection{
-	DIR_LEFT,
-	DIR_RIGHT,
-	DIR_UP,
-	DIR_DOWN
+
+
+const float kPixelsPerMeter						= 32.0f;
+const float kGravity							= -9.8f; // adjust this to taste
+const float kUpdateInterval						= 1.0f / 60.0f;
+const double kSecondsPerUpdate					= 0.1;
+
+const std::string kLevelTMX						= "level1.tmx";
+const std::string kPlayerFileName				= "alienBeige_stand.png";
+
+//enumeration of possible input states
+enum EState {
+	STATE_STOP,
+	STATE_LEFT,
+	STATE_RIGHT,
+	STATE_UP,
+	STATE_DOWN,
+	STATE_JUMP,
+	STATE_ENTER,
+	STATE_ESCAPE,
+	STATE_HUD,
+	STATE_SPRINT,
+};
+
+enum kFilterCatagory 
+{
+	BOUNDARY	= 0x0001,
+	PLAYER		= 0x0002,
+	LADDER		= 0x0004,
+	ENEMY		= 0x0008,
+	//ENEMY_AIRCRAFT = 0x0010,
+	//FRIENDLY_TOWER = 0x0020,
+	//RADAR_SENSOR = 0x0040,
 };
 
 enum

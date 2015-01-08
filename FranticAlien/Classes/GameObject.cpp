@@ -52,13 +52,12 @@ void GameObject::addBodyToWorld(b2World& world)
 void GameObject::addCircularFixtureToBody(float radius)
 {
 	b2CircleShape shape;
-	shape.m_radius = radius * this->getScale();
-	this->createFixture(&shape, false);
+	shape.m_radius = (radius * this->getScale()) / kPixelsPerMeter;
+	this->createFixture(&shape, false, kFilterCatagory::PLAYER, kFilterCatagory::BOUNDARY | kFilterCatagory::ENEMY);
 }
 
 void GameObject::addRectangularFixtureToBody(float width, float height)
-{
-	
+{	
 	b2PolygonShape shape;
 	shape.SetAsBox
 	(
@@ -68,33 +67,35 @@ void GameObject::addRectangularFixtureToBody(float width, float height)
 		0.0f
 	);
 	
-	this->createFixture(&shape, false);
+	this->createFixture(&shape, false, kFilterCatagory::PLAYER, kFilterCatagory::BOUNDARY | kFilterCatagory::ENEMY);
 }
-void GameObject::addSensorRectangleToBody()
+
+void GameObject::addSensorRectangleToBody(float offset)
 {
 	b2PolygonShape shape;
 	shape.SetAsBox
-		(
-		(50 / kPixelsPerMeter) * 0.5f,
+	(
 		(10 / kPixelsPerMeter) * 0.5f,
-		b2Vec2(0, 0),
+		(10 / kPixelsPerMeter) * 0.5f,
+		b2Vec2(0, offset),
 		0.0f
-		);
+	);
 
-	this->createFixture(&shape, true);
+	this->createFixture(&shape, true, kFilterCatagory::PLAYER, kFilterCatagory::LADDER);
 }
-void GameObject::createFixture(b2Shape* shape, bool isSensor)
+
+void GameObject::createFixture(b2Shape* shape, bool isSensor, uint16 categoryBits, uint16 maskBits)
 {
 	// note that friction, etc. can be modified later by looping
 	// over the body's fixtures and calling fixture->SetFriction()
 	b2FixtureDef fixtureDef;
 
 	fixtureDef.shape = shape;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.0f;
-	//fixtureDef.restitution = 0.1f;
-	fixtureDef.filter.categoryBits = kFilterCategorySolidObject;
-	fixtureDef.filter.maskBits = 0xffff;
+	fixtureDef.density = kGameObjectFixtureDensity;
+	fixtureDef.friction = kGameObjectFixtureFriction;
+	//fixtureDef.restitution = kGameObjectFixtureRestitution;
+	fixtureDef.filter.categoryBits = categoryBits;
+	fixtureDef.filter.maskBits = maskBits;
 	fixtureDef.isSensor = isSensor;
 
 	this->_body->CreateFixture(&fixtureDef);
@@ -122,35 +123,6 @@ void GameObject::initListeners()
 		auto touchEvent = static_cast<EventTouch*>(event);
 
 		auto node = touchEvent->getCurrentTarget();
-
-		auto winSize = Director::getInstance()->getWinSize();
-		b2Vec2 currentVelocity = this->_body->GetLinearVelocity();
-		b2Vec2 impulse(0.0f, 0.0f);
-
-		// walk
-		if (touch->getLocation().y < (winSize.height * 0.5f))
-		{
-			// apply impulse if x velocity is getting low
-			if (fabsf(currentVelocity.x) < 5.0f)
-			{
-				impulse.y = 0.0f;
-				impulse.x = 50.0f;
-				if (touch->getLocation().x < (winSize.width * 0.5f))
-					impulse.x = -impulse.x;
-				this->_body->ApplyLinearImpulse(impulse, _body->GetWorldCenter(), true);
-			}
-		}
-		// jump
-		else
-		{
-			// apply impulse
-			impulse.y = 50.0f;
-			impulse.x = 30.0f;
-			if (touch->getLocation().x < (winSize.width * 0.5f))
-				impulse.x = -impulse.x;
-			this->_body->ApplyLinearImpulse(impulse, _body->GetWorldCenter(), true);
-		}
-
 		
 		if (node->getBoundingBox().containsPoint(touch->getLocation()))
 		{
@@ -161,7 +133,7 @@ void GameObject::initListeners()
 			auto scaleUpAction = ScaleTo::create(0.1, 1.1);
 			auto scaleDownAction = ScaleTo::create(0.1, 1.0);
 
-			// Button effect
+			// GameObject selected effect
 			node->runAction(Sequence::createWithTwoActions(scaleUpAction, scaleDownAction));
 
 			if (player->isMenuActive())
@@ -211,14 +183,18 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
 
 void GamePlayer::addFixturesToBody()
 {
-	this->addRectangularFixtureToBody(68,69);
-	this->addSensorRectangleToBody();
+	auto size = this->getContentSize();
+	this->addRectangularFixtureToBody(10,size.height);
+	//this->addCircularFixtureToBody(35);
+	this->addSensorRectangleToBody(-0.3);
+	//this->addSensorRectangleToBody(-0.5);
 }
 
 void GamePlayer::update(float& delta, b2World& physics)
 {
 	_physics->update(*this);
 	_input->update(*this, delta);    
+	_graphics->update(*this);
 }
 
 

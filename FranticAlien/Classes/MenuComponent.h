@@ -25,6 +25,8 @@ public:
 	virtual bool addMenu(GameObject &gameObject) = 0;
     virtual void showMenu(GameObject &gameObject) = 0;
 	virtual void hideMenu(GameObject &gameObject) = 0;
+
+	virtual void update(GameObject &gameObject) = 0;
 	
 	virtual bool isActive() = 0;
 };
@@ -37,6 +39,8 @@ public:
 	void showMenu(GameObject &gameObject);
 	void hideMenu(GameObject &gameObject);
     
+	void update(GameObject &gameObject){}
+
 	inline bool isActive() { return _isActive; }
 
 private:

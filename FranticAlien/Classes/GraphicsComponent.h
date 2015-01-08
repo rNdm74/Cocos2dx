@@ -5,6 +5,8 @@
 
 class GameObject;
 
+using namespace cocos2d;
+
 class GraphicsComponent
 {
 public:

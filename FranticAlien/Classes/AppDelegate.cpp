@@ -52,6 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create global area for game
     auto appGlobal = AppGlobal::getInstance();
     appGlobal->IsGameSceneRunning = false;
+	appGlobal->initKeyboardListener();
         		
     // create a scene. it's an autorelease object
     auto scene = SplashScene::createScene();

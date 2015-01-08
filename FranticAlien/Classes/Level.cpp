@@ -75,11 +75,11 @@ void Level::EndContact(b2Contact* contact)
 
 void Level::createPhysicsWorld()
 {
-	physicsWorld = new b2World(b2Vec2(0.0f, kGravity));
+	physicsWorld = new b2World(b2Vec2(0, kGravity));
 	
 	physicsWorld->SetAllowSleeping(true);
 	physicsWorld->SetContinuousPhysics(true);
-	physicsWorld->SetContactListener(this);
+	physicsWorld->SetContactListener(new ContactListener());
 }
 void Level::prepareLayers()
 {
@@ -142,20 +142,20 @@ void Level::createRectangularFixture(TMXLayer& layer, int x, int y, int width, i
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
 	fixtureDef.density = 2.0f;
-	fixtureDef.friction = 0.1f;
-	fixtureDef.restitution = 0.0f;
+	fixtureDef.friction = 0.2f;
+	fixtureDef.restitution = 0.2f;
 	fixtureDef.filter.categoryBits = kFilterCategoryLevel;
 	fixtureDef.filter.maskBits = 0xffff;
 	body->CreateFixture(&fixtureDef);
 }
 
-void Level::createRectangularFixture(float x, float y, float width, float height)
+void Level::createRectangularFixture(float x, float y, float width, float height, bool isSensor, uint16 categoryBits, uint16 maskBits)
 {
 	auto worldPos = map->convertToWorldSpace(Vec2(x, y));
 
 	// create the body
 	b2BodyDef bodyDef;
-	bodyDef.type = b2_staticBody;
+	bodyDef.type = b2_kinematicBody;
 	bodyDef.position.Set
 	(
 		(worldPos.x + width / 2.0f) / kPixelsPerMeter,
@@ -175,11 +175,88 @@ void Level::createRectangularFixture(float x, float y, float width, float height
 	// create the fixture
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
-	fixtureDef.density = 2.0f;
-	fixtureDef.friction = 0.0f;
-	fixtureDef.restitution = 0.0f;
-	fixtureDef.filter.categoryBits = kFilterCategoryLevel;
-	fixtureDef.filter.maskBits = 0xffff;
+	fixtureDef.density = 0.0f;
+	fixtureDef.friction = 0.2f;
+	fixtureDef.restitution = 0.02f;
+	fixtureDef.filter.categoryBits = categoryBits;
+	fixtureDef.filter.maskBits = maskBits;
+	fixtureDef.isSensor = isSensor;
+	body->CreateFixture(&fixtureDef);
+}
+
+void Level::createGhostFixture(float x, float y, float width, float height, bool isSensor, uint16 categoryBits, uint16 maskBits)
+{
+	auto worldPos = map->convertToWorldSpace(Vec2(x, y));
+
+	// create the body
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_kinematicBody;
+	bodyDef.position.Set(0, 0);
+	
+	b2Body* body = physicsWorld->CreateBody(&bodyDef);
+	
+	b2EdgeShape edgeShape;
+
+	b2Vec2 v1 = b2Vec2
+	(
+		worldPos.x / kPixelsPerMeter,
+		(worldPos.y + height) / kPixelsPerMeter
+	);
+	
+	b2Vec2 v2 = b2Vec2
+	(
+		(worldPos.x + width) / kPixelsPerMeter,
+		(worldPos.y + height) / kPixelsPerMeter
+	);
+
+	// create the fixture
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &edgeShape;
+	edgeShape.Set(v1, v2);
+	edgeShape.m_vertex0.Set(v1.x - 1, v1.y);
+	edgeShape.m_vertex3.Set(v2.x + 1, v2.y);
+	edgeShape.m_hasVertex0 = true;
+	edgeShape.m_hasVertex3 = true;
+
+	fixtureDef.density = 0.0f;
+	fixtureDef.friction = 0.2f;
+	fixtureDef.restitution = 0.02f;
+	fixtureDef.filter.categoryBits = categoryBits;
+	fixtureDef.filter.maskBits = maskBits;
+	fixtureDef.isSensor = isSensor;
+	body->CreateFixture(&fixtureDef);
+}
+
+void Level::createPolyLineFixture(std::vector<b2Vec2> vectors, int32 count, bool isSensor, uint16 categoryBits, uint16 maskBits)
+{
+	//auto worldPos = map->convertToWorldSpace(Vec2(x, y));
+
+	// create the body
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_kinematicBody;
+	bodyDef.position.Set(0, 0);
+
+	b2Body* body = physicsWorld->CreateBody(&bodyDef);
+
+	b2PolygonShape polyShape;
+	
+	
+	// create the fixture
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &polyShape;
+	polyShape.m_count = count;
+
+	for (int i = 0; i < count; i++)
+	{
+		polyShape.m_vertices[i].Set(vectors.at(i).x, vectors.at(i).y);
+	}
+
+	fixtureDef.density = 0.0f;
+	fixtureDef.friction = 0.2f;
+	fixtureDef.restitution = 0.02f;
+	fixtureDef.filter.categoryBits = categoryBits;
+	fixtureDef.filter.maskBits = maskBits;
+	fixtureDef.isSensor = isSensor;
 	body->CreateFixture(&fixtureDef);
 }
 
@@ -192,6 +269,8 @@ void Level::addObjects()
 		auto objects = objectGroup->getObjects();
 		for (auto& object : objects)
 		{
+			auto test = object.getType();
+
 			auto properties = object.asValueMap();
 			auto type = properties.at("type");
 
@@ -205,13 +284,19 @@ void Level::addObjects()
 }
 
 GameObject* Level::addObject(std::string className, ValueMap& properties)
-{
+{	
 	auto x = properties["x"].asFloat();
 	auto y = properties["y"].asFloat();
 	auto width = properties["width"].asFloat();
 	auto height = properties["height"].asFloat();
 
-	this->createRectangularFixture(x, y,width, height);
+	if (className == "Ghost")
+		this->createGhostFixture(x, y, width, height, false, kFilterCatagory::BOUNDARY, kFilterCatagory::PLAYER | kFilterCatagory::ENEMY);
+	else if (className == "Ladder")
+		this->createRectangularFixture(x, y, width, height, false, kFilterCatagory::LADDER, kFilterCatagory::PLAYER | kFilterCatagory::ENEMY);
+	else if (className == "Bounds")	
+		this->createRectangularFixture(x, y, width, height, false, kFilterCatagory::BOUNDARY, kFilterCatagory::PLAYER | kFilterCatagory::ENEMY);
+		
 
 	// create the object
 	GameObject* o = nullptr;
@@ -238,5 +323,5 @@ GameObject* Level::addObject(std::string className, ValueMap& properties)
 
 void Level::update(float& delta)
 {
-	physicsWorld->Step(delta, 6, 2);
+	physicsWorld->Step(delta, 1, 1);
 }

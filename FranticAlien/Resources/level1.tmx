@@ -893,17 +893,26 @@
   </data>
  </layer>
  <objectgroup name="CollisionAreas">
-  <object name="Bounds" type="Bounds" x="70" y="140" width="140" height="70"/>
-  <object name="Bounds" type="Bounds" x="280" y="140" width="420" height="70"/>
-  <object name="Bounds" type="Bounds" x="770" y="140" width="140" height="70"/>
-  <object name="Bounds" type="Bounds" x="70" y="280" width="280" height="70"/>
-  <object name="Bounds" type="Bounds" x="420" y="280" width="140" height="70"/>
-  <object name="Bounds" type="Bounds" x="630" y="280" width="280" height="70"/>
-  <object name="Bounds" type="Bounds" x="70" y="420" width="140" height="70"/>
-  <object name="Bounds" type="Bounds" x="280" y="420" width="420" height="70"/>
-  <object name="Bounds" type="Bounds" x="770" y="420" width="140" height="70"/>
-  <object name="Bounds" type="Bounds" x="70" y="560" width="840" height="70"/>
-  <object name="Bounds" type="Bounds" x="0" y="0" width="70" height="630"/>
-  <object name="Bounds" type="Bounds" x="910" y="0" width="70" height="630"/>
+  <object name="Ghost" type="Ghost" x="70" y="140" width="140" height="70"/>
+  <object name="Ghost" type="Ghost" x="280" y="140" width="420" height="70"/>
+  <object name="Ghost" type="Ghost" x="770" y="140" width="140" height="70"/>
+  <object name="Ghost" type="Ghost" x="70" y="280" width="280" height="70"/>
+  <object name="Ghost" type="Ghost" x="420" y="280" width="140" height="70"/>
+  <object name="Ghost" type="Ghost" x="630" y="280" width="280" height="70"/>
+  <object name="Ghost" type="Ghost" x="70" y="420" width="140" height="70"/>
+  <object name="Ghost" type="Ghost" x="280" y="420" width="420" height="70"/>
+  <object name="Ghost" type="Ghost" x="770" y="420" width="140" height="70"/>
+  <object name="Ghost" type="Ghost" x="70" y="560" width="840" height="70"/>
+  <object name="Bounds" type="Bounds" x="70" y="0" height="560"/>
+  <object name="Bounds" type="Bounds" x="910" y="0" height="560"/>
+  <object name="Ghost" type="Ghost" x="70" y="0" width="840" height="70"/>
+ </objectgroup>
+ <objectgroup name="LadderAreas">
+  <object name="Ladder" type="Ladder" x="210" y="140" width="70" height="140"/>
+  <object name="Ladder" type="Ladder" x="700" y="140" width="70" height="140"/>
+  <object name="Ladder" type="Ladder" x="350" y="280" width="70" height="140"/>
+  <object name="Ladder" type="Ladder" x="210" y="420" width="70" height="140"/>
+  <object name="Ladder" type="Ladder" x="700" y="420" width="70" height="140"/>
+  <object name="Ladder" type="Ladder" x="560" y="280" width="70" height="140"/>
  </objectgroup>
 </map>

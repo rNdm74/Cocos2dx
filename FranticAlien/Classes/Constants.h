@@ -57,7 +57,7 @@ const float kUpdateInterval						= 1.0f / 60.0f;
 const double kSecondsPerUpdate					= 0.1;
 
 const std::string kLevelTMX						= "level1.tmx";
-const std::string kPlayerFileName				= "alienBeige_stand.png";
+const std::string kPlayerFileName				= "alienBeige.png";
 
 //enumeration of possible input states
 enum EState {
@@ -75,11 +75,11 @@ enum EState {
 
 enum kFilterCatagory 
 {
-	BOUNDARY	= 0x0001,
-	PLAYER		= 0x0002,
-	LADDER		= 0x0004,
-	ENEMY		= 0x0008,
-	//ENEMY_AIRCRAFT = 0x0010,
+	BOUNDARY		= 0x0001,
+	PLAYER			= 0x0002,
+	LADDER			= 0x0004,
+	ENEMY			= 0x0008,
+	LADDER_SENSOR	= 0x0010,
 	//FRIENDLY_TOWER = 0x0020,
 	//RADAR_SENSOR = 0x0040,
 };

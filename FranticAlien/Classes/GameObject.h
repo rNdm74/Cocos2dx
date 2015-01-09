@@ -24,6 +24,11 @@ public:
     
 public:
     // "creator" methods first
+	bool isAtTopOfLadder;
+	bool isClimbing;
+	bool isAtBottomOfLadder;
+
+	Vec2 ladderPos;
     
     // If applicable, then Constructors and the Destructor
 	GameObject(MenuComponent* menu, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics)
@@ -32,6 +37,12 @@ public:
 		_input = input;
 		_physics = physics;
 		_graphics = graphics;
+
+		isAtTopOfLadder = false;
+		isClimbing = false;
+		isAtBottomOfLadder = false;
+
+		ladderPos = Vec2::ZERO;
 	}
 
 	virtual ~GameObject(){};
@@ -46,7 +57,9 @@ public:
 	virtual void update(float& delta, b2World& physics){}
 
 	virtual void addBodyToWorld(b2World& world);
-	virtual void addCircularFixtureToBody(float radius);
+	virtual void addCircularHeadFixtureToBody(float radius, b2Vec2 offset);
+	virtual void addCircularBodyFixtureToBody(float radius, b2Vec2 offset);
+	virtual void addPolygonShapeToBody();
 	virtual	void addRectangularFixtureToBody(float width, float height);
 	virtual void addSensorRectangleToBody(float offset);
 	virtual void addFixturesToBody(){}

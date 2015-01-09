@@ -32,7 +32,8 @@ void PlayerInputComponent::update(GameObject& gameObject, float& delta)
 				
 		case STATE_UP:
 		{
-			climb = 2.5f;
+			
+			//climb = 2.5f;
 
 			//if (body->GetGravityScale() == 0)
 			//	climb = 5.0f;
@@ -54,6 +55,14 @@ void PlayerInputComponent::update(GameObject& gameObject, float& delta)
 	
 	
 	body->ApplyLinearImpulse(b2Vec2(impulse, climb), body->GetWorldCenter(), true);
+
+	if (gameObject.isAtTopOfLadder)
+	{
+		//auto pos = body->GetPosition();
+		auto offset = (gameObject.getContentSize().height / kPixelsPerMeter) / 2;
+		b2Vec2 pos = b2Vec2(body->GetPosition().x, gameObject.ladderPos.y + offset + 0.1);
+		body->SetTransform(pos, 0);
+	}
 }
 
 void PlayerInputComponent::setLeftVelocityX(float& velocityX)

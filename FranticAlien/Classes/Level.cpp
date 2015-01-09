@@ -292,6 +292,8 @@ GameObject* Level::addObject(std::string className, ValueMap& properties)
 
 	if (className == "Ghost")
 		this->createGhostFixture(x, y, width, height, false, kFilterCatagory::BOUNDARY, kFilterCatagory::PLAYER | kFilterCatagory::ENEMY);
+	else if (className == "GhostLadderTop")
+		this->createGhostFixture(x, y, width, height, false, kFilterCatagory::LADDER, kFilterCatagory::PLAYER | kFilterCatagory::ENEMY);
 	else if (className == "Ladder")
 		this->createRectangularFixture(x, y, width, height, false, kFilterCatagory::LADDER, kFilterCatagory::PLAYER | kFilterCatagory::ENEMY);
 	else if (className == "Bounds")	

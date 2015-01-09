@@ -30,6 +30,7 @@ void GameObject::hideMenu()
 #pragma endregion Menu
 
 #pragma region Box2D
+
 void GameObject::addBodyToWorld(b2World& world)
 {
 	// add a dynamic body to world
@@ -49,11 +50,39 @@ void GameObject::addBodyToWorld(b2World& world)
 	
 }
 
-void GameObject::addCircularFixtureToBody(float radius)
+void GameObject::addCircularHeadFixtureToBody(float radius, b2Vec2 offset)
 {
 	b2CircleShape shape;
 	shape.m_radius = (radius * this->getScale()) / kPixelsPerMeter;
-	this->createFixture(&shape, false, kFilterCatagory::PLAYER, kFilterCatagory::BOUNDARY | kFilterCatagory::ENEMY);
+	shape.m_p = offset;
+	this->createFixture(&shape, false, kFilterCatagory::PLAYER, kFilterCatagory::ENEMY);
+}
+
+void GameObject::addCircularBodyFixtureToBody(float radius, b2Vec2 offset)
+{
+	b2CircleShape shape;
+	shape.m_radius = (radius * this->getScale()) / kPixelsPerMeter;
+	shape.m_p = offset;
+	this->createFixture(&shape, false, kFilterCatagory::PLAYER, kFilterCatagory::BOUNDARY | kFilterCatagory::LADDER);
+}
+
+void GameObject::addPolygonShapeToBody()
+{
+	//setup platform shape for reuse
+	b2PolygonShape polygonShape;
+	b2Vec2 verts[7];
+
+	verts[0].Set(0, 0);		// center point
+	verts[1].Set(0.25, 0);	// center point
+	verts[2].Set(0.5, 0.5);	// right bottom
+	verts[3].Set(0.5, 1);	// right top
+	verts[4].Set(-0.5, 1);	// left top
+	verts[5].Set(-0.5, 0.5);// left bottom
+	verts[6].Set(-0.25, 0);	// center point
+
+	polygonShape.Set(verts, 7);
+
+	this->createFixture(&polygonShape, false, kFilterCatagory::PLAYER, kFilterCatagory::BOUNDARY);
 }
 
 void GameObject::addRectangularFixtureToBody(float width, float height)
@@ -67,7 +96,7 @@ void GameObject::addRectangularFixtureToBody(float width, float height)
 		0.0f
 	);
 	
-	this->createFixture(&shape, false, kFilterCatagory::PLAYER, kFilterCatagory::BOUNDARY | kFilterCatagory::ENEMY);
+	this->createFixture(&shape, false, kFilterCatagory::PLAYER, kFilterCatagory::BOUNDARY | kFilterCatagory::ENEMY | kFilterCatagory::LADDER | kFilterCatagory::LADDER_SENSOR);
 }
 
 void GameObject::addSensorRectangleToBody(float offset)
@@ -75,7 +104,7 @@ void GameObject::addSensorRectangleToBody(float offset)
 	b2PolygonShape shape;
 	shape.SetAsBox
 	(
-		(10 / kPixelsPerMeter) * 0.5f,
+		(40 / kPixelsPerMeter) * 0.5f,
 		(10 / kPixelsPerMeter) * 0.5f,
 		b2Vec2(0, offset),
 		0.0f
@@ -112,6 +141,7 @@ void GameObject::setProperties(ValueMap& properties)
 		)
 	);
 }
+
 #pragma endregion Box2D
 
 void GameObject::initListeners()
@@ -184,10 +214,11 @@ GamePlayer* GamePlayer::createWithFrameName(const std::string& arg)
 void GamePlayer::addFixturesToBody()
 {
 	auto size = this->getContentSize();
-	this->addRectangularFixtureToBody(10,size.height);
-	//this->addCircularFixtureToBody(35);
-	this->addSensorRectangleToBody(-0.3);
-	//this->addSensorRectangleToBody(-0.5);
+	//this->addRectangularFixtureToBody(40,70);
+	this->addCircularHeadFixtureToBody(33, b2Vec2(0, 1.8));
+	//this->addCircularBodyFixtureToBody(20, b2Vec2(0, 0.6));
+	this->addSensorRectangleToBody(-0.1);
+	this->addPolygonShapeToBody();
 }
 
 void GamePlayer::update(float& delta, b2World& physics)

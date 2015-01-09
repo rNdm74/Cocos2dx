@@ -29,6 +29,9 @@ private:
     virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 
 	virtual bool isLadder(b2Contact* contact, GameObject*& gameObject);
+	virtual b2Fixture* getLadderFixture(b2Contact* contact);
+	virtual bool isTopLadder(b2Fixture* ladder, GameObject& gameObject);
+	virtual bool isBottomLadder(b2Fixture* ladder, GameObject& gameObject);
 
 public:
         std::vector<Contact>_contacts;
